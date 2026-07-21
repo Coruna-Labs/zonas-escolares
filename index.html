@@ -139,8 +139,14 @@
      state on top. Deliberately no size overrides here (padding, font)
      beyond what .pop-tag already sets -- the first draft gave these a
      bigger padding of their own, which made them read as a visibly
-     different, chunkier control instead of the same chip repeated. */
-  .legend-toggle{border:none;cursor:pointer;font:inherit;
+     different, chunkier control instead of the same chip repeated.
+     Second gotcha found after fixing the padding: "font: inherit" is a
+     shorthand that resets font-size/font-weight along with font-family --
+     it was silently overriding .pop-tag's 9.5px/700 with the button's
+     own inherited (body-level, 16px/400) font despite coming first in
+     the cascade, since the shorthand touches those sub-properties too.
+     font-family alone doesn't have that problem. */
+  .legend-toggle{border:none;cursor:pointer;font-family:inherit;
     transition:opacity .15s,filter .15s}
   .legend-toggle:hover{filter:brightness(0.96)}
   .legend-toggle.off{opacity:.35}
