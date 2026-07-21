@@ -471,6 +471,17 @@ whenStyleReady(async () => {
         "line-opacity": lineOpacityExpr(),
       },
     });
+    // Invisible, unfiltered twin of catchments-fill, queried only by
+    // address search's hit-test -- found a real bug where searching an
+    // address whose only covering school had its dominant ensinanza
+    // toggled off would report "not covered" even though it genuinely is
+    // covered, just hidden from view. Search answers "is this address
+    // covered," which has to stay true regardless of what's currently
+    // toggled for browsing.
+    map.addLayer({
+      id:"catchments-hittest", type:"fill", source:"catchments",
+      paint:{ "fill-opacity": 0 },
+    });
 
     map.on("click","catchments-fill",(e)=>{
       const f = e.features[0];
@@ -580,20 +591,26 @@ function renderRail(){
   // matches" during that brief window instead of just staying blank while
   // the loading toast is up.
   if(!state.catchments){ railListEl.innerHTML = ""; railCountEl.textContent = ""; return; }
-  let schools = visibleSchools();
   let countText, showReset = false;
 
+  // A resolved search shows its match(es) regardless of the ensinanza
+  // toggle -- same reasoning as the hittest layer above. Toggling off a
+  // type is a browsing preference; it shouldn't make a genuinely covered
+  // address look uncovered just because its school's type is hidden.
+  let schools;
   if(state.searchMatchCodigos && state.searchMatchCodigos.size){
-    schools = schools.filter(s => state.searchMatchCodigos.has(s.codigo));
+    schools = state.allSchools.filter(s => state.searchMatchCodigos.has(s.codigo));
     countText = t.railCountSearch(schools.length);
     showReset = true;
   } else if(state.selectedCity){
+    schools = visibleSchools();
     schools = schools.filter(s => s.concello_codigo === state.selectedCity);
     const cityName = state.cityMarkersData.features
       .find(f=>f.properties.concello_codigo===state.selectedCity)?.properties.concello_nome || "";
     countText = t.railCountCity(schools.length, cityName);
     showReset = true;
   } else {
+    schools = visibleSchools();
     countText = t.railCountAll(schools.length);
   }
 
@@ -897,7 +914,7 @@ function handleGeocodeResult(cand){
   // started moving. A fixed delay past the flyTo duration sidesteps
   // both races and is imperceptible for a search action.
   setTimeout(() => {
-    const hits = map.queryRenderedFeatures(map.project(lngLat), {layers:["catchments-fill"]});
+    const hits = map.queryRenderedFeatures(map.project(lngLat), {layers:["catchments-hittest"]});
     showSearchResult(lngLat, hits, cand.address);
   }, 1100);
 }
