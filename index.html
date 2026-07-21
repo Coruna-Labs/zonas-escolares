@@ -100,9 +100,20 @@
   .pop-sub{font-size:11px;color:var(--muted);margin:0 0 6px;line-height:1.45}
   .pop-tags{display:flex;gap:4px;flex-wrap:wrap;margin:0 0 6px}
   .pop-tag{font-size:9.5px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;
-    color:var(--muted);background:var(--hairline);padding:2px 6px;border-radius:5px}
+    padding:2px 6px;border-radius:5px}
   .pop-link{font-size:11px;color:var(--ink);text-decoration:underline;text-underline-offset:2px}
   .pop-warn{color:var(--error);font-weight:600}
+
+  /* ---------- Ensinanza tint pairs -- one light bg + one readable text
+     color per type, shared by rail tags, the legend/toggle chips, and the
+     popup tags (three places that used to be plain grey, now all the same
+     "Airtable-style" filled chip). Same hue family as ENSINANZA_COLORS,
+     just split into a pastel background and a darker, legible foreground
+     instead of one mid-tone used as a small dot. ---------- */
+  .ens-tag-22{background:#E3F0F8;color:#2E6E94}
+  .ens-tag-25{background:#EFE9F7;color:#6B4E9E}
+  .ens-tag-24{background:#E7F3EB;color:#3D7955}
+  .ens-tag-29{background:#FBEFE1;color:#A8672A}
 
   /* ---------- Rail: permanent, always visible -- browse + filter surface ----------
      Retired the old slide-in docked panel in favor of this. The panel opened
@@ -119,13 +130,14 @@
   @media (max-width:719px){
     .rail{left:0;right:0;bottom:0;height:40vh;border-radius:12px 12px 0 0}
   }
-  .rail__legend{display:flex;flex-wrap:wrap;gap:5px;padding:12px 12px 10px;border-bottom:1px solid var(--hairline)}
-  .legend-toggle{display:flex;align-items:center;gap:5px;background:none;border:1px solid var(--hairline);
-    border-radius:999px;padding:4px 9px 4px 6px;font:inherit;font-size:10.5px;font-weight:600;
-    color:var(--ink);cursor:pointer;transition:opacity .15s,border-color .15s}
-  .legend-toggle:hover{border-color:var(--rest)}
-  .legend-toggle.off{opacity:.4}
-  .legend-dot{width:8px;height:8px;border-radius:2px;flex:0 0 auto}
+  .rail__legend{display:flex;flex-wrap:wrap;gap:6px;padding:12px 12px 10px;border-bottom:1px solid var(--hairline)}
+  /* .legend-toggle pairs with .pop-tag + .ens-tag-XX in the HTML -- same
+     filled chip as the rail tags, just a real <button> with a hover/off
+     state on top. */
+  .legend-toggle{border:none;cursor:pointer;font:inherit;padding:4px 9px;
+    transition:opacity .15s,filter .15s}
+  .legend-toggle:hover{filter:brightness(0.96)}
+  .legend-toggle.off{opacity:.35}
 
   .rail__status{display:flex;align-items:baseline;justify-content:space-between;gap:8px;
     padding:10px 14px;border-bottom:1px solid var(--hairline)}
@@ -138,11 +150,9 @@
   .rail__scroll{overflow-y:auto;flex:1;padding:6px}
   .rail__group{padding:9px 8px 4px;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
     color:var(--faint);font-weight:700}
-  .rail__school{display:flex;align-items:flex-start;gap:8px;padding:7px 8px;border-radius:8px;cursor:pointer}
+  .rail__school{padding:7px 8px;border-radius:8px;cursor:pointer}
   .rail__school:hover{background:#f4f5f6}
   .rail__school.hi{background:#f0f1f2}
-  .rail__chips{display:flex;flex-direction:column;gap:3px;flex:0 0 auto;margin-top:3px}
-  .rail__chip{width:9px;height:9px;border-radius:2px;flex:0 0 auto}
   .rail__school-body{min-width:0;flex:1}
   .rail__school-name{font-size:12px;font-weight:660;color:var(--ink);margin:0;
     overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -592,8 +602,8 @@ const railLegendEl = document.getElementById("rail-legend");
 function renderRailLegend(){
   const t = I18N[lang];
   railLegendEl.innerHTML = ENSINANZA_PRIORITY.map(code => `
-    <button class="legend-toggle${state.activeEnsinanzas.has(code)?"":" off"}" data-code="${code}">
-      <span class="legend-dot" style="background:${ENSINANZA_COLORS[code]}"></span>${t.ensinanzaNames[code]}
+    <button class="legend-toggle pop-tag ens-tag-${code}${state.activeEnsinanzas.has(code)?"":" off"}" data-code="${code}">
+      ${t.ensinanzaNames[code]}
     </button>`).join("");
 }
 railLegendEl.addEventListener("click",(e)=>{
@@ -682,19 +692,17 @@ function renderRail(){
 
 function schoolRowHTML(s){
   const t = I18N[lang];
-  // One small chip per ensinanza offered, in the fixed priority order,
+  // One colored tag per ensinanza offered, in the fixed priority order,
   // not one dominant color -- same reasoning as the map's ring outlines:
   // a school offering ESO+Bacharelato should visibly have both, not just
-  // whichever one a priority order happened to pick.
+  // whichever one a priority order happened to pick. The tag color itself
+  // now carries the category (see .ens-tag-XX), so there's no need for a
+  // separate row of plain swatches alongside plain-grey text anymore.
   const codes = ENSINANZA_PRIORITY.filter(c => s.ensinanzaCodes.has(c));
-  const chips = codes.map(c => `<span class="rail__chip" style="background:${ENSINANZA_COLORS[c]}"></span>`).join("");
-  const tags = codes.map(c => `<span class="pop-tag">${t.ensinanzaNames[c]}</span>`).join("");
+  const tags = codes.map(c => `<span class="pop-tag ens-tag-${c}">${t.ensinanzaNames[c]}</span>`).join("");
   return `<div class="rail__school" data-codigo="${s.codigo}">
-    <div class="rail__chips">${chips}</div>
-    <div class="rail__school-body">
-      <p class="rail__school-name">${s.nome}</p>
-      <div class="rail__school-tags">${tags}</div>
-    </div>
+    <p class="rail__school-name">${s.nome}</p>
+    <div class="rail__school-tags">${tags}</div>
   </div>`;
 }
 
@@ -1024,7 +1032,7 @@ function openSchoolPopup(lngLat, feats){
   if(!feats.length) return;
   const html = feats.map(f=>{
     const p = f.properties;
-    const tags = parseEnsinanzas(p.ensinanzas).map(e=>`<span class="pop-tag">${e.nome}</span>`).join("");
+    const tags = parseEnsinanzas(p.ensinanzas).map(e=>`<span class="pop-tag ens-tag-${e.codigo}">${e.nome}</span>`).join("");
     return `<p class="pop-title">${p.nome}</p>
       <p class="pop-sub">${p.concello_nome}</p>
       <div class="pop-tags">${tags}</div>
