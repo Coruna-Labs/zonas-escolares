@@ -93,15 +93,18 @@
   .city-marker.active .dot{background:var(--ink)}
   .city-marker.active .tag{background:var(--ink);color:#fff}
 
-  /* ---------- Callout: native MapLibre popup — search result ---------- */
-  .maplibregl-popup-content{font-family:inherit;border-radius:10px;padding:12px 14px;
+  /* ---------- Callout: native MapLibre popup — direct polygon click ----------
+     Sized down a step from the first draft -- at the original size it read as
+     noticeably heavier than a rail row for the same information, which felt
+     inconsistent given they're both just "here's a school and its tags." */
+  .maplibregl-popup-content{font-family:inherit;border-radius:9px;padding:10px 12px;
     box-shadow:0 8px 28px rgba(0,0,0,.16);border:1px solid var(--hairline)}
-  .pop-title{font-size:13px;font-weight:660;margin:0 0 3px}
-  .pop-sub{font-size:11px;color:var(--muted);margin:0 0 6px;line-height:1.45}
-  .pop-tags{display:flex;gap:4px;flex-wrap:wrap;margin:0 0 6px}
+  .pop-title{font-size:12px;font-weight:660;margin:0 0 2px}
+  .pop-sub{font-size:10.5px;color:var(--muted);margin:0 0 5px;line-height:1.4}
+  .pop-tags{display:flex;gap:4px;flex-wrap:wrap;margin:0 0 5px}
   .pop-tag{font-size:9.5px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;
     padding:2px 6px;border-radius:5px}
-  .pop-link{font-size:11px;color:var(--ink);text-decoration:underline;text-underline-offset:2px}
+  .pop-link{font-size:10.5px;color:var(--ink);text-decoration:underline;text-underline-offset:2px}
   .pop-warn{color:var(--error);font-weight:600}
 
   /* ---------- Ensinanza tint pairs -- one light bg + one readable text
@@ -159,9 +162,11 @@
   .rail__school-tags{display:flex;gap:3px;flex-wrap:wrap;margin:3px 0 0}
   .rail__empty{padding:20px 14px;font-size:12px;color:var(--faint);text-align:center}
 
-  /* ---------- Search-result pin (distinct from city markers) ---------- */
-  .result-pin{width:13px;height:13px;border-radius:50% 50% 50% 0;background:var(--ink);
-    transform:rotate(-45deg);box-shadow:0 1px 3px rgba(0,0,0,.35);border:2px solid #fff}
+  /* ---------- Search-result pin (distinct from city markers) ----------
+     Sized up from 13px -- at the original size it read as a bit timid for
+     what's meant to be "here's the exact spot you searched for." */
+  .result-pin{width:22px;height:22px;border-radius:50% 50% 50% 0;background:var(--ink);
+    transform:rotate(-45deg);box-shadow:0 2px 6px rgba(0,0,0,.4);border:3px solid #fff}
 
   /* ---------- Toast ---------- */
   .toast{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:6;
@@ -241,7 +246,7 @@ const I18N = {
        railCountCity:(n,city)=>`${n} centro${n===1?"":"s"} en ${city}`,
        railCountSearch:(n)=>`${n} resultado${n===1?"":"s"}`,
        railEmpty:"Ningún centro coincide coa selección.",
-       railReset:"Ver todos",
+       railReset:"Ver todos", railBack:"← Volver",
        ensinanzaNames:{"22":"Infantil","25":"Primaria","24":"ESO","29":"Bacharelato"} },
   es:{ title:"MisEducativos", sub:"Áreas de influencia de los centros educativos de Galicia.",
        note:"Disponible en 11 concellos, por ahora.",
@@ -254,7 +259,7 @@ const I18N = {
        railCountCity:(n,city)=>`${n} centro${n===1?"":"s"} en ${city}`,
        railCountSearch:(n)=>`${n} resultado${n===1?"":"s"}`,
        railEmpty:"Ningún centro coincide con la selección.",
-       railReset:"Ver todos",
+       railReset:"Ver todos", railBack:"← Volver",
        ensinanzaNames:{"22":"Infantil","25":"Primaria","24":"ESO","29":"Bachillerato"} },
   en:{ title:"MisEducativos", sub:"School catchment zones across Galicia.",
        note:"Available in 11 concellos, for now.",
@@ -267,7 +272,7 @@ const I18N = {
        railCountCity:(n,city)=>`${n} school${n===1?"":"s"} in ${city}`,
        railCountSearch:(n)=>`${n} result${n===1?"":"s"}`,
        railEmpty:"No school matches this selection.",
-       railReset:"See all",
+       railReset:"See all", railBack:"← Back",
        ensinanzaNames:{"22":"Infantil","25":"Primary","24":"ESO","29":"Bacharelato"} },
 };
 
@@ -365,6 +370,8 @@ const state = {
                             // across its 1-2 catchment features), for the rail
   activeEnsinanzas: new Set(["22","25","24","29"]), // all on by default; the legend toggles these
   searchMatchCodigos: null, // Set of school codigos from the last resolved search, or null
+  previousMatch: null,      // {codigos, city} snapshot to restore via "back" when a rail-row
+                            // click narrows further from a broader city/search context
 };
 
 /* ---------- catchment paint expressions: category color x zoom x selection ---------- */
@@ -410,19 +417,50 @@ function highlightCondition(){
   const sel = state.selectedCity || "__none__";
   return ["==", ["get","concello_codigo"], sel];
 }
+// A specific search match is usually one school, occasionally a handful
+// at a dense boundary -- can afford a strong highlight. A whole selected
+// CITY can be 100+ overlapping shapes (Vigo especially), and the same
+// strong opacity there compounds right back into the solid-black problem
+// this whole ring/neutral-fill redesign was built to avoid. So the
+// highlighted fill-opacity depends on which one is actually active.
+function highlightFillOpacity(){
+  // A whole-city selection can span 100+ overlapping shapes (Vigo); any
+  // non-zero fill boost there compounds straight back to a black screen
+  // (verified: 0.25 across 11 overlaps compounds to ~96%). So a plain
+  // city selection doesn't touch fill-opacity at all -- it relies
+  // entirely on the ring outlines, which don't compound into a filled
+  // block the same way.
+  if(!(state.searchMatchCodigos && state.searchMatchCodigos.size)) return 0.05;
+
+  // A search match isn't reliably small either -- assumed "usually one,
+  // rarely more than a handful" here first, then found a real address
+  // (dense Vigo) that matches 15-16 schools every time, which at a flat
+  // 0.42 also compounds to ~100%. Instead of guessing another constant,
+  // solve backwards from a target *compounded* opacity: per-layer
+  // opacity o across n stacked layers compounds to 1-(1-o)^n, so
+  // o = 1-(1-target)^(1/n) hits that target regardless of how many
+  // schools happen to match. n=1 (the common case) still gets a strong
+  // ~0.35; n=15 gets a much gentler per-layer value that still lands
+  // near the same visual target where they overlap.
+  const n = state.searchMatchCodigos.size;
+  const target = 0.35;
+  return 1 - Math.pow(1 - target, 1 / n);
+}
 function fillOpacityExpr(){
-  const byMatch = ["case", highlightCondition(), 0.25, 0.05];
+  const byMatch = ["case", highlightCondition(), highlightFillOpacity(), 0.05];
   return ["interpolate", ["linear"], ["zoom"], 9, 0, 10.5, byMatch];
 }
 function lineOpacityExpr(){
-  const byMatch = ["case", highlightCondition(), 0.9, 0.65];
+  const byMatch = ["case", highlightCondition(), 1, 0.65];
   return ["interpolate", ["linear"], ["zoom"], 9, 0, 10.5, byMatch];
 }
 function lineWidthExpr(){
   // Unselected width bumped up from the original 0.6 -- the outline is
   // now the primary way to read the category color while browsing (see
   // fillOpacityExpr above), so it needs to actually be legible on its own.
-  return ["case", highlightCondition(), 1.8, 1.0];
+  // Highlighted width bumped further (was 1.8) for the same reason as
+  // fill-opacity above -- more visual separation from the resting state.
+  return ["case", highlightCondition(), 2.6, 1.0];
 }
 // Small, fixed per-pixel offsets so the 4 type rings sit concentrically
 // rather than drawing on top of each other.
@@ -662,7 +700,10 @@ function renderRail(){
   }
 
   railCountEl.textContent = countText;
-  railResetEl.textContent = t.railReset;
+  // "Back" when there's a broader context to return to (drilled into one
+  // school from a city list or a multi-result search); plain full reset
+  // otherwise -- see captureBackTarget/goBack.
+  railResetEl.textContent = state.previousMatch ? t.railBack : t.railReset;
   railResetEl.classList.toggle("show", showReset);
 
   if(!schools.length){
@@ -706,10 +747,34 @@ function schoolRowHTML(s){
   </div>`;
 }
 
+// If the rail is currently showing something broader than one school (a
+// city's full list, or a multi-result search), remember it before a row
+// click narrows further -- otherwise "back" would have nowhere to return
+// to except the full 346-school reset, which is what this whole thing is
+// meant to avoid re-typing an address for.
+function captureBackTarget(){
+  if(state.searchMatchCodigos && state.searchMatchCodigos.size > 1){
+    return {codigos: new Set(state.searchMatchCodigos), city: state.selectedCity};
+  }
+  if(!state.searchMatchCodigos && state.selectedCity){
+    return {codigos: null, city: state.selectedCity}; // null codigos = "whole city," not a search subset
+  }
+  return null; // resting state, or already narrowed to one -- nothing to go back to
+}
+function goBack(){
+  if(!state.previousMatch){ closeEverything(); return; }
+  const prev = state.previousMatch;
+  state.previousMatch = null;
+  clearResult();
+  state.searchMatchCodigos = prev.codigos;
+  selectCity(prev.city, {fromSearch: !!prev.codigos});
+}
+
 railListEl.addEventListener("click",(e)=>{
   const row = e.target.closest(".rail__school"); if(!row) return;
   const school = state.allSchools.find(s=>s.codigo===row.dataset.codigo);
   if(!school) return;
+  state.previousMatch = captureBackTarget();
   clearResult();
   state.searchMatchCodigos = new Set([school.codigo]);
   selectCity(school.concello_codigo, {fromSearch:true});
@@ -722,7 +787,7 @@ railListEl.addEventListener("click",(e)=>{
   }
 });
 
-railResetEl.addEventListener("click", closeEverything);
+railResetEl.addEventListener("click", goBack);
 
 /* ---------- city markers (DOM, always on the map, fade out on deep zoom) ---------- */
 function renderCityMarkers(){
@@ -763,7 +828,10 @@ function updateMarkerOpacity(){
 // so it clears any active search narrowing instead.
 function selectCity(codigo, {fromSearch=false} = {}){
   state.selectedCity = codigo;
-  if(!fromSearch) state.searchMatchCodigos = null;
+  // An explicit pick (marker/dropdown, not part of a search or a
+  // rail-row drill-down) starts fresh -- any stale "back" target from a
+  // previous drill-down no longer applies.
+  if(!fromSearch){ state.searchMatchCodigos = null; state.previousMatch = null; }
   renderCityTrigger();
   updateCatchmentHighlight();
   for(const [c,{el}] of Object.entries(state.markerEls)){
@@ -771,6 +839,17 @@ function selectCity(codigo, {fromSearch=false} = {}){
   }
   renderRail();
   syncURL({city: codigo || ""});
+
+  // Fly to the city on an explicit pick (marker click or dropdown choice)
+  // -- reverses an earlier "don't move the camera on city select" call;
+  // turned out to feel more helpful than disorienting in practice. Only
+  // for a real city pick, not fromSearch: a resolved address search and a
+  // rail-row click already do their own, more precise flyTo to the exact
+  // point/school, and flying twice would just fight itself.
+  if(!fromSearch && codigo){
+    const marker = state.cityMarkersData.features.find(f=>f.properties.concello_codigo===codigo);
+    if(marker) map.flyTo({center: marker.geometry.coordinates, zoom: 12.5, duration: 900});
+  }
 }
 function updateCatchmentHighlight(){
   if(!map.getLayer("catchments-fill")) return;
@@ -1010,6 +1089,9 @@ function parseEnsinanzas(raw){
 // to a point on the map rather than a browsable result.
 function showSearchResult(lngLat, hits, resolvedAddress){
   clearResult();
+  // A brand-new search starts fresh -- any "back" target left over from
+  // an earlier drill-down no longer applies to this result.
+  state.previousMatch = null;
   state.resultMarker = new maplibregl.Marker({element:makeResultPinEl(), anchor:"bottom"})
     .setLngLat(lngLat).addTo(map);
 
