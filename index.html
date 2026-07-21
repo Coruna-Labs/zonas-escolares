@@ -104,39 +104,49 @@
   .pop-link{font-size:11px;color:var(--ink);text-decoration:underline;text-underline-offset:2px}
   .pop-warn{color:var(--error);font-weight:600}
 
-  /* ---------- Docked panel — city browse ---------- */
-  .panel{position:absolute;z-index:20;background:var(--panel);border:1px solid var(--hairline);
-    box-shadow:0 1px 2px rgba(0,0,0,.03),0 10px 30px rgba(0,0,0,.07);transition:transform .25s ease}
+  /* ---------- Rail: permanent, always visible -- browse + filter surface ----------
+     Retired the old slide-in docked panel in favor of this. The panel opened
+     transiently for one city or one search result; the rail is always there
+     and just filters its own contents, which is what let the legend move in
+     as real toggle controls (see .legend-toggle below) instead of a passive
+     floating key. */
+  .rail{position:absolute;z-index:15;background:var(--panel);border:1px solid var(--hairline);
+    box-shadow:0 1px 2px rgba(0,0,0,.03),0 10px 30px rgba(0,0,0,.07);
+    display:flex;flex-direction:column;overflow:hidden}
   @media (min-width:720px){
-    .panel{top:14px;right:14px;bottom:14px;width:320px;border-radius:12px;transform:translateX(120%)}
-    .panel.open{transform:translateX(0)}
+    .rail{top:14px;right:14px;bottom:14px;width:300px;border-radius:12px}
   }
   @media (max-width:719px){
-    .panel{left:0;right:0;bottom:0;max-height:64vh;border-radius:12px 12px 0 0;transform:translateY(100%)}
-    .panel.open{transform:translateY(0)}
+    .rail{left:0;right:0;bottom:0;height:40vh;border-radius:12px 12px 0 0}
   }
-  .panel__inner{padding:18px;overflow-y:auto;height:100%}
-  .panel__close{position:absolute;top:10px;right:10px;background:none;border:none;font-size:1.2rem;
-    line-height:1;color:var(--faint);cursor:pointer;padding:4px 8px;z-index:2}
-  .panel__close:hover{color:var(--ink)}
-  .panel__title{margin:0 30px 2px 0;font-size:16px;font-weight:660;color:var(--ink)}
-  .panel__subtitle{margin:0 0 16px;font-size:11.5px;color:var(--muted);font-weight:600}
-  .panel__school{padding:10px 0;border-top:1px solid var(--hairline)}
-  .panel__school:first-of-type{border-top:none}
-  .panel__school-name{font-size:12.5px;font-weight:660;color:var(--ink);margin:0 0 4px}
-  .panel__school-meta{font-size:11px;color:var(--muted);margin:0 0 5px}
-  .panel__school-tags{display:flex;gap:4px;flex-wrap:wrap;margin:0 0 5px}
-  .panel__school a{font-size:11px;color:var(--muted);text-decoration:underline;text-underline-offset:2px}
-  .panel__note{margin-top:16px;padding-top:12px;border-top:1px solid var(--hairline);
-    font-size:11px;color:var(--faint);line-height:1.45}
+  .rail__legend{display:flex;flex-wrap:wrap;gap:5px;padding:12px 12px 10px;border-bottom:1px solid var(--hairline)}
+  .legend-toggle{display:flex;align-items:center;gap:5px;background:none;border:1px solid var(--hairline);
+    border-radius:999px;padding:4px 9px 4px 6px;font:inherit;font-size:10.5px;font-weight:600;
+    color:var(--ink);cursor:pointer;transition:opacity .15s,border-color .15s}
+  .legend-toggle:hover{border-color:var(--rest)}
+  .legend-toggle.off{opacity:.4}
+  .legend-dot{width:8px;height:8px;border-radius:2px;flex:0 0 auto}
 
-  /* ---------- Legend: ensinanza color key ---------- */
-  .legend{position:absolute;left:14px;bottom:78px;z-index:5;background:var(--panel);
-    border:1px solid var(--hairline);border-radius:10px;padding:9px 11px;
-    box-shadow:0 1px 2px rgba(0,0,0,.03),0 8px 22px rgba(0,0,0,.07)}
-  .legend-row{display:flex;align-items:center;gap:7px;font-size:10.5px;color:var(--muted);
-    padding:2px 0}
-  .legend-dot{width:9px;height:9px;border-radius:3px;flex:0 0 auto}
+  .rail__status{display:flex;align-items:baseline;justify-content:space-between;gap:8px;
+    padding:10px 14px;border-bottom:1px solid var(--hairline)}
+  .rail__status .count{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .rail__status .reset{font-size:10.5px;color:var(--faint);cursor:pointer;text-decoration:underline;
+    text-underline-offset:2px;visibility:hidden;background:none;border:none;font-family:inherit;padding:0}
+  .rail__status .reset.show{visibility:visible}
+  .rail__status .reset:hover{color:var(--ink)}
+
+  .rail__scroll{overflow-y:auto;flex:1;padding:6px}
+  .rail__group{padding:9px 8px 4px;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--faint);font-weight:700}
+  .rail__school{display:flex;align-items:flex-start;gap:8px;padding:7px 8px;border-radius:8px;cursor:pointer}
+  .rail__school:hover{background:#f4f5f6}
+  .rail__school.hi{background:#f0f1f2}
+  .rail__pill{width:9px;height:9px;border-radius:2px;flex:0 0 auto;margin-top:3px}
+  .rail__school-body{min-width:0;flex:1}
+  .rail__school-name{font-size:12px;font-weight:660;color:var(--ink);margin:0;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .rail__school-tags{display:flex;gap:3px;flex-wrap:wrap;margin:3px 0 0}
+  .rail__empty{padding:20px 14px;font-size:12px;color:var(--faint);text-align:center}
 
   /* ---------- Search-result pin (distinct from city markers) ---------- */
   .result-pin{width:13px;height:13px;border-radius:50% 50% 50% 0;background:var(--ink);
@@ -151,7 +161,6 @@
   @media (max-width:640px){
     .masthead{width:100%;max-width:none}
     .maplibregl-ctrl-bottom-left{display:none}
-    .legend{display:none}
   }
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -186,10 +195,13 @@
   </div>
 </div>
 
-<div class="legend" id="legend"></div>
-
-<aside class="panel" aria-live="polite">
-  <div class="panel__inner"></div>
+<aside class="rail" aria-label="Centros">
+  <div class="rail__legend" id="rail-legend"></div>
+  <div class="rail__status">
+    <span class="count" id="rail-count"></span>
+    <button class="reset" id="rail-reset"></button>
+  </div>
+  <div class="rail__scroll" id="rail-list"></div>
 </aside>
 
 <div class="toast" id="toast"></div>
@@ -197,10 +209,12 @@
 <script>
 /* ==========================================================================
    MisEducativos — Coruña Labs
-   Built from map-template. Rail deliberately omitted for this tool: city
-   markers on the Galicia-wide overview + the inline search bar do that job
-   instead (see project discussion — a persistent grouped list would have
-   been a third redundant surface on top of those two).
+   Built from map-template. The rail is permanent -- not the optional,
+   collapsible thing the template treats it as -- because it's the primary
+   browse/filter surface here: city select, address search, and the
+   ensinanza-type toggles all narrow the same always-visible list rather
+   than opening a separate transient panel (an earlier draft had one; see
+   project discussion for why it got retired in favor of this).
    ========================================================================== */
 
 /* ---------- TOOL-SPECIFIC: strings ---------- */
@@ -211,10 +225,12 @@ const I18N = {
        allCities:"Todas as zonas", searchPlaceholder:"Busca un enderezo…",
        notCovered:(loc)=>`${loc} aínda non está cuberto — por agora só nestes 11 concellos.`,
        noMatch:"Non se atopou ese enderezo.",
-       schoolsIn:(n,count)=>`${count} centro${count===1?"":"s"} en ${n}`,
-       panelNote:"Fai clic nun centro do mapa para máis detalle. Liga á ficha oficial da Xunta.",
        officialLink:"Ver ficha oficial",
-       resultTitle:"Resultado da busca", resultSubtitle:(addr)=>addr,
+       railCountAll:(n)=>`${n} centros en Galicia`,
+       railCountCity:(n,city)=>`${n} centro${n===1?"":"s"} en ${city}`,
+       railCountSearch:(n)=>`${n} resultado${n===1?"":"s"}`,
+       railEmpty:"Ningún centro coincide coa selección.",
+       railReset:"Ver todos",
        ensinanzaNames:{"22":"Infantil","25":"Primaria","24":"ESO","29":"Bacharelato"} },
   es:{ title:"MisEducativos", sub:"Áreas de influencia de los centros educativos de Galicia.",
        note:"Disponible en 11 concellos, por ahora.",
@@ -222,10 +238,12 @@ const I18N = {
        allCities:"Todas las zonas", searchPlaceholder:"Busca una dirección…",
        notCovered:(loc)=>`${loc} aún no está cubierto — por ahora solo en estos 11 concellos.`,
        noMatch:"No se encontró esa dirección.",
-       schoolsIn:(n,count)=>`${count} centro${count===1?"":"s"} en ${n}`,
-       panelNote:"Haz clic en un centro del mapa para más detalle. Enlaza a la ficha oficial de la Xunta.",
        officialLink:"Ver ficha oficial",
-       resultTitle:"Resultado de la búsqueda", resultSubtitle:(addr)=>addr,
+       railCountAll:(n)=>`${n} centros en Galicia`,
+       railCountCity:(n,city)=>`${n} centro${n===1?"":"s"} en ${city}`,
+       railCountSearch:(n)=>`${n} resultado${n===1?"":"s"}`,
+       railEmpty:"Ningún centro coincide con la selección.",
+       railReset:"Ver todos",
        ensinanzaNames:{"22":"Infantil","25":"Primaria","24":"ESO","29":"Bachillerato"} },
   en:{ title:"MisEducativos", sub:"School catchment zones across Galicia.",
        note:"Available in 11 concellos, for now.",
@@ -233,10 +251,12 @@ const I18N = {
        allCities:"All zones", searchPlaceholder:"Search an address…",
        notCovered:(loc)=>`${loc} isn't covered yet — only these 11 concellos, for now.`,
        noMatch:"Couldn't find that address.",
-       schoolsIn:(n,count)=>`${count} school${count===1?"":"s"} in ${n}`,
-       panelNote:"Click a school on the map for more detail. Links to the Xunta's official page.",
        officialLink:"View official page",
-       resultTitle:"Search result", resultSubtitle:(addr)=>addr,
+       railCountAll:(n)=>`${n} schools in Galicia`,
+       railCountCity:(n,city)=>`${n} school${n===1?"":"s"} in ${city}`,
+       railCountSearch:(n)=>`${n} result${n===1?"":"s"}`,
+       railEmpty:"No school matches this selection.",
+       railReset:"See all",
        ensinanzaNames:{"22":"Infantil","25":"Primary","24":"ESO","29":"Bacharelato"} },
 };
 
@@ -286,11 +306,11 @@ function applyText(){
   if(toast.style.display==="block" && !toast.classList.contains("err")) toast.textContent=t.loading;
   renderCityTrigger();
   renderCityMenu();
-  renderLegend();
-  if(panel.classList.contains("open") && state.selectedCity) openCityPanel(state.selectedCity);
+  renderRailLegend();
+  renderRail();
 }
-// Called once state/panel (declared further below) exist -- see bottom of
-// this script, right after their declarations, not here at top-level.
+// Called once state/rail-related data (declared further below) exist --
+// see bottom of this script, right after their declarations, not here.
 
 document.getElementById("langs").addEventListener("click",(e)=>{
   const b=e.target.closest("button"); if(!b) return;
@@ -323,13 +343,17 @@ new ResizeObserver(() => map.resize()).observe(document.getElementById("map"));
 
 /* ---------- TOOL-SPECIFIC: state ---------- */
 const state = {
-  selectedCity: null,       // concello_codigo or null ("Toda Galicia")
-  catchments: null,         // parsed GeoJSON, kept in memory for panel filtering + hit-testing
+  selectedCity: null,       // concello_codigo or null ("Todas as zonas")
+  catchments: null,         // parsed GeoJSON, kept in memory for rail rendering + hit-testing
   cityMarkersData: null,    // parsed city_markers.geojson
   cityGroups: [],           // [{provincia_nome, cities:[{concello_codigo, concello_nome, school_count}]}]
   markerEls: {},            // concello_codigo -> {marker, el}
   resultMarker: null,
   resultPopup: null,
+  allSchools: [],           // built once from state.catchments -- one row per school (deduped
+                            // across its 1-2 catchment features), for the rail
+  activeEnsinanzas: new Set(["22","25","24","29"]), // all on by default; the legend toggles these
+  searchMatchCodigos: null, // Set of school codigos from the last resolved search, or null
 };
 
 /* ---------- catchment paint expressions: category color x zoom x selection ---------- */
@@ -355,15 +379,23 @@ const state = {
 // a colored outline reads fine even stacked a dozen deep -- that's what
 // actually carries the category signal while browsing; fill lighting up
 // is reserved for "here's the one city you're looking at."
-function fillOpacityExpr(){
+// Which condition decides "highlighted vs faint": a resolved search wins
+// over a plain city selection, matching the rail (narrowest filter shows).
+// A search match is per-school (codigo); a city selection is per-concello.
+function highlightCondition(){
+  if(state.searchMatchCodigos && state.searchMatchCodigos.size){
+    return ["in", ["get","codigo"], ["literal", [...state.searchMatchCodigos]]];
+  }
   const sel = state.selectedCity || "__none__";
-  const byCity = ["case", ["==",["get","concello_codigo"], sel], 0.25, 0.05];
-  return ["interpolate", ["linear"], ["zoom"], 9, 0, 10.5, byCity];
+  return ["==", ["get","concello_codigo"], sel];
+}
+function fillOpacityExpr(){
+  const byMatch = ["case", highlightCondition(), 0.25, 0.05];
+  return ["interpolate", ["linear"], ["zoom"], 9, 0, 10.5, byMatch];
 }
 function lineOpacityExpr(){
-  const sel = state.selectedCity || "__none__";
-  const byCity = ["case", ["==",["get","concello_codigo"], sel], 0.9, 0.65];
-  return ["interpolate", ["linear"], ["zoom"], 9, 0, 10.5, byCity];
+  const byMatch = ["case", highlightCondition(), 0.9, 0.65];
+  return ["interpolate", ["linear"], ["zoom"], 9, 0, 10.5, byMatch];
 }
 function fillColorExpr(){
   return ["match", ["get","dominant_ensinanza_codigo"],
@@ -374,11 +406,16 @@ function fillColorExpr(){
     "#16181a"];
 }
 function lineWidthExpr(){
-  const sel = state.selectedCity || "__none__";
   // Unselected width bumped up from the original 0.6 -- the outline is
   // now the primary way to read the category color while browsing (see
   // fillOpacityExpr above), so it needs to actually be legible on its own.
-  return ["case", ["==",["get","concello_codigo"], sel], 1.8, 1.0];
+  return ["case", highlightCondition(), 1.8, 1.0];
+}
+// Ensinanza-type toggles are a hard show/hide, not a fade -- separate from
+// the highlight/opacity logic above. Applied via map.setFilter, not paint,
+// since "hidden" should mean "doesn't render at all," not "very faint."
+function ensinanzaFilterExpr(){
+  return ["in", ["get","dominant_ensinanza_codigo"], ["literal", [...state.activeEnsinanzas]]];
 }
 
 /* ---------- TOOL-SPECIFIC: data + layers ---------- */
@@ -419,6 +456,7 @@ whenStyleReady(async () => {
     map.addSource("catchments", {type:"geojson", data:catchments});
     map.addLayer({
       id:"catchments-fill", type:"fill", source:"catchments",
+      filter: ensinanzaFilterExpr(),
       paint:{
         "fill-color": fillColorExpr(),
         "fill-opacity": fillOpacityExpr(),
@@ -426,6 +464,7 @@ whenStyleReady(async () => {
     });
     map.addLayer({
       id:"catchments-line", type:"line", source:"catchments",
+      filter: ensinanzaFilterExpr(),
       paint:{
         "line-color": fillColorExpr(),
         "line-width": lineWidthExpr(),
@@ -441,10 +480,12 @@ whenStyleReady(async () => {
     map.on("mouseleave","catchments-fill",()=>map.getCanvas().style.cursor="");
 
     buildCityGroups();
+    buildSchoolIndex();
     renderCityMenu();
     renderCityMarkers();
     updateCatchmentHighlight();
-    renderLegend();
+    renderRailLegend();
+    renderRail();
 
     hideToast();
   }catch(e){
@@ -453,14 +494,37 @@ whenStyleReady(async () => {
   }
 });
 
-function renderLegend(){
-  const t = I18N[lang];
-  const order = ["22","25","24","29"];
-  document.getElementById("legend").innerHTML = order.map(code => `
-    <div class="legend-row">
-      <span class="legend-dot" style="background:${ENSINANZA_COLORS[code]}"></span>
-      <span>${t.ensinanzaNames[code]}</span>
-    </div>`).join("");
+// Same priority as ENSINANZA_PRIORITY in scripts/04_dedupe_reproject.py --
+// duplicated here deliberately rather than shared, since one is Python and
+// one is JS; keep both in sync if the priority ever changes.
+const ENSINANZA_PRIORITY = ["22","25","24","29"];
+function dominantEnsinanza(codeSet){
+  for(const code of ENSINANZA_PRIORITY) if(codeSet.has(code)) return code;
+  return [...codeSet].sort()[0];
+}
+
+// One row per school (a school can be 1-2 catchment features -- see the
+// multi-geometry note in 04_dedupe_reproject.py -- but the rail shows one
+// row per school, not per feature). Built once from the real parsed
+// GeoJSON in memory, not from queryRenderedFeatures, so no stringified-
+// property gotcha here (see parseEnsinanzas further down for that).
+function buildSchoolIndex(){
+  const byCode = new Map();
+  for(const f of state.catchments.features){
+    const p = f.properties;
+    if(!byCode.has(p.codigo)){
+      byCode.set(p.codigo, {
+        codigo:p.codigo, nome:p.nome, detail_url:p.detail_url,
+        concello_codigo:p.concello_codigo, concello_nome:p.concello_nome,
+        ensinanzaCodes:new Set(),
+      });
+    }
+    const entry = byCode.get(p.codigo);
+    for(const e of p.ensinanzas) entry.ensinanzaCodes.add(e.codigo);
+  }
+  state.allSchools = [...byCode.values()]
+    .map(s => ({...s, dominant: dominantEnsinanza(s.ensinanzaCodes)}))
+    .sort((a,b)=>a.nome.localeCompare(b.nome));
 }
 
 function buildCityGroups(){
@@ -477,6 +541,122 @@ function buildCityGroups(){
       cities: cities.sort((a,b)=>a.concello_nome.localeCompare(b.concello_nome)),
     }));
 }
+
+/* ---------- rail: legend (now also the ensinanza-type toggles) ---------- */
+const railLegendEl = document.getElementById("rail-legend");
+function renderRailLegend(){
+  const t = I18N[lang];
+  railLegendEl.innerHTML = ENSINANZA_PRIORITY.map(code => `
+    <button class="legend-toggle${state.activeEnsinanzas.has(code)?"":" off"}" data-code="${code}">
+      <span class="legend-dot" style="background:${ENSINANZA_COLORS[code]}"></span>${t.ensinanzaNames[code]}
+    </button>`).join("");
+}
+railLegendEl.addEventListener("click",(e)=>{
+  const btn = e.target.closest(".legend-toggle"); if(!btn) return;
+  const code = btn.dataset.code;
+  if(state.activeEnsinanzas.has(code)) state.activeEnsinanzas.delete(code);
+  else state.activeEnsinanzas.add(code);
+  renderRailLegend();
+  renderRail();
+  updateEnsinanzaFilter();
+});
+
+/* ---------- rail: the list itself --------
+   Narrowest filter wins, same priority as the map's highlightCondition:
+   a resolved search > a selected city > everything, grouped by city. The
+   ensinanza toggle applies on top of whichever of those is active. */
+const railListEl = document.getElementById("rail-list");
+const railCountEl = document.getElementById("rail-count");
+const railResetEl = document.getElementById("rail-reset");
+
+function visibleSchools(){
+  return state.allSchools.filter(s => state.activeEnsinanzas.has(s.dominant));
+}
+
+function renderRail(){
+  const t = I18N[lang];
+  // applyText() runs once before the data fetch resolves (see bottom of
+  // this script) -- without this guard the rail would flash "no school
+  // matches" during that brief window instead of just staying blank while
+  // the loading toast is up.
+  if(!state.catchments){ railListEl.innerHTML = ""; railCountEl.textContent = ""; return; }
+  let schools = visibleSchools();
+  let countText, showReset = false;
+
+  if(state.searchMatchCodigos && state.searchMatchCodigos.size){
+    schools = schools.filter(s => state.searchMatchCodigos.has(s.codigo));
+    countText = t.railCountSearch(schools.length);
+    showReset = true;
+  } else if(state.selectedCity){
+    schools = schools.filter(s => s.concello_codigo === state.selectedCity);
+    const cityName = state.cityMarkersData.features
+      .find(f=>f.properties.concello_codigo===state.selectedCity)?.properties.concello_nome || "";
+    countText = t.railCountCity(schools.length, cityName);
+    showReset = true;
+  } else {
+    countText = t.railCountAll(schools.length);
+  }
+
+  railCountEl.textContent = countText;
+  railResetEl.textContent = t.railReset;
+  railResetEl.classList.toggle("show", showReset);
+
+  if(!schools.length){
+    railListEl.innerHTML = `<p class="rail__empty">${t.railEmpty}</p>`;
+    return;
+  }
+
+  // Grouped by city only in the fully-resting state -- once a city or a
+  // search has narrowed things, every row already shares that context, so
+  // a repeated group header would just be noise.
+  const grouped = !state.selectedCity && !(state.searchMatchCodigos && state.searchMatchCodigos.size);
+  if(!grouped){
+    railListEl.innerHTML = schools.map(schoolRowHTML).join("");
+    return;
+  }
+  const byCity = new Map();
+  for(const s of schools){
+    if(!byCity.has(s.concello_nome)) byCity.set(s.concello_nome, []);
+    byCity.get(s.concello_nome).push(s);
+  }
+  const cityNames = [...byCity.keys()].sort((a,b)=>a.localeCompare(b));
+  railListEl.innerHTML = cityNames.map(city => `
+    <div class="rail__group">${city}</div>
+    ${byCity.get(city).map(schoolRowHTML).join("")}
+  `).join("");
+}
+
+function schoolRowHTML(s){
+  const tags = [...s.ensinanzaCodes].map(c=>{
+    const t = I18N[lang];
+    return `<span class="pop-tag">${t.ensinanzaNames[c]}</span>`;
+  }).join("");
+  return `<div class="rail__school" data-codigo="${s.codigo}">
+    <span class="rail__pill" style="background:${ENSINANZA_COLORS[s.dominant]}"></span>
+    <div class="rail__school-body">
+      <p class="rail__school-name">${s.nome}</p>
+      <div class="rail__school-tags">${tags}</div>
+    </div>
+  </div>`;
+}
+
+railListEl.addEventListener("click",(e)=>{
+  const row = e.target.closest(".rail__school"); if(!row) return;
+  const school = state.allSchools.find(s=>s.codigo===row.dataset.codigo);
+  if(!school) return;
+  clearResult();
+  state.searchMatchCodigos = new Set([school.codigo]);
+  selectCity(school.concello_codigo, {fromSearch:true});
+  const feat = state.catchments.features.find(f=>f.properties.codigo===school.codigo);
+  if(feat){
+    const ring = feat.geometry.type === "Polygon" ? feat.geometry.coordinates[0] : feat.geometry.coordinates[0][0];
+    const lng = ring.reduce((s,c)=>s+c[0],0)/ring.length;
+    const lat = ring.reduce((s,c)=>s+c[1],0)/ring.length;
+    map.flyTo({center:[lng,lat], zoom:15.5, duration:900});
+  }
+});
+
+railResetEl.addEventListener("click", closeEverything);
 
 /* ---------- city markers (DOM, always on the map, fade out on deep zoom) ---------- */
 function renderCityMarkers(){
@@ -509,15 +689,21 @@ function updateMarkerOpacity(){
 }
 
 /* ---------- city selection: shared state for markers + dropdown + search ---------- */
-function selectCity(codigo, {openPanel=true} = {}){
+// {fromSearch}: a resolved search sets the city too (keeps the dropdown in
+// sync, per the "these don't relate" concern from earlier -- turns out
+// they should, a little), but it must NOT clear searchMatchCodigos, since
+// that's the very narrowing the search just produced. An explicit user
+// pick (marker click, dropdown choice) means "browse this city broadly,"
+// so it clears any active search narrowing instead.
+function selectCity(codigo, {fromSearch=false} = {}){
   state.selectedCity = codigo;
+  if(!fromSearch) state.searchMatchCodigos = null;
   renderCityTrigger();
   updateCatchmentHighlight();
   for(const [c,{el}] of Object.entries(state.markerEls)){
     el.classList.toggle("active", c===codigo);
   }
-  if(codigo && openPanel) openCityPanel(codigo);
-  if(!codigo) closePanel();
+  renderRail();
   syncURL({city: codigo || ""});
 }
 function updateCatchmentHighlight(){
@@ -525,6 +711,11 @@ function updateCatchmentHighlight(){
   map.setPaintProperty("catchments-fill","fill-opacity", fillOpacityExpr());
   map.setPaintProperty("catchments-line","line-opacity", lineOpacityExpr());
   map.setPaintProperty("catchments-line","line-width", lineWidthExpr());
+}
+function updateEnsinanzaFilter(){
+  if(!map.getLayer("catchments-fill")) return;
+  map.setFilter("catchments-fill", ensinanzaFilterExpr());
+  map.setFilter("catchments-line", ensinanzaFilterExpr());
 }
 
 /* ---------- city trigger + dropdown ---------- */
@@ -574,50 +765,12 @@ cityMenu.addEventListener("click",(e)=>{
 document.addEventListener("click",(e)=>{
   if(!e.target.closest(".searchbar")) closeCityMenu();
 });
-document.addEventListener("keydown",(e)=>{ if(e.key==="Escape"){ closeCityMenu(); closePanel(); } });
+document.addEventListener("keydown",(e)=>{ if(e.key==="Escape") closeCityMenu(); });
 
-/* ---------- SHARED-ish: docked panel — city browse ---------- */
-const panel = document.querySelector(".panel");
-function openPanel(html){
-  panel.querySelector(".panel__inner").innerHTML =
-    `<button class="panel__close" aria-label="×">&times;</button>` + html;
-  panel.querySelector(".panel__close").addEventListener("click", closeEverything);
-  panel.classList.add("open");
-}
-function closePanel(){ panel.classList.remove("open"); }
-
-// Now that state/panel/cityMenu etc. all exist, do the first text pass and
+// Now that state/cityMenu/rail etc. all exist, do the first text pass and
 // show the loading toast (map data itself arrives async in map.on("load")).
 applyText();
 showToast(I18N[lang].loading,false);
-
-function openCityPanel(codigo){
-  const t = I18N[lang];
-  const feats = state.catchments.features.filter(f=>f.properties.concello_codigo===codigo);
-  const byCode = new Map();
-  for(const f of feats){
-    const p = f.properties;
-    if(!byCode.has(p.codigo)) byCode.set(p.codigo, {nome:p.nome, detail_url:p.detail_url, ensinanzas:new Map()});
-    for(const e of p.ensinanzas) byCode.get(p.codigo).ensinanzas.set(e.codigo, e.nome);
-  }
-  const schools = [...byCode.values()].sort((a,b)=>a.nome.localeCompare(b.nome));
-  const provincia_nome = feats[0]?.properties.provincia_nome || "";
-  const concello_nome = feats[0]?.properties.concello_nome || "";
-
-  const rows = schools.map(s => `
-    <div class="panel__school">
-      <p class="panel__school-name">${s.nome}</p>
-      <div class="panel__school-tags">${[...s.ensinanzas.values()].map(n=>`<span class="pop-tag">${n}</span>`).join("")}</div>
-      <a href="${s.detail_url}" target="_blank" rel="noopener">${t.officialLink} ↗</a>
-    </div>`).join("");
-
-  openPanel(`
-    <p class="panel__title">${concello_nome}</p>
-    <p class="panel__subtitle">${provincia_nome} · ${t.schoolsIn(concello_nome, schools.length)}</p>
-    ${rows}
-    <p class="panel__note">${t.panelNote}</p>
-  `);
-}
 
 /* ---------- search: suggest-as-you-type, geocode, point-in-polygon ---------- */
 // Same Xunta ArcGIS instance we already trust for the exact-match geocode
@@ -768,11 +921,20 @@ function makeResultPinEl(){
   return el;
 }
 
-// Search results go in the docked panel (same surface city-browsing
-// uses), not a small popup -- a popup only has room for 1-3 facts and a
-// matched school has more to say than that. The popup stays reserved for
-// the honest "not covered" message, which really is just a short note
-// tied to a point on the map.
+// MapLibre stringifies non-primitive GeoJSON properties (arrays/objects)
+// for features that come back from queryRenderedFeatures/click events --
+// vector tiles have no native way to hold nested structures, so
+// "ensinanzas" arrives as a JSON string there, not the real array it is
+// on state.catchments.features (which the rail reads directly, no tiling
+// involved). Found this the hard way: openSchoolPopup throws without it.
+function parseEnsinanzas(raw){
+  return typeof raw === "string" ? JSON.parse(raw) : raw;
+}
+
+// A resolved search narrows the rail + map to the matched school(s) --
+// same surface as everything else now, not a separate panel. The popup
+// stays reserved for the honest "not covered" message, a short note tied
+// to a point on the map rather than a browsable result.
 function showSearchResult(lngLat, hits, resolvedAddress){
   clearResult();
   state.resultMarker = new maplibregl.Marker({element:makeResultPinEl(), anchor:"bottom"})
@@ -782,41 +944,11 @@ function showSearchResult(lngLat, hits, resolvedAddress){
     const t = I18N[lang];
     const html = `<p class="pop-title pop-warn">${t.notCovered(extractLocality(resolvedAddress))}</p>`;
     state.resultPopup = new maplibregl.Popup({closeButton:true, offset:12}).setLngLat(lngLat).setHTML(html).addTo(map);
+    selectCity(null); // also resets searchMatchCodigos, since fromSearch defaults false
     return;
   }
-  selectCity(hits[0].properties.concello_codigo, {openPanel:false});
-  openSearchResultPanel(hits, resolvedAddress);
-}
-
-// MapLibre stringifies non-primitive GeoJSON properties (arrays/objects)
-// for features that come back from queryRenderedFeatures/click events --
-// vector tiles have no native way to hold nested structures, so
-// "ensinanzas" arrives as a JSON string there, not the real array it is
-// on state.catchments.features (which openCityPanel reads directly, no
-// tiling involved). Found this the hard way: openSchoolPopup and
-// openSearchResultPanel both throw on .map() without this.
-function parseEnsinanzas(raw){
-  return typeof raw === "string" ? JSON.parse(raw) : raw;
-}
-
-function openSearchResultPanel(feats, resolvedAddress){
-  const t = I18N[lang];
-  const rows = feats.map(f=>{
-    const p = f.properties;
-    const tags = parseEnsinanzas(p.ensinanzas).map(e=>`<span class="pop-tag">${e.nome}</span>`).join("");
-    return `<div class="panel__school">
-      <p class="panel__school-name">${p.nome}</p>
-      <p class="panel__school-meta">${p.concello_nome}</p>
-      <div class="panel__school-tags">${tags}</div>
-      <a href="${p.detail_url}" target="_blank" rel="noopener">${t.officialLink} ↗</a>
-    </div>`;
-  }).join("");
-
-  openPanel(`
-    <p class="panel__title">${t.resultTitle}</p>
-    <p class="panel__subtitle">${t.resultSubtitle(resolvedAddress)}</p>
-    ${rows}
-  `);
+  state.searchMatchCodigos = new Set(hits.map(f=>f.properties.codigo));
+  selectCity(hits[0].properties.concello_codigo, {fromSearch:true});
 }
 
 // Direct click on a catchment shape on the map -- unlike search, this
