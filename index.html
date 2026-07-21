@@ -141,7 +141,8 @@
   .rail__school{display:flex;align-items:flex-start;gap:8px;padding:7px 8px;border-radius:8px;cursor:pointer}
   .rail__school:hover{background:#f4f5f6}
   .rail__school.hi{background:#f0f1f2}
-  .rail__pill{width:9px;height:9px;border-radius:2px;flex:0 0 auto;margin-top:3px}
+  .rail__chips{display:flex;flex-direction:column;gap:3px;flex:0 0 auto;margin-top:3px}
+  .rail__chip{width:9px;height:9px;border-radius:2px;flex:0 0 auto}
   .rail__school-body{min-width:0;flex:1}
   .rail__school-name{font-size:12px;font-weight:660;color:var(--ink);margin:0;
     overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -379,6 +380,16 @@ const state = {
 // a colored outline reads fine even stacked a dozen deep -- that's what
 // actually carries the category signal while browsing; fill lighting up
 // is reserved for "here's the one city you're looking at."
+//
+// A school offering more than one ensinanza used to get exactly one fill
+// color, picked by a fixed priority -- which meant Bacharelato (almost
+// always paired with ESO) was buried under the ESO color for 55 of 57
+// schools that actually offer it. Fixed by dropping the single-color-per-
+// polygon idea entirely: fill goes neutral (just area wash), and each
+// ensinanza type gets its own thin ring outline, offset outward from the
+// others so a multi-type school shows multiple distinct rings instead of
+// one color winning. See RING_OFFSETS below.
+//
 // Which condition decides "highlighted vs faint": a resolved search wins
 // over a plain city selection, matching the rail (narrowest filter shows).
 // A search match is per-school (codigo); a city selection is per-concello.
@@ -397,25 +408,39 @@ function lineOpacityExpr(){
   const byMatch = ["case", highlightCondition(), 0.9, 0.65];
   return ["interpolate", ["linear"], ["zoom"], 9, 0, 10.5, byMatch];
 }
-function fillColorExpr(){
-  return ["match", ["get","dominant_ensinanza_codigo"],
-    "22", ENSINANZA_COLORS["22"],
-    "25", ENSINANZA_COLORS["25"],
-    "24", ENSINANZA_COLORS["24"],
-    "29", ENSINANZA_COLORS["29"],
-    "#16181a"];
-}
 function lineWidthExpr(){
   // Unselected width bumped up from the original 0.6 -- the outline is
   // now the primary way to read the category color while browsing (see
   // fillOpacityExpr above), so it needs to actually be legible on its own.
   return ["case", highlightCondition(), 1.8, 1.0];
 }
-// Ensinanza-type toggles are a hard show/hide, not a fade -- separate from
-// the highlight/opacity logic above. Applied via map.setFilter, not paint,
-// since "hidden" should mean "doesn't render at all," not "very faint."
-function ensinanzaFilterExpr(){
-  return ["in", ["get","dominant_ensinanza_codigo"], ["literal", [...state.activeEnsinanzas]]];
+// Small, fixed per-pixel offsets so the 4 type rings sit concentrically
+// rather than drawing on top of each other.
+const RING_OFFSETS = { "22": 0, "25": 1.6, "24": 3.2, "29": 4.8 };
+
+// __fid-based filters (see buildFeatureIndex) rather than a MapLibre
+// property expression on "ensinanzas" -- that property is an array of
+// objects, and we already got burned once by MapLibre stringifying
+// non-primitive properties for tile-backed sources (see parseEnsinanzas).
+// __fid is a plain number we assign ourselves, so filtering by it is safe
+// regardless of how MapLibre internally encodes the richer properties.
+function fillFilterExpr(){
+  const visible = new Set();
+  for(const f of state.catchments.features){
+    if(f.properties.ensinanzas.some(e=>state.activeEnsinanzas.has(e.codigo))){
+      visible.add(f.properties.__fid);
+    }
+  }
+  return ["in", ["get","__fid"], ["literal", [...visible]]];
+}
+// Each ring layer's filter is fixed at creation (which features offer
+// this type at all); toggling that type on/off just flips the whole
+// layer's visibility instead of recomputing a filter.
+function ringFilterExpr(code){
+  const fids = state.catchments.features
+    .filter(f=>f.properties.ensinanzas.some(e=>e.codigo===code))
+    .map(f=>f.properties.__fid);
+  return ["in", ["get","__fid"], ["literal", fids]];
 }
 
 /* ---------- TOOL-SPECIFIC: data + layers ---------- */
@@ -439,6 +464,12 @@ whenStyleReady(async () => {
       fetch("data/catchments_galicia.geojson").then(r=>{if(!r.ok)throw new Error("catchments");return r.json();}),
       fetch("data/city_markers.geojson").then(r=>{if(!r.ok)throw new Error("markers");return r.json();}),
     ]);
+    // Plain numeric id per feature, assigned once here -- lets filter
+    // expressions target exact catchment shapes safely (a school can be
+    // 1-2 shapes; "codigo" alone isn't precise enough for the per-type
+    // ring filters below, which need feature-, not school-, granularity).
+    catchments.features.forEach((f,i) => { f.properties.__fid = i; });
+
     state.catchments = catchments;
     state.cityMarkersData = cityMarkers;
 
@@ -456,21 +487,29 @@ whenStyleReady(async () => {
     map.addSource("catchments", {type:"geojson", data:catchments});
     map.addLayer({
       id:"catchments-fill", type:"fill", source:"catchments",
-      filter: ensinanzaFilterExpr(),
+      filter: fillFilterExpr(),
       paint:{
-        "fill-color": fillColorExpr(),
+        "fill-color": "#16181a",
         "fill-opacity": fillOpacityExpr(),
       },
     });
-    map.addLayer({
-      id:"catchments-line", type:"line", source:"catchments",
-      filter: ensinanzaFilterExpr(),
-      paint:{
-        "line-color": fillColorExpr(),
-        "line-width": lineWidthExpr(),
-        "line-opacity": lineOpacityExpr(),
-      },
-    });
+    // One ring layer per ensinanza type instead of a single colored line
+    // -- see the big comment above highlightCondition() for why. Each
+    // layer's filter is fixed (which shapes offer this type, full stop);
+    // the toggle just flips the whole layer's visibility.
+    for(const code of ENSINANZA_PRIORITY){
+      map.addLayer({
+        id:`catchments-ring-${code}`, type:"line", source:"catchments",
+        filter: ringFilterExpr(code),
+        layout:{ visibility: state.activeEnsinanzas.has(code) ? "visible" : "none" },
+        paint:{
+          "line-color": ENSINANZA_COLORS[code],
+          "line-width": lineWidthExpr(),
+          "line-opacity": lineOpacityExpr(),
+          "line-offset": RING_OFFSETS[code],
+        },
+      });
+    }
     // Invisible, unfiltered twin of catchments-fill, queried only by
     // address search's hit-test -- found a real bug where searching an
     // address whose only covering school had its dominant ensinanza
@@ -505,14 +544,11 @@ whenStyleReady(async () => {
   }
 });
 
-// Same priority as ENSINANZA_PRIORITY in scripts/04_dedupe_reproject.py --
-// duplicated here deliberately rather than shared, since one is Python and
-// one is JS; keep both in sync if the priority ever changes.
+// Fixed display order for the 4 ensinanza types -- used for the ring
+// offsets, the legend, and each school's chip order. Not a "dominant type"
+// priority anymore (that idea is what this whole redesign moved away
+// from); just a consistent order to render things in.
 const ENSINANZA_PRIORITY = ["22","25","24","29"];
-function dominantEnsinanza(codeSet){
-  for(const code of ENSINANZA_PRIORITY) if(codeSet.has(code)) return code;
-  return [...codeSet].sort()[0];
-}
 
 // One row per school (a school can be 1-2 catchment features -- see the
 // multi-geometry note in 04_dedupe_reproject.py -- but the rail shows one
@@ -533,9 +569,7 @@ function buildSchoolIndex(){
     const entry = byCode.get(p.codigo);
     for(const e of p.ensinanzas) entry.ensinanzaCodes.add(e.codigo);
   }
-  state.allSchools = [...byCode.values()]
-    .map(s => ({...s, dominant: dominantEnsinanza(s.ensinanzaCodes)}))
-    .sort((a,b)=>a.nome.localeCompare(b.nome));
+  state.allSchools = [...byCode.values()].sort((a,b)=>a.nome.localeCompare(b.nome));
 }
 
 function buildCityGroups(){
@@ -581,7 +615,10 @@ const railCountEl = document.getElementById("rail-count");
 const railResetEl = document.getElementById("rail-reset");
 
 function visibleSchools(){
-  return state.allSchools.filter(s => state.activeEnsinanzas.has(s.dominant));
+  // "Offers any currently active type," matching the map's fillFilterExpr
+  // -- not "its one dominant type is active," which is the old single-
+  // color-per-school idea this whole redesign moved away from.
+  return state.allSchools.filter(s => [...s.ensinanzaCodes].some(c => state.activeEnsinanzas.has(c)));
 }
 
 function renderRail(){
@@ -644,12 +681,16 @@ function renderRail(){
 }
 
 function schoolRowHTML(s){
-  const tags = [...s.ensinanzaCodes].map(c=>{
-    const t = I18N[lang];
-    return `<span class="pop-tag">${t.ensinanzaNames[c]}</span>`;
-  }).join("");
+  const t = I18N[lang];
+  // One small chip per ensinanza offered, in the fixed priority order,
+  // not one dominant color -- same reasoning as the map's ring outlines:
+  // a school offering ESO+Bacharelato should visibly have both, not just
+  // whichever one a priority order happened to pick.
+  const codes = ENSINANZA_PRIORITY.filter(c => s.ensinanzaCodes.has(c));
+  const chips = codes.map(c => `<span class="rail__chip" style="background:${ENSINANZA_COLORS[c]}"></span>`).join("");
+  const tags = codes.map(c => `<span class="pop-tag">${t.ensinanzaNames[c]}</span>`).join("");
   return `<div class="rail__school" data-codigo="${s.codigo}">
-    <span class="rail__pill" style="background:${ENSINANZA_COLORS[s.dominant]}"></span>
+    <div class="rail__chips">${chips}</div>
     <div class="rail__school-body">
       <p class="rail__school-name">${s.nome}</p>
       <div class="rail__school-tags">${tags}</div>
@@ -726,13 +767,20 @@ function selectCity(codigo, {fromSearch=false} = {}){
 function updateCatchmentHighlight(){
   if(!map.getLayer("catchments-fill")) return;
   map.setPaintProperty("catchments-fill","fill-opacity", fillOpacityExpr());
-  map.setPaintProperty("catchments-line","line-opacity", lineOpacityExpr());
-  map.setPaintProperty("catchments-line","line-width", lineWidthExpr());
+  for(const code of ENSINANZA_PRIORITY){
+    map.setPaintProperty(`catchments-ring-${code}`,"line-opacity", lineOpacityExpr());
+    map.setPaintProperty(`catchments-ring-${code}`,"line-width", lineWidthExpr());
+  }
 }
 function updateEnsinanzaFilter(){
   if(!map.getLayer("catchments-fill")) return;
-  map.setFilter("catchments-fill", ensinanzaFilterExpr());
-  map.setFilter("catchments-line", ensinanzaFilterExpr());
+  map.setFilter("catchments-fill", fillFilterExpr());
+  // Each ring's own filter (which shapes offer that type) never changes --
+  // only whether the layer is shown at all does.
+  for(const code of ENSINANZA_PRIORITY){
+    map.setLayoutProperty(`catchments-ring-${code}`, "visibility",
+      state.activeEnsinanzas.has(code) ? "visible" : "none");
+  }
 }
 
 /* ---------- city trigger + dropdown ---------- */
