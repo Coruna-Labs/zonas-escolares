@@ -29,7 +29,6 @@
   .lab a:hover{color:var(--ink)}
   .masthead h1{font-size:23px;line-height:1.12;margin:0;font-weight:660;letter-spacing:-.015em}
   .masthead p.sub{font-size:12.5px;line-height:1.5;color:var(--muted);margin:9px 0 0;max-width:320px;pointer-events:none}
-  .masthead p.note{font-size:11.5px;color:var(--faint);margin:7px 0 0;font-style:italic;pointer-events:none}
 
   .langs{pointer-events:auto;display:flex;gap:2px;flex:0 0 auto;margin-top:2px}
   .langs button{background:none;border:none;font:inherit;font-size:11px;font-weight:600;
@@ -212,7 +211,6 @@
     </div>
   </div>
   <p class="sub" id="m-sub"></p>
-  <p class="sub note" id="m-note"></p>
 
   <div class="searchbar">
     <button class="seg-city placeholder" id="city-trigger" aria-haspopup="listbox" aria-expanded="false">
@@ -257,7 +255,6 @@
 /* ---------- TOOL-SPECIFIC: strings ---------- */
 const I18N = {
   gl:{ title:"MisEducativos", sub:"Áreas de influencia dos centros educativos de Galicia.",
-       note:"Dispoñible en 11 concellos, por agora.",
        loading:"Cargando…", error:"Non se puideron cargar os datos.",
        allCities:"Todas as zonas", searchPlaceholder:"Busca un enderezo…",
        notCovered:(loc)=>`${loc} aínda non está cuberto — por agora só nestes 11 concellos.`,
@@ -269,10 +266,9 @@ const I18N = {
        railEmpty:"Ningún centro coincide coa selección.",
        railReset:"Ver todos", railBack:"← Volver",
        legendHint:"Filtrar por tipo",
-       railFoot:'Datos: <a href="https://www.edu.xunta.gal/centroseducativos/" target="_blank" rel="noopener">Xunta de Galicia — Centros educativos</a> (fonte oficial)<br><a href="https://github.com/Coruna-Labs/mis-educativos" target="_blank" rel="noopener">Código fonte ↗</a>',
+       railFoot:'Datos: <a href="https://www.edu.xunta.gal/centroseducativos/" target="_blank" rel="noopener">Xunta de Galicia — Centros educativos</a> (fonte oficial). <a href="https://github.com/Coruna-Labs/mis-educativos" target="_blank" rel="noopener">Código fonte ↗</a>',
        ensinanzaNames:{"22":"Infantil","25":"Primaria","24":"ESO","29":"Bacharelato"} },
   es:{ title:"MisEducativos", sub:"Áreas de influencia de los centros educativos de Galicia.",
-       note:"Disponible en 11 concellos, por ahora.",
        loading:"Cargando…", error:"No se pudieron cargar los datos.",
        allCities:"Todas las zonas", searchPlaceholder:"Busca una dirección…",
        notCovered:(loc)=>`${loc} aún no está cubierto — por ahora solo en estos 11 concellos.`,
@@ -284,10 +280,9 @@ const I18N = {
        railEmpty:"Ningún centro coincide con la selección.",
        railReset:"Ver todos", railBack:"← Volver",
        legendHint:"Filtrar por tipo",
-       railFoot:'Datos: <a href="https://www.edu.xunta.gal/centroseducativos/" target="_blank" rel="noopener">Xunta de Galicia — Centros educativos</a> (fuente oficial)<br><a href="https://github.com/Coruna-Labs/mis-educativos" target="_blank" rel="noopener">Código fuente ↗</a>',
+       railFoot:'Datos: <a href="https://www.edu.xunta.gal/centroseducativos/" target="_blank" rel="noopener">Xunta de Galicia — Centros educativos</a> (fuente oficial). <a href="https://github.com/Coruna-Labs/mis-educativos" target="_blank" rel="noopener">Código fuente ↗</a>',
        ensinanzaNames:{"22":"Infantil","25":"Primaria","24":"ESO","29":"Bachillerato"} },
   en:{ title:"MisEducativos", sub:"School catchment zones across Galicia.",
-       note:"Available in 11 concellos, for now.",
        loading:"Loading…", error:"Couldn't load the data.",
        allCities:"All zones", searchPlaceholder:"Search an address…",
        notCovered:(loc)=>`${loc} isn't covered yet — only these 11 concellos, for now.`,
@@ -299,7 +294,7 @@ const I18N = {
        railEmpty:"No school matches this selection.",
        railReset:"See all", railBack:"← Back",
        legendHint:"Filter by type",
-       railFoot:'Data: <a href="https://www.edu.xunta.gal/centroseducativos/" target="_blank" rel="noopener">Xunta de Galicia — Centros educativos</a> (official source)<br><a href="https://github.com/Coruna-Labs/mis-educativos" target="_blank" rel="noopener">Source code ↗</a>',
+       railFoot:'Data: <a href="https://www.edu.xunta.gal/centroseducativos/" target="_blank" rel="noopener">Xunta de Galicia — Centros educativos</a> (official source). <a href="https://github.com/Coruna-Labs/mis-educativos" target="_blank" rel="noopener">Source code ↗</a>',
        ensinanzaNames:{"22":"Infantil","25":"Primary","24":"ESO","29":"Bacharelato"} },
 };
 
@@ -343,7 +338,6 @@ function applyText(){
   document.documentElement.lang = lang;
   document.getElementById("m-title").textContent = t.title;
   document.getElementById("m-sub").textContent = t.sub;
-  document.getElementById("m-note").textContent = t.note || "";
   document.getElementById("addr-input").placeholder = t.searchPlaceholder;
   document.getElementById("rail-legend-hint").textContent = t.legendHint;
   document.getElementById("rail-foot").innerHTML = t.railFoot;
@@ -806,8 +800,12 @@ function goBack(){
   if(!state.previousMatch){ closeEverything(); return; }
   const prev = state.previousMatch;
   state.previousMatch = null;
-  clearResult();
   state.searchMatchCodigos = prev.codigos;
+  // No clearResult() here -- selectCity() below only clears the pin when
+  // fromSearch is false (a plain city view, prev.codigos null), which is
+  // exactly when the pin shouldn't have survived anyway. Going back to a
+  // multi-result search list (prev.codigos set) passes fromSearch:true and
+  // keeps the pin, since it's still the same search being restored.
   selectCity(prev.city, {fromSearch: !!prev.codigos});
 }
 
@@ -875,8 +873,13 @@ function selectCity(codigo, {fromSearch=false} = {}){
   state.selectedCity = codigo;
   // An explicit pick (marker/dropdown, not part of a search or a
   // rail-row drill-down) starts fresh -- any stale "back" target from a
-  // previous drill-down no longer applies.
-  if(!fromSearch){ state.searchMatchCodigos = null; state.previousMatch = null; }
+  // previous drill-down no longer applies, and neither does any address
+  // pin still on the map: it belongs to a search that this city pick
+  // isn't part of. A rail-row drill-down or a resolved search itself
+  // passes fromSearch:true and skips this, so the pin they place/rely on
+  // survives (that's also how "volver" gets back to its own search
+  // results without losing the pin -- see goBack()).
+  if(!fromSearch){ state.searchMatchCodigos = null; state.previousMatch = null; clearResult(); }
   renderCityTrigger();
   updateCatchmentHighlight();
   for(const [c,{el}] of Object.entries(state.markerEls)){
@@ -1060,7 +1063,7 @@ function clearResult(){
   if(state.resultMarker){ state.resultMarker.remove(); state.resultMarker=null; }
   if(state.resultPopup){ state.resultPopup.remove(); state.resultPopup=null; }
 }
-function closeEverything(){ selectCity(null); clearResult(); }
+function closeEverything(){ selectCity(null); }
 
 async function runSearch(query){
   const t = I18N[lang];
