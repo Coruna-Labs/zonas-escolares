@@ -1,7 +1,8 @@
 """
-Step 2: sweep every concello x ensinanza combo and save the raw HTML
-response to disk before parsing anything, per DISCOVERY.md's caching
-rule -- if the parser has a bug later, we don't want to re-hit the server.
+Step 2: sweep every concello x ensinanza combo, across all 4 provinces,
+and save the raw HTML response to disk before parsing anything, per
+DISCOVERY.md's caching rule -- if the parser has a bug later, we don't
+want to re-hit the server.
 """
 
 import json
@@ -10,11 +11,10 @@ import requests
 
 BASE_URL = "https://www.edu.xunta.gal/centroseducativos"
 HEADERS = {"User-Agent": "Mozilla/5.0"}
-PROVINCIA_A_CORUNA = "15"
 
 RAW_DIR = "raw"
 DATA_DIR = "data"
-DELAY_SECONDS = 1.5  # polite pacing -- this is a small, 12-request sweep
+DELAY_SECONDS = 1.5  # polite pacing -- this is a small, 38-request sweep
 
 
 def new_session() -> requests.Session:
@@ -50,18 +50,21 @@ def main():
     s = new_session()
     results = []
     for c in enumeration:
+        provincia_codigo = c["provincia_codigo"]
         concello_codigo = c["concello_codigo"]
         for e in c["ensinanzas"]:
             ensinanza_codigo = e["codigo"]
             fname = f"{RAW_DIR}/search_{concello_codigo}_{ensinanza_codigo}.html"
-            print(f"Fetching concello={concello_codigo} ({c['concello_nome']}) "
+            print(f"Fetching concello={concello_codigo} ({c['concello_nome']}, {c['provincia_nome']}) "
                   f"ensinanza={ensinanza_codigo} ({e['nome']}) ...", end=" ")
             try:
-                html = search(s, PROVINCIA_A_CORUNA, concello_codigo, ensinanza_codigo)
+                html = search(s, provincia_codigo, concello_codigo, ensinanza_codigo)
                 with open(fname, "w", encoding="utf-8") as f:
                     f.write(html)
                 print(f"OK ({len(html)} bytes) -> {fname}")
                 results.append({
+                    "provincia_codigo": provincia_codigo,
+                    "provincia_nome": c["provincia_nome"],
                     "concello_codigo": concello_codigo,
                     "concello_nome": c["concello_nome"],
                     "ensinanza_codigo": ensinanza_codigo,
@@ -72,6 +75,8 @@ def main():
             except Exception as exc:
                 print(f"FAILED: {exc}")
                 results.append({
+                    "provincia_codigo": provincia_codigo,
+                    "provincia_nome": c["provincia_nome"],
                     "concello_codigo": concello_codigo,
                     "concello_nome": c["concello_nome"],
                     "ensinanza_codigo": ensinanza_codigo,

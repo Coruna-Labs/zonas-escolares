@@ -1,15 +1,17 @@
 """
-Step 1: enumerate the concello x ensinanza combinations to sweep.
+Step 1: enumerate the concello x ensinanza combinations to sweep, across
+all four Galicia provinces (Xunta-wide, not just A Coruna).
 
-IMPORTANT SCOPE NOTE, verified against a live capture on 2026-07-21:
+IMPORTANT SCOPE NOTE, verified against a live capture on 2026-07-21 and
+confirmed to hold across all 4 provinces on 2026-07-21:
 The "area de influencia" (catchment) tool is a DIFFERENT page from the
 general school-search tool, with its own JS and its own concello list.
-It uses `Concellos.do?DIALOG-EVENT-DeGalicia&provincia=15`, which returns
-only 3 concellos: A Coruna city, Ferrol, and Santiago de Compostela.
-This is not a bug or a truncated response -- address-based catchment
-zoning is a big-city feature. The other 92 concellos in the province
-don't have street-level catchment boundaries in this tool at all
-(confirmed against the tool's own combo-population JS, not guessed).
+It uses `Concellos.do?DIALOG-EVENT-DeGalicia&provincia={code}`. Per
+province this returns only a handful of concellos -- big cities mostly,
+but not exclusively (Lugo province includes Cervo, Xove, and Lourenza,
+small towns, alongside Lugo city). This isn't a bug or a truncated
+response -- confirmed against the tool's own combo-population JS, not
+guessed. Xunta-wide totals: 11 concellos, 38 concello x ensinanza combos.
 
 A session is required: CargarAreaInfluenciaCentro.do?DIALOG-EVENT-inicializa
 sets a JSESSIONID cookie, and the search form's action URL embeds it.
@@ -20,7 +22,13 @@ import requests
 
 BASE_URL = "https://www.edu.xunta.gal/centroseducativos"
 HEADERS = {"User-Agent": "Mozilla/5.0"}
-PROVINCIA_A_CORUNA = "15"
+
+PROVINCIAS = [
+    ("15", "Coruña (A)"),
+    ("27", "Lugo"),
+    ("32", "Ourense"),
+    ("36", "Pontevedra"),
+]
 
 RAW_DIR = "raw"
 DATA_DIR = "data"
@@ -53,17 +61,20 @@ def fetch_ensinanzas(s: requests.Session, provincia: str, concello: str) -> list
 
 def main():
     s = new_session()
-    concellos = fetch_concellos(s, PROVINCIA_A_CORUNA)
 
     enumeration = []
-    for c in concellos:
-        codigo = str(c["codigo"])
-        ensinanzas = fetch_ensinanzas(s, PROVINCIA_A_CORUNA, codigo)
-        enumeration.append({
-            "concello_codigo": codigo,
-            "concello_nome": c["valor"],
-            "ensinanzas": [{"codigo": str(e["codigo"]), "nome": e["valor"]} for e in ensinanzas],
-        })
+    for provincia_codigo, provincia_nome in PROVINCIAS:
+        concellos = fetch_concellos(s, provincia_codigo)
+        for c in concellos:
+            concello_codigo = str(c["codigo"])
+            ensinanzas = fetch_ensinanzas(s, provincia_codigo, concello_codigo)
+            enumeration.append({
+                "provincia_codigo": provincia_codigo,
+                "provincia_nome": provincia_nome,
+                "concello_codigo": concello_codigo,
+                "concello_nome": c["valor"],
+                "ensinanzas": [{"codigo": str(e["codigo"]), "nome": e["valor"]} for e in ensinanzas],
+            })
 
     with open(f"{RAW_DIR}/enumeration.json", "w", encoding="utf-8") as f:
         json.dump(enumeration, f, ensure_ascii=False, indent=2)
@@ -71,10 +82,11 @@ def main():
         json.dump(enumeration, f, ensure_ascii=False, indent=2)
 
     total_combos = sum(len(c["ensinanzas"]) for c in enumeration)
-    print(f"Concellos in scope for area de influencia (provincia={PROVINCIA_A_CORUNA}): {len(enumeration)}")
+    print(f"Concellos in scope for area de influencia, Xunta-wide: {len(enumeration)}")
     for c in enumeration:
         names = ", ".join(e["nome"] for e in c["ensinanzas"])
-        print(f"  {c['concello_codigo']}  {c['concello_nome']:30s} ensinanzas: {names}")
+        print(f"  {c['provincia_codigo']}/{c['concello_codigo']}  "
+              f"{c['concello_nome']:30s} ({c['provincia_nome']}) ensinanzas: {names}")
     print(f"\nTotal concello x ensinanza combos to sweep: {total_combos}")
 
 

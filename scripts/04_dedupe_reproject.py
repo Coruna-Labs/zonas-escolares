@@ -5,12 +5,14 @@ DEVIATION FROM THE ORIGINAL PLAN, found during dedupe -- worth flagging
 plainly rather than silently working around it:
 
 DISCOVERY.md assumed one catchment polygon per school, with ensinanzas
-just being a list of what that one polygon covers. That's true for 117
-of the 125 schools. But 8 schools (mostly IES campuses where ESO and
+just being a list of what that one polygon covers. That's true for most
+schools, but not all of them -- some (mostly IES campuses where ESO and
 Bacharelato zones differ, plus a couple of CEIPs where Infantil and
 Primaria zones differ) genuinely have DIFFERENT catchment polygons for
 different grade levels at the same address. This isn't a parsing bug --
-verified by inspecting the raw coordinate arrays directly.
+verified by inspecting the raw coordinate arrays directly, and originally
+found in the 125-school A Coruna-only sample; see this script's own
+printed output for the exact count at whatever scope was last run.
 
 So instead of one feature per school, this script groups by
 (codigo, exact geometry). Schools with a single consistent shape produce
@@ -35,10 +37,10 @@ DATA_DIR = "data"
 SRC_CRS = "EPSG:25829"
 DST_CRS = "EPSG:4326"
 
-# Sanity bounds for A Coruña province, used as an integrity check on the
-# reprojected output (lon, lat), not a filter.
-BBOX_LON = (-9.5, -7.5)
-BBOX_LAT = (42.5, 43.9)
+# Sanity bounds for all of Galicia (Xunta-wide), used as an integrity
+# check on the reprojected output (lon, lat), not a filter.
+BBOX_LON = (-9.5, -6.5)
+BBOX_LAT = (41.8, 43.9)
 
 transformer = Transformer.from_crs(SRC_CRS, DST_CRS, always_xy=True)
 
@@ -92,6 +94,8 @@ def main():
                 "properties": {
                     "codigo": codigo,
                     "nome": first["nome"],
+                    "provincia_codigo": first["provincia_codigo"],
+                    "provincia_nome": first["provincia_nome"],
                     "concello_codigo": first["concello_codigo"],
                     "concello_nome": first["concello_nome"],
                     "ensinanzas": [{"codigo": c, "nome": n} for c, n in ensinanzas],
@@ -102,7 +106,7 @@ def main():
 
     geojson = {"type": "FeatureCollection", "features": features}
 
-    with open(f"{DATA_DIR}/catchments_a_coruna_cities.geojson", "w", encoding="utf-8") as f:
+    with open(f"{DATA_DIR}/catchments_galicia.geojson", "w", encoding="utf-8") as f:
         json.dump(geojson, f, ensure_ascii=False, indent=2)
 
     # Integrity check: every reprojected coordinate should land inside Galicia.
@@ -129,7 +133,7 @@ def main():
     if out_of_bounds:
         for codigo, lon, lat in out_of_bounds[:10]:
             print(f"  ! {codigo}: ({lon}, {lat})")
-    print(f"\nWrote {DATA_DIR}/catchments_a_coruna_cities.geojson")
+    print(f"\nWrote {DATA_DIR}/catchments_galicia.geojson")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,2385 @@
+
+
+
+
+  
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="gl">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Language" content="gl" />
+    <meta name="robots" content="index, nofollow" />
+    <meta name="title" content="centroseducativos" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/> 
+    <meta name="description" content="Consulta e mantemento de centros" />
+    <meta name="author" content='Consellería de Educación, Ciencia, Universidades e Formación Profesional' />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+	
+    <link rel="shortcut icon" href='https://recursosweb.edu.xunta.gal/recursosweb/imaxes//cabeceira/user-image-mini.png' type="image/x-icon">
+    
+    <!-- TITULO -->
+	<title>
+	    centroseducativos
+	</title>
+		
+	
+	<script type="text/javascript">
+		menuActivo = '';					
+	</script>
+	
+	<script type="text/javascript">
+		pageLoader = 'si';					
+	</script>
+  	<!-- HEADER -->
+	
+
+
+
+
+<link charset="UTF-8" href="https://recursosweb.edu.xunta.gal/recursosweb/estilos/principal/glyphicons/glyphicons.css" rel="stylesheet" type="text/css"/>
+<link charset="UTF-8" href="https://recursosweb.edu.xunta.gal/recursosweb/estilos/principal/font-awesome-4.6.3/font-awesome.css" rel="stylesheet" type="text/css"/>
+<link charset="UTF-8" href="https://recursosweb.edu.xunta.gal/recursosweb/estilos/principal/estilosMaquetaAmtega.css" rel="stylesheet" type="text/css"/>
+
+<script charset="UTF-8" src="https://recursosweb.edu.xunta.gal/recursosweb/scripts/jquery.min.js" type="text/javascript"></script>
+<script charset="UTF-8" src="https://recursosweb.edu.xunta.gal/recursosweb/scripts/animacions.js" type="text/javascript"></script>
+<script charset="UTF-8" src="https://recursosweb.edu.xunta.gal/recursosweb/scripts/menu-edu-2.0.0/menu-edu.js" type="text/javascript"></script>
+
+
+<script charset="UTF-8" src="https://recursosweb.edu.xunta.gal/recursosweb/scripts/bowser-1.8.1/bowser.js" type="text/javascript"></script>
+<script charset="UTF-8" src="https://recursosweb.edu.xunta.gal/recursosweb/scripts/support.js" type="text/javascript"></script>
+
+<!-- ********************************************** -->
+<!--            Funcionalidades comúns              -->
+<!-- ********************************************** -->
+
+<!--
+	/*****************************************************************************\
+	Nesta paxina se incluen as funcionalidades comuns para:
+		Estilos para a visualizacion correcta en IE 6 e 7
+		Visualizacion do evento onFocus no IE 7
+		Activa a visualizacion dos divs "js" no caso de haber javascript
+		Definición de bordes estandar para navegadores distintos de IE
+	/*****************************************************************************\
+-->
+<!-- Visualizacion correcta do div de mensaxes e botóns link en ie 8-->
+
+<!--[if IE 8]>
+	<style>
+		a.botazul, 
+		a.botdourado{
+			padding: 0.19em;
+		}			
+	</style>
+<![endif]-->
+
+<!-- Visualizacion correcta do div de mensaxes e botóns link en ie6 e 7-->
+
+<!--[if lte IE 7]>
+	<style>
+		a.botazul, 
+		a.botdourado{
+			display:inline-block;
+			padding: 0.32em;
+		}		
+	</style>
+<![endif]-->
+
+<!-- Visualizacion correcta de combos -->
+
+<!--[if IE 7]>
+	<style>
+		fieldset {
+			padding: 0.5em;
+		}
+		#corpo {
+			padding-top: 0;
+		}
+		.LayoutCamposHorizontal DIV.EtiquetaArriba{	
+			line-height: normal;
+		}
+		.informacionContexto ~ h1 {
+			margin-left:17%;
+		}
+	</style>
+<![endif]-->
+
+<!--  Forzar informacion de contexto a dereita e estilos basicos de controis -->
+<!--[if lt IE 7]>
+	<style>
+		.informacionContexto {
+			text-align: right;
+			padding: 0;
+		}
+		.AnchoMetade .LayoutCamposHorizontal div {
+			margin-right: 6% !important;
+		}		
+		.LayoutCamposHorizontal div {
+		 	margin-right: 3% !important;
+		}		
+		label {
+			float:left;
+		}
+		INPUT, 
+		SELECT,
+		SELECT.combo,
+		SELECT.formularioinactivo, 
+		INPUT.formulario,
+		INPUT.formularioinactivo,
+		TEXTAREA.formulario,
+		TEXTAREA.formularioinactivo,
+		TEXTAREA {
+				clear:left;		
+				color: #000;
+			 	background-color: #fff;	
+			 	border: 0.08em solid #000000;				
+			  	}	
+	</style>
+<![endif]-->
+
+<!-- 
+     Activa a visualizacion dos divs "js" no caso de haber javascript
+     Definicion de bordes estandar para navegadores distintos de IE 
+ -->
+
+<script type="text/javascript">
+
+	// Si javascript esta activo poñemos visible o estilo "js"
+	document.write("<style>.js{ display: block}<\/style>");
+	
+	// Borde negro en firefox, Opera, etc...
+	/*
+	var ie = document.all != undefined;
+	if (!(ie)) {
+	 document.write("<style> fieldset { border: 0.1em solid #BFB8BF; } </style>");
+   	}
+   	*/
+</script>
+
+
+<!--  Indicase o entorno no que nos movemos -->
+<script type="text/javascript">
+	var meuhostname = (document.location.hostname).toLowerCase();
+	
+		if (meuhostname.indexOf("www.edu.xunta.") == 0) {
+		// Se é producción, non visualizamos nada
+	}else {
+		//eliminamos todo o que non aporta info do entorno
+		meuhostname = meuhostname.replace("www","");
+		meuhostname = meuhostname.replace("auth-edu","");
+		meuhostname = meuhostname.replace(".edu","");
+		meuhostname = meuhostname.replace(".edu2","");
+		meuhostname = meuhostname.replace("edu","");
+		meuhostname = meuhostname.replace("edu2","");
+		meuhostname = meuhostname.replace(".extranet","");
+		meuhostname = meuhostname.replace(".xunta","");
+		meuhostname = meuhostname.replace(".es","");
+		meuhostname = meuhostname.replace(".gal","");
+		meuhostname = meuhostname.replace(".local","");
+		
+		//remprazamos cadeas que identifican entorno
+		meuhostname = meuhostname.replace(".des","desenvolvemento");
+		meuhostname = meuhostname.replace(".probas","contorna de probas");
+		meuhostname = meuhostname.replace(/\w*.dev/,"desenvolvemento");
+		meuhostname = meuhostname.replace(/\w*stg2/,"contorna de probas");
+		meuhostname = meuhostname.replace(/\w*.stg/,"contorna de probas");
+		meuhostname = meuhostname.replace(".formacion","formación");
+		
+		document.write("<div id='contorno'><i class='fa fa-cogs'></i>"+meuhostname.toUpperCase()+"</div>");
+	}
+</script>
+
+<!-- ********************************************** -->
+</head>
+
+<body>
+	
+		<!--[if (!IE)|(gt IE 9)]><!-->
+			<div id="page-loader">
+		        <div class="dot"></div>
+		        <div class="dot"></div>
+		    </div>
+		<!--<![endif]-->
+	
+	
+	<!-- CABECEIRA -->
+	
+
+
+
+
+
+
+
+
+
+
+<header>
+	<div id="app_nome">
+		 
+		<div id="nomeAplicacion">
+			<a href="/centroseducativos/" accesskey="i" 
+					title="centroseducativos-Consulta e mantemento de centros-Ir á páxina principal. Atallo de teclado: i" >
+				<h1><img alt="centroseducativos" src="https://recursosweb.edu.xunta.gal/recursosweb/imaxes/svg-apps-educacion/centroseducativos.svg"/><span class="sr-only">centroseducativos</span></h1>
+			</a>
+		</div>
+		<div id="iconoMenu">
+			<a id="linkIconoMenu" href="#" 
+				title='Amosar/Ocultar menú'><span class="glyphicon glyphicon-menu-hamburger" 
+				aria-label='Amosar/Ocultar menú'></span></a>
+		</div>
+	</div>
+	<div id="accesosDirectos">
+
+		 
+		<a href="/centroseducativos/VerAccesibilidade.do" accesskey="a" 
+			title='Pautas de accesibilidade empregadas. Atallo de teclado: a' ><i class="fa fa-universal-access" 
+				aria-label='Accesibilidade e usabilidade' aria-hidden="true"></i></a>
+		
+		 
+		<a href="/centroseducativos/VerAvisoLegal.do" accesskey="v" 
+			title='Avisos legais para usuarios do servizo web. Atallo de teclado: v' ><i class="fa fa-balance-scale" 
+				aria-label='Aviso legal' aria-hidden="true"></i></a>
+	
+			
+
+		
+		
+		<a href="https://www.edu.xunta.gal/buzoninformes/" accesskey="b" target="_buzonInformes"  
+			title='Buzón informes. Atallo teclado: b'><i class="glyphicon glyphicon-inbox" 
+				aria-label='Buzón de informes' aria-hidden="true" ></i></a>
+
+	</div>
+	
+	
+		<div id="botonLogin">
+			 			
+			<a href="/centroseducativos/AbrirSesion.do" accesskey="s" 
+				title='Entrar. Atallo de teclado: s'><i class="glyphicon glyphicon-off p-r-5" 
+				aria-label='Entrar' aria-hidden="true" 
+				style="color:green;"></i></a>
+		</div>
+	
+	
+</header>
+
+
+	<div id="contenedorPrincipal">
+		
+
+
+
+
+
+
+
+
+
+	
+
+		
+		
+		
+				
+			<div class="divEdu-menu" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:html="http://struts.apache.org/tags-html" xmlns:edu="http://www.edu.xunta.es"><ul id="nav" class="edu-menu"><li id="Inicio"><a href="/centroseducativos/PaxinaInicio.do" accesskey="i" id="Inicio"><abbr name="MenuPrincipal" title="Inicio. Atallo teclado: i">		  			
+				1.
+				Inicio</abbr></a></li><li id="BuscaCentros"><a href="/centroseducativos/BuscaCentros.do?DIALOG-EVENT-inic" accesskey="2" id="BuscaCentros"><abbr name="MenuPrincipal" title="Buscar centros">		  			
+				2.
+				Busca</abbr></a></li>
+				
+			
+			<li id="ListaCentro"><a href="/centroseducativos/ListaCentros.do" accesskey="b" id="ListaCentro"><abbr name="MenuPrincipal" title="Gu&iacute;a de centros">		  			
+				3.
+				Gu&iacute;a de centros</abbr></a></li><li id="AreaInfluenciaCentro"><a href="/centroseducativos/CargarAreaInfluenciaCentro.do?DIALOG-EVENT-inicializa" accesskey="a" id="AreaInfluenciaCentro"><abbr name="MenuPrincipal" title="Áreas de influencia dos centros">		  			
+				4.
+				Áreas de influencia</abbr></a></li>
+				
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			</ul></div>				 	
+				<script type="text/javascript">
+					$(document).ready(function(){ menuEdu().iniciarMenu('');});	
+				</script>
+		
+				
+		
+		
+			
+				
+				
+			
+		
+		
+		<main>
+			<!-- CORPO -->			
+			<div id="corpo" class="corpo">
+				
+				
+				
+				
+		
+				
+					
+						
+							<div id="titulo" class="divTituloPaxina">	
+								<h1>
+									Áreas de influencia
+									
+								</h1>
+								
+							</div>	
+						
+						 
+					
+					
+					
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					
+						<div class="AnchoTotal">
+							<div id="axuda_centroseducativos_areasinfluencia" > <div class="mensaxeAxuda"><p><span style="font-size:14px">Nesta pantalla pode  consultar as áreas de influencia dos centros educativos sostidos con fondos públicos, con efectos exclusivamente <span style="color:#e74c3c">informativos.</span></span></p><p><span style="font-size:14px">A integración dos datos estase a realizar de forma progresiva, polo que no caso de dúbida ou para completar a información debe dirixirse ao centro educativo/xefatura territorial correspondente.</span></p><p><span style="color:#e74c3c"><span style="font-size:14px">Estamos adaptando a aplicación para poder visualizar as áreas de bacharelato diferenciadas por modalidade.</span></span></p></div></div>
+						</div>
+					
+		
+					
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script charset="UTF-8" src="https://recursosweb.edu.xunta.gal/recursosweb/scripts/text_utils.js" type="text/javascript"></script>
+<script charset="UTF-8" src="https://recursosweb.edu.xunta.gal/recursosweb/scripts/jquery-ui.js" type="text/javascript"></script>
+<link charset="UTF-8" href="https://recursosweb.edu.xunta.gal/recursosweb/estilos/principal/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<link charset="UTF-8" href="https://recursosweb.edu.xunta.gal/recursosweb/estilos/principal/jquery.ui.maqint.theme.css" rel="stylesheet" type="text/css"/>
+
+<link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css"/>
+<script  data-dojo-config='has:{"dojo-inject-jquery": false}, async: true'
+    src="https://js.arcgis.com/4.25/" ></script>
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+#map {
+	height: 615px;
+	width: 700px;
+    margin: 0;
+    padding: 0;
+}
+</style>
+
+
+<div class="AnchoTotal">
+<div id="axuda_centroseducativos_areasinfluencia2" > <div class="mensaxeAxuda"><p>Nesta pantalla pódense consultar ás áreas de influencia dos centros educativos.<br /><strong>Para cada consulta deberanse cubrir obrigatoriamente os campos marcados con &#39;*&#39;: Provincia, Concello, Ensinanza</strong>.<br /><strong>Mostraranse as áreas de influencia dos centros coincidentes ata un máximo de 10, </strong>se o resultado da busca devolve máis de 10, non se cargará ningunha área no mapa, para visualizalas terase que marcar na listaxe de resultados sen superar o límite establecido.<br />Facendo click na área de influencia ou no marcador do centro, mostrarase información relacionada.<br /><br /><strong>Busca por provincia/concello:</strong> Áreas de influencia correspondentes ós centros que coinciden cós filtros de busca (provincia, concello, ensinanza e tipo centro)<br /><br /><strong>Busca por enderezo: </strong>Áreas de influencia nas que se encontra o enderezo aportado, coincidindo cós filtros de busca (provincia, concello, ensinanza e tipo centro).<br />Para realizar este tipo de busca, marcar o check de &#34;Busca por enderezo&#34;, a provincia/concello deberán ser do enderezo aportado para que os resultados da busca sexan satisfactorios.</p></div></div>
+</div>
+
+<script src="/centroseducativos/javascript/utils-centros.js" charset="UTF-8" type="text/javascript"></script>
+<form name="AreaInfluenciaCentroForm" method="post" action="/centroseducativos/CargarAreaInfluenciaCentro.do">
+
+
+
+
+	
+
+	<input type="hidden" name="codigo" value="">	
+	<input type="hidden" name="buscarEnArea" value="N" id="buscarEnArea">
+	
+	<input type="hidden" name="x" value="" id="x">
+	<input type="hidden" name="y" value="" id="y">
+	
+	<div class="AnchoTotal">
+		<div class="LayoutCamposVertical">
+			<div class="LayoutCamposHorizontal">
+				<div class="AnchoMetade" style="margin-right: 0px;">
+					<div class="AnchoTotal" style="margin-right: 0px;">
+						<fieldset>
+							<legend>Busca de centros</legend>
+							<div class="LayoutCamposHorizontal">
+								<!-- FILTRO Código de provincia -->
+								<div>
+									<label for="filtroProvincia"> Provincia<span class="obrigatorio">*</span></label>
+									<select name="filtroProvincia" id="filtroProvincia" title="Provincia"><option value="">-- Seleccione un elemento --</option>
+										<OPTGROUP label="Provincias"><option value="15">Coruña (A)</option>
+<option value="27">Lugo</option>
+<option value="32">Ourense</option>
+<option value="36" selected="selected">Pontevedra</option>
+</OPTGROUP></select>
+									
+								</div>
+								
+								<div>									
+									<label for="filtroConcello"> Concello<span class="obrigatorio">*</span> </label>
+									<select name="comboConcello" id="comboConcello" >
+										<option value="">-- Seleccione un elemento --</option>
+									</select>									
+									<input type="hidden" name="filtroConcello" value="36057" id="filtroConcello">
+									
+								</div>
+							</div>
+							<div class="LayoutCamposHorizontal">
+								<!--FILTRO ensinanza -->
+								<div>
+									<label for="filtroEnsinanza"> Ensinanza <span class="obrigatorio">*</span></label>
+									<select name="comboEnsinanza" id="comboEnsinanza" >
+										<option value="">-- Seleccione un elemento --</option>
+									</select>
+									<input type="hidden" name="filtroEnsinanza" value="24" id="filtroEnsinanza">
+									
+								</div>
+								<!--FILTRO tipo centro-->
+								<div>
+									<label for="filtroTipoCentro"> Tipo centro </label>
+									<select name="filtroTipoCentro" id="filtroTipoCentro" title="Tipo centro"><option value="" selected="selected">-- Todos --</option>
+										<option value="P">Centro Público</option>
+										<option value="PC">Centro Privado Concertado</option></select>
+									
+								</div>
+							</div>
+
+							<div class="LayoutCamposHorizontal">
+								<div>
+									<input type="checkbox" name="buscaEnderezo" value="on" id="checkBuscaEnderezo">
+									<label>Busca por enderezo (indicar só rúa e número Ex: Avda. A Coruña 7)</label>
+									<strong><a title="Axuda contextual (Abre nova venté)" target="popUpAxuda" href="/axudaplicacion/AxudaContextual.do?claveBusca=axuda_centroseducativos_ai_enderezo"><img class="enlaceImaxe" alt="Axuda" src="https://recursosweb.edu.xunta.gal/recursosweb/imaxes/iconos/axuda.gif"></a></strong>
+								</div>
+							</div>
+							<div class="LayoutCamposVertical">
+								<label for="Enderezo"> Enderezo <span class=obrigatorio></span> </label>
+								<input type="text" name="enderezo" size="70" value="" readonly="readonly" id="enderezo" class="txtEnderezo">
+							</div>
+	                   <div class="LayoutCamposHorizontal">
+							<!-- Boton buscar listado de centros polos combos-->
+							<div style="margin-top: 13px; margin-right: 10px;">
+								<input type="submit" name="DIALOG-EVENT-buscarCentros" value="Buscar" class="botaccion btnEnderezo">
+							</div>
+							<!-- Boton limpar -->
+							<div style="margin-top: 13px;">
+								<input type="button" name="limpar" value="Limpar" id="limpar" class="botnavegacion">
+							</div>
+	                   </div>
+						</fieldset>
+
+						
+							
+							<fieldset>
+								<legend> Resultados da busca </legend>
+								<div class="AnchoTotal LayoutCamposVertical">
+								
+									<div>
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[0]'
+												value="36011622"												" /> 
+												<label id='labelCentro[0]'>CPR Aloya </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36011622' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[1]'
+												value="36010794"												" /> 
+												<label id='labelCentro[1]'>CPR Fillas de María Inmaculada </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36010794' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[2]'
+												value="36010095"												" /> 
+												<label id='labelCentro[2]'>CPR Martín Códax </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36010095' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[3]'
+												value="36011531"												" /> 
+												<label id='labelCentro[3]'>CPR Plurilingüe Alba </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36011531' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[4]'
+												value="36010927"												" /> 
+												<label id='labelCentro[4]'>CPR Plurilingüe Alborada </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36010927' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[5]'
+												value="36009925"												" /> 
+												<label id='labelCentro[5]'>CPR Plurilingüe Amor de Dios </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36009925' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[6]'
+												value="36014209"												" /> 
+												<label id='labelCentro[6]'>CPR Plurilingüe Andersen Augalonga </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36014209' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[7]'
+												value="36010903"												" /> 
+												<label id='labelCentro[7]'>CPR Plurilingüe Apostol Santiago </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36010903' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[8]'
+												value="36010939"												" /> 
+												<label id='labelCentro[8]'>CPR Plurilingüe Barreiro </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36010939' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[9]'
+												value="36024057"												" /> 
+												<label id='labelCentro[9]'>CPR Plurilingüe Bouza Brey </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36024057' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[10]'
+												value="36010976"												" /> 
+												<label id='labelCentro[10]'>CPR Plurilingüe Compañía de María </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36010976' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[11]'
+												value="36010216"												" /> 
+												<label id='labelCentro[11]'>CPR Plurilingüe Divino Salvador </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36010216' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[12]'
+												value="36011750"												" /> 
+												<label id='labelCentro[12]'>CPR Plurilingüe Don Bosco </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36011750' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[13]'
+												value="36010435"												" /> 
+												<label id='labelCentro[13]'>CPR Plurilingüe El Castro </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36010435' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[14]'
+												value="36011257"												" /> 
+												<label id='labelCentro[14]'>CPR Plurilingüe El Pilar </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36011257' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[15]'
+												value="36010356"												" /> 
+												<label id='labelCentro[15]'>CPR Plurilingüe Escuelas Nieto </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36010356' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[16]'
+												value="36011099"												" /> 
+												<label id='labelCentro[16]'>CPR Plurilingüe Labor </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36011099' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[17]'
+												value="36011831"												" /> 
+												<label id='labelCentro[17]'>CPR Plurilingüe Las Acacias </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36011831' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[18]'
+												value="36011117"												" /> 
+												<label id='labelCentro[18]'>CPR Plurilingüe Losada </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36011117' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[19]'
+												value="36011142"												" /> 
+												<label id='labelCentro[19]'>CPR Plurilingüe María Auxiliadora </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36011142' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[20]'
+												value="36011166"												" /> 
+												<label id='labelCentro[20]'>CPR Plurilingüe María Inmaculada </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36011166' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[21]'
+												value="36011181"												" /> 
+												<label id='labelCentro[21]'>CPR Plurilingüe Mariano </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36011181' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[22]'
+												value="36011518"												" /> 
+												<label id='labelCentro[22]'>CPR Plurilingüe Mercantil </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36011518' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[23]'
+												value="36011178"												" /> 
+												<label id='labelCentro[23]'>CPR Plurilingüe Miralba </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36011178' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[24]'
+												value="36011191"												" /> 
+												<label id='labelCentro[24]'>CPR Plurilingüe Montecastelo </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36011191' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[25]'
+												value="36010824"												" /> 
+												<label id='labelCentro[25]'>CPR Plurilingüe Monterrey </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36010824' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[26]'
+												value="36016097"												" /> 
+												<label id='labelCentro[26]'>CPR Plurilingüe Montesol </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36016097' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[27]'
+												value="36010800"												" /> 
+												<label id='labelCentro[27]'>CPR Plurilingüe Niño Jesús de Praga </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36010800' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[28]'
+												value="36011385"												" /> 
+												<label id='labelCentro[28]'>CPR Plurilingüe Ntra. Señora de la Esperanza </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36011385' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[29]'
+												value="36011221"												" /> 
+												<label id='labelCentro[29]'>CPR Plurilingüe Padre Míguez </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36011221' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[30]'
+												value="36011491"												" /> 
+												<label id='labelCentro[30]'>CPR Plurilingüe Possumus </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36011491' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[31]'
+												value="36011270"												" /> 
+												<label id='labelCentro[31]'>CPR Plurilingüe Rosalía de Castro </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36011270' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[32]'
+												value="36011300"												" /> 
+												<label id='labelCentro[32]'>CPR Plurilingüe San Blas - Vista Alegre </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36011300' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[33]'
+												value="36010848"												" /> 
+												<label id='labelCentro[33]'>CPR Plurilingüe San Fernando </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36010848' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[34]'
+												value="36011351"												" /> 
+												<label id='labelCentro[34]'>CPR Plurilingüe San José de Cluny </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36011351' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[35]'
+												value="36011361"												" /> 
+												<label id='labelCentro[35]'>CPR Plurilingüe San José de la Guía </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36011361' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[36]'
+												value="36011211"												" /> 
+												<label id='labelCentro[36]'>CPR Plurilingüe San Miguel 2 </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36011211' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[37]'
+												value="36011865"												" /> 
+												<label id='labelCentro[37]'>CPR Quiñones de León </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36011865' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[38]'
+												value="36010897"												" /> 
+												<label id='labelCentro[38]'>CPR Santa Cristina </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36010897' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[39]'
+												value="36011579"												" /> 
+												<label id='labelCentro[39]'>IES A Guía </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36011579' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[40]'
+												value="36011798"												" /> 
+												<label id='labelCentro[40]'>IES Alexandre Bóveda </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36011798' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[41]'
+												value="36014601"												" /> 
+												<label id='labelCentro[41]'>IES Álvaro Cunqueiro </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36014601' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[42]'
+												value="36016681"												" /> 
+												<label id='labelCentro[42]'>IES Carlos Casares </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36016681' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[43]'
+												value="36011567"												" /> 
+												<label id='labelCentro[43]'>IES Castelao </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36011567' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[44]'
+												value="36019426"												" /> 
+												<label id='labelCentro[44]'>IES Coruxo </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36019426' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[45]'
+												value="36019050"												" /> 
+												<label id='labelCentro[45]'>IES de Beade </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36019050' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[46]'
+												value="36018173"												" /> 
+												<label id='labelCentro[46]'>IES de Teis </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36018173' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[47]'
+												value="36019670"												" /> 
+												<label id='labelCentro[47]'>IES do Castro </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36019670' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[48]'
+												value="36020374"												" /> 
+												<label id='labelCentro[48]'>IES Plurilingüe Valadares </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36020374' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[49]'
+												value="36011634"												" /> 
+												<label id='labelCentro[49]'>IES Politécnico de Vigo </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36011634' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[50]'
+												value="36018461"												" /> 
+												<label id='labelCentro[50]'>IES República Oriental do Uruguai </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36018461' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[51]'
+												value="36017430"												" /> 
+												<label id='labelCentro[51]'>IES Ricardo Mella </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36017430' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[52]'
+												value="36019062"												" /> 
+												<label id='labelCentro[52]'>IES Rosais 2 </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36019062' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[53]'
+												value="36011580"												" /> 
+												<label id='labelCentro[53]'>IES San Tomé de Freixeiro </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36011580' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+										
+										<!-- Url para ir ó detalle do centro. montaxe de url sen c:url por problemas jsessionid na parte pública -->
+										
+										<div class="LayoutCamposHorizontal" style="margin-left: 2em;">
+
+											<input type="checkbox" class="checkSel"
+												name='checkCentro[54]'
+												value="36011592"												" /> 
+												<label id='labelCentro[54]'>IES Santa Irene </label> 
+												<a href='/centroseducativos/CargarDetalleCentro.do?codigo=36011592' title='Ver detalle' style="font-size: 10px" target="_blank">
+													<span class="glyphicon glyphicon-info-sign" aria-hidden="true" aria-label="Máis información"></span>
+												</a>
+
+										</div>
+										
+									
+									</div>
+								
+						
+									
+							</div>	
+							</fieldset>
+												
+
+												
+					</div>
+					
+				</div>
+				
+				<div style="margin-right: 0px;">
+					<fieldset>
+						<legend>
+							Localización
+						</legend>
+						<div id="map"></div>
+					</fieldset>
+				</div>
+
+			</div>
+		</div>
+	</div>
+		
+</form>
+
+<script type="text/javascript">
+
+var checkBuscaEnderezo = document.getElementById("checkBuscaEnderezo");
+var limpar = document.getElementById("limpar");
+
+//Comportamento check busca enderezo
+
+if (checkBuscaEnderezo != null){
+	$('.txtEnderezo').prop('readonly', !$(checkBuscaEnderezo).is(':checked'));
+	
+	checkBuscaEnderezo.onclick = function(e){
+		var $this = $(this);
+		$('.txtEnderezo').prop('readonly', !$this.is(':checked'));			
+	}
+}
+
+
+if (limpar != null){
+	limpar.onclick = function(e){		
+		window.document.forms[0].action = 
+			"/centroseducativos/CargarAreaInfluenciaCentro.do?DIALOG-EVENT-limpar";
+		window.document.forms[0].submit();
+	}
+}
+
+function introEnderezo (event){
+	
+	if (event.keyCode == 13 || event.keyCode == 13) {
+		buscarEnderezo();
+		return false;
+	} else {
+		return true;
+	}
+}
+
+require([
+	"esri/Map", "esri/Basemap", "esri/Graphic",
+	"esri/views/MapView", "esri/widgets/Home",
+	"esri/geometry/Point",
+	"esri/geometry/SpatialReference",
+    "esri/layers/FeatureLayer", "esri/layers/GraphicsLayer", "esri/layers/TileLayer"
+], (
+    Map, Basemap, Graphic,
+    MapView, Home,
+    Point, SpatialReference,
+    FeatureLayer, GraphicsLayer, TileLayer
+)  => {	
+	
+/*
+ * Funcions utils para a xeolocalizacion (esri)
+ *  
+ */	
+coordenadasGalicia = [];
+coordenadasGalicia[0]  = [-8.547505, 42.871740];
+coordenadasGalicia['15030'] = [-8.411540100000025, 43.3623436];
+coordenadasGalicia['15078'] = [-8.544844499999954, 42.8782132];
+coordenadasGalicia['15036'] = [-8.219345100000055, 43.48964600000001];
+coordenadasGalicia['27028'] = [-7.55675819999999, 43.0097384];
+coordenadasGalicia['32054'] = [-7.863880999999992, 42.33578929999999];
+coordenadasGalicia['36038'] = [-8.644620199999963, 42.4298846];
+coordenadasGalicia['36057'] = [-8.720726799999966, 42.24059889999999];
+coordenadasGalicia['36026'] = [-8.702244, 42.392400];
+coordenadasGalicia['27013'] = [-7.44769, 43.6821];
+coordenadasGalicia['27027'] = [-7.29789, 43.4711];
+coordenadasGalicia['27025'] = [-7.51242, 43.6856];
+
+
+ 	const URL_BASE_MAP= 'https://ideg.xunta.gal/servizos/rest/services/MapasBase/MapaBase_2020/MapServer';
+ 	const URL_GEOCODER= 'https://ideg2.xunta.gal/arcgis/rest/services/Geocoder/GeocodeServer/findAddressCandidates';
+ 	const MAP_SITEMA_REF_ESPACIAL =25829;
+ 	const spatialReference = new SpatialReference ({ wkid:MAP_SITEMA_REF_ESPACIAL}); 
+
+	// create a LAYER 
+	const LAYER_BASE_MAP =  new TileLayer(URL_BASE_MAP,null);  ;
+
+	// create a basemap 
+	const BASE_MAP = new Basemap({ baseLayers: [LAYER_BASE_MAP], title: "Amtega Galicia", id: "baseAmtegaMap" });
+ 	
+ 	const CONSTRAINTS_MAP = {
+		maxZoom: 13
+	};
+	
+ 	const symbol_colexio2 = {
+		type: "web-style",
+		name: "university",        
+        styleName: "Esri2DPointSymbolsStyle"
+    };
+    const symbol_marca = {
+		type: "web-style",
+		name: "tear-pin-1",        
+        styleName: "Esri2DPointSymbolsStyle"
+    };
+
+ 	const symbol_colexio = {
+		type : "simple-marker",
+        color: [226, 119, 40], 
+	    outline: {
+    	    color: [255,255,255],
+        	width: 2
+    	}
+    };
+		
+	function getFeatureColexiosLayer ( source , actions) {	 
+		
+		var accions = actions? actions:[];
+		return new FeatureLayer({
+      // create an instance of esri/layers/support/Field for each field object
+      title: "Colexios de Galicia",
+      fields: [
+        { name: "ObjectID", type: "oid" },
+        { name: "Name", type: "string" },
+		{ name: "NomeCentro", type: "string" },
+        { name: "Codigo", type: "string" },
+        { name: "id", type: "string" }
+      ],
+	  outFields: ['*'],
+      objectIdField: "ObjectID",
+      geometryType: "point",
+      spatialReference: { wkid: MAP_SITEMA_REF_ESPACIAL },
+      source: source, // adding an empty feature collection
+      renderer:  {
+        type: "simple",
+        symbol: symbol_colexio2
+		},
+      popupTemplate: {
+		title :"{NomeCentro}",
+		content: "{Codigo} - {Name}",
+		actions: accions 
+		}				
+    });
+	}
+	
+ 	const arrayAreaInfluenciaAreas = []; 	
+ 	arrayAreaInfluenciaAreas.push ({type: "simple-fill", color: [000, 000, 255, 0.3],  outline: {color: [000, 000, 255], width: 1.5 }});//azul
+ 	arrayAreaInfluenciaAreas.push ({type: "simple-fill", color: [000, 255, 000, 0.3],  outline: {color: [000, 255, 000], width: 1.5 }});// lima
+ 	arrayAreaInfluenciaAreas.push ({type: "simple-fill", color: [255, 000, 000, 0.3],  outline: {color: [255, 000, 000], width: 1.5 }});// roxo
+ 	arrayAreaInfluenciaAreas.push ({type: "simple-fill", color: [000, 255, 255, 0.3],  outline: {color: [000, 255, 255], width: 1.5 }}); // cyan
+ 	arrayAreaInfluenciaAreas.push ({type: "simple-fill", color: [255, 255, 000, 0.3],  outline: {color: [255, 255, 000], width: 1.5 }});// amarillo
+ 	arrayAreaInfluenciaAreas.push ({type: "simple-fill", color: [255, 000, 255, 0.3],  outline: {color: [255, 000, 255], width: 1.5 }}); // magenta 	
+ 	arrayAreaInfluenciaAreas.push ({type: "simple-fill", color: [128, 000, 128, 0.3],  outline: {color: [128, 000, 128], width: 1.5 }}); // 
+ 	arrayAreaInfluenciaAreas.push ({type: "simple-fill", color: [128, 128, 000, 0.3],  outline: {color: [128, 128, 000], width: 1.5 }}); // oliva
+ 	arrayAreaInfluenciaAreas.push ({type: "simple-fill", color: [000, 128, 128, 0.3],  outline: {color: [000, 128, 128], width: 1.5 }}); // tila
+ 	arrayAreaInfluenciaAreas.push ({type: "simple-fill", color: [227, 139, 079, 0.3],  outline: {color: [227, 139, 079], width: 1.5}}); //naranja
+ 	
+ 
+   // mostra os cambios no mapa usando por defecto o layer colexiosLayer 
+    function mostraMapa (layer, edits) {			
+		layer.applyEdits ({addFeatures:edits.mostrar , deleteFeatures: edits.quitar });
+	}
+	
+	// carga a cache dos graficos dos colexios pasados como parametro
+	function calculeColexiosGraphics (cache, colexios) {
+		if ( cache.length ===0 && colexios != null && colexios.length > 0 ) {			
+			let graphics = [];
+			for (let i=0; i<colexios.length; i++){
+				const point = new Point(colexios[i].punto.coordinates, spatialReference );
+				let graphic = new Graphic({ geometry: point , attributes: colexios[i]});
+				graphics.push(graphic);
+			}        	    
+			cache = graphics;
+		}
+		return cache;
+	}
+	// carga a cache de obxetos de areas de influencia
+	function cargarAreaInfluenciaGraphics (cache, areasInfluencia ) {
+		if (!cache || cache.length <= 0) {
+			for (let i=0; i< areasInfluencia.length ; i++) {
+				$.each (areasInfluencia[i], function (key, value ) {
+					cache.push ( new Graphic( { symbol: arrayAreaInfluenciaAreas [i %10], geometry: value}));
+				});					
+			}
+		}
+		return cache;		
+	}
+
+	function getCenterMap (cidade) {
+		let centroCidade = coordenadasGalicia[cidade];		
+		if (!centroCidade ) {
+			centroCidade  = coordenadasGalicia[0];
+		}
+		return centroCidade;
+	}
+	
+	function manageLinkDetallePopup (show) {
+		// Watch for when features are selected
+	    view.popup.watch("selectedFeature", (graphic) => {
+			if (graphic) {
+				const graphicTemplate = graphic.getEffectivePopupTemplate();
+	            graphicTemplate.actions.items[0].visible = show? true : false;
+	        }
+	    });			  
+	}
+	
+	function getAreasInfluenciaPolygon (areaJSON) {
+		let areas = [];
+		let area = {
+			spatialReference: spatialReference,
+			type: areaJSON.type,
+			rings: areaJSON.coordinates			
+		};
+		areas.push (area);
+		if (areaJSON.type === "multipolygon") {
+			areas = [];
+			$.each (areaJSON.coordinates, function (key, value ) {
+				areas.push ( {type:"polygon", spatialReference: spatialReference , rings: value});
+			});
+		} 		
+		return areas;
+	}
+
+	let areasInfluencia = [];
+	let idsMostrar = [];
+	let numMostrados = 0;
+    let i = cargarDatos (areasInfluencia);
+
+    let map = new Map({	
+		basemap: BASE_MAP
+  	});	
+  	let view = new MapView({
+      map: map,
+	  zoom: 4,
+	  constraints: CONSTRAINTS_MAP,
+      container: "map", // Div element,
+   	  spatialReference: { wkid: MAP_SITEMA_REF_ESPACIAL }
+  	});
+    var homeBtn = new Home({view: view});	
+    view.ui.add(homeBtn, "top-left");  	
+  	centraMapa ();
+  	
+    $(".checkSel").change(function() {		
+		var $el = $(this);
+		var codigo = $el.val();
+		if  ($el.is(':checked')) {			
+			if (numMostrados >= 10) {
+				$el.prop( "checked", false );
+				alert ('Non se poden mostrar m�is centros de 10 centros no mapa. Desmarque outro para poder mostralo.');
+				return false;
+			}
+			mostrarNoMapa (codigo);
+		} else {
+			quitarDoMapa (codigo);
+		}
+	});	
+
+    if (i <= 10) {
+		$.each ($(".checkSel"), function (i, o) {
+			$(o).trigger('click');
+		});
+	} else {
+		alert ('Os centros coincidentes superan o m�ximo permitido, marque os centros que desexa amosar ata un l�mite de 10 ');
+	}
+    /*
+    * Se se fai click no mapa lanza a busqueda por punto
+    */
+	view.on("click", function(event) {
+		$("#buscarEnArea").val("S");		
+		$("#x").val (event.mapPoint.x);
+      	$("#y").val (event.mapPoint.y);      	
+      	$("#enderezo").val('');
+      	$("#checkBuscaEnderezo").prop ('checked', false);
+      	$(".btnEnderezo").trigger('click');
+    });	
+
+	/*
+	 * Pulsar enter en txtEnderezo lanza a busqueda
+	 */
+	$(".txtEnderezo").keypress( function( event) {
+		if (event.keyCode == 13 || event.keyCode == 13) {
+			$(".btnEnderezo").trigger('click');
+			return false;
+		} else {
+			return true;
+		}		
+	});
+	/*
+	 * O pulsar no boton buscar comprobamos se buscamos por enderezo ou non
+	 */
+	$(".btnEnderezo").click( function( event) {	
+		var buscarEnderezo = $("#checkBuscaEnderezo").is(':checked') ;		
+		var $buscarEnArea = $( "#buscarEnArea");
+		let rdo = false;
+		
+		if (buscarEnderezo) {
+			return buscarPorEnderezo ();			
+		}		
+		if  (! $buscarEnArea.val () == "S") {			 			
+			$buscarEnArea.val("N"); 					
+		}
+		return true;
+	});
+	/*
+	Calculamos as areas de influencia. Crease un gráfico por cada poligono 
+	*/
+	function calculaGraficoArea (i, areaJSON){
+		let graficos = [];				
+		if (areaJSON.type.toLowerCase() === "multipolygon") {
+			for (let index = 0 ; index< areaJSON.coordinates.length; index++) {
+				graficos.push ( creaGeometria (i, areaJSON.coordinates[index]));
+			}
+		} else {
+			graficos.push ( creaGeometria (i, areaJSON.coordinates));			
+		}		
+		return graficos;
+	}
+	/*Creamos a area de influencia.
+	*/
+	function creaGeometria (i, coordenadas) {
+		let geometry = { type: "polygon", spatialReference: spatialReference,rings : coordenadas};		
+		return new Graphic( {symbol: arrayAreaInfluenciaAreas [i % 10], geometry: geometry});
+	}
+	function buscarPorEnderezo () {		
+		let data = {};
+		data.address = document.getElementById('enderezo').value;		
+		if (!data.address) {
+			alert ("O campo enderezo non pode estar vacío");
+			return false;
+		}
+		data.city= $( "#comboConcello option:selected" ).text();
+		data.subRegion=$( "#filtroProvincia option:selected" ).text();
+		
+		return findDireccion (data);		
+	}
+	
+	 // Find places and add them to the map
+	function findDireccion( data) {
+		var defaults = { f: "pjson", maxLocations  : 1, Region: "Galicia", outSR :  MAP_SITEMA_REF_ESPACIAL };
+		var settings = $.extend( {}, defaults, data );
+		
+		var string  =new URLSearchParams(settings).toString();
+		$.getJSON( URL_GEOCODER,string)
+		.done(function(rdo) {
+			if (rdo.candidates.length> 0) {
+				$("#x").val (rdo.candidates[0].location.x);
+				$("#y").val (rdo.candidates[0].location.y);	
+				$("#buscarEnArea").val("S");
+				let formulario = document.forms[0];  
+				formulario.action= formulario.action+"?DIALOG-EVENT-buscarCentros";	
+				formulario.submit();				
+			} else {
+				alert('Non se encontrou o enderezo');
+			}
+		})
+		.fail(function(error) {
+			    alert.log( "Produciuse un erro na busqueda. Probe a buscar sen dirección");
+			    return false;
+		});
+		return false;
+	}
+	  
+	  function mostrarNoMapa (codigo) {
+		  var area = idsMostrar [codigo];	  
+		  if (area == null ) {		  
+			 let grafico = areasInfluencia[codigo].graphics;
+			 idsMostrar [codigo] = grafico;
+			 view.graphics.addMany (grafico);
+			 numMostrados++;
+		  }	    
+	  }
+	  function quitarDoMapa (codigo) {
+		  var area = idsMostrar [codigo];
+		  if (area != null ) {
+			  view.graphics.removeMany (area);
+			  idsMostrar [codigo] = null;
+			  numMostrados--;
+		  }	    
+	  }
+	  
+  function centraMapa () {
+	let zoom = 11;
+	let x = $("#x").val();
+	let grafico = null;
+	let center = null;
+	if (x > 0) {
+		center = new Point([x, $("#y").val()], spatialReference );
+		grafico = new Graphic({ geometry: center , symbol:symbol_marca });					
+	} else {
+		let cidade = $('#filtroConcello').val();
+		center = getCenterMap(cidade);
+		zoom = cidade?8:4;
+	}	
+	if (grafico) {
+  		view.graphics.add (grafico);
+  	}
+	if (center) {
+		view.goTo({center: center,zoom: zoom});
+	}
+  }
+
+	
+  /* Funcions combos*/
+  $("#filtroProvincia").change (function () {  return changeProvincia ();  });
+  $("#comboConcello"  ).change (function ()   {  changeConcello ();  });
+  
+  $("#comboConcello" ).focusout (function () {  return checkConcello ();  });    
+  $("#comboEnsinanza").focusout (function (){  return checkEnsinanza ();  });
+
+   let getLabel= function (item) {	return item.valor;	};
+   let getId = function (item) {	return item.codigo;	};
+   let getDato = null;
+  
+  function checkConcello() {
+	$('#filtroConcello').val($('#comboConcello').val());
+	return false;	
+  }
+  function checkEnsinanza() {
+    $('#filtroEnsinanza').val($('#comboEnsinanza').val());
+	return false;	
+  }
+  
+  function changeProvincia (inicio) {	
+		var provincia = $('#filtroProvincia').val();		
+		if (inicio !== 1 ) { // se non e inicio borrase o codConcello senon se manten.
+			$('#filtroConcello').val('');
+	    	$('#comboConcello').val('');
+		}
+		if (provincia > 0) {
+			centros_crearCombo ({
+	    		'url':'Concellos.do?DIALOG-EVENT-DeGalicia&provincia='+provincia,
+	    		'combo': 'comboConcello',  'campoId': '#filtroConcello',
+	    		'getId' : getId, 'getLabel': getLabel, 'getDato': getDato,
+	    		'funcionSeguinte': changeConcello,
+	    		'primeiraOpcion': '-- Seleccione un elemento --'
+	    	 });
+		}
+		return false;
+	}
+  	function changeConcello (inicio) {	
+		var concello = $('#comboConcello').val();			
+		var provincia = $('#filtroProvincia').val();
+		checkConcello();	
+		if (concello > 0 ) {			
+			centros_crearCombo( 
+				{'url':'Ensinanza.do?DIALOG-EVENT-areas&provincia='+provincia+'&concello='+concello,
+		    	 'combo': 'comboEnsinanza',  'campoId': '#filtroEnsinanza',
+		    	 'getId' : getId, 'getLabel': getLabel, 'getDato': getDato,
+		    	 'funcionSeguinte': changeEnsinanza,
+		    	 'primeiraOpcion': '-- Seleccione un elemento --'
+	    	 });
+		}
+		return false;
+	}
+  	
+  	function changeEnsinanza () {	
+  		checkEnsinanza ();
+  		centraMapa ();
+	}
+	changeProvincia (1);
+	
+	function cargarDatos (areasInfluencia) {
+	    let i = 0;
+	    let area;
+	    let areaJSON;
+	    
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[523018.5451,4677020.9003],[521054.7344,4676261.9927],[521629.7047,4675001.171],[521802.426,4674713.4076],[521883.0255,4674746.5246],[522083.4586,4675140.9963],[522082.9569,4675078.5664],[522102.306,4675034.6028],[522133.1739,4674991.1554],[522211.3382,4674929.0555],[522240.166,4674920.616],[522242.0712,4674869.0934],[522224.2147,4674847.594],[522176.6744,4674821.5462],[522275.2043,4674650.7338],[522403.8636,4674708.5959],[522548.106,4674464.8286],[522654.1319,4674530.2988],[522976.5258,4674859.7066],[523148.055,4675277.2708],[523394.4131,4675846.2829],[523101.3986,4676007.8158],[523085.0587,4676054.8237],[523077.9695,4676107.7745],[523063.5881,4676267.9784],[523051.9383,4676379.207],[523027.5566,4676594.8347],[523018.5451,4677020.9003]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Aloya';
+		area.codigo ='36011622'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[523059.9301,4675059.1938],[523114.1186,4675026.1305],[523213.5959,4674922.7631],[523283.1188,4674873.3813],[523335.0528,4674819.1273],[523378.8793,4674814.1022],[523378.898,4674756.3715],[523369.5259,4674719.0061],[523371.3717,4674674.0635],[523396.7882,4674638.5827],[523359.7314,4674540.6859],[523370.8386,4674483.0705],[523379.0267,4674416.7508],[523379.7957,4674349.0517],[523380.526,4674319.0833],[523364.2874,4674268.285],[523400.2735,4674212.8756],[523442.1353,4674144.7971],[523464.788,4674089.2431],[523499.9988,4674046.363],[523518.2241,4674032.4049],[523511.5822,4674007.7106],[523527.0088,4673961.1422],[523536.1168,4673937.7965],[523489.137,4673876.435],[523443.3425,4673789.8971],[523473.0576,4673729.2561],[523577.0602,4673695.511],[523595.9828,4673708.2887],[523596.3805,4673720.6655],[523921.0611,4673953.9321],[523828.7881,4673865.4999],[523595.9828,4673708.2887],[523595.5913,4673696.1027],[523624.3342,4673480.4495],[523571.0985,4673183.5019],[524452.1641,4672339.3168],[524679.258,4672273.1748],[524833.9549,4672464.0135],[525056.0718,4672694.8935],[527234.8854,4671567.6233],[531104.4669,4674017.4165],[528766.1707,4674622.3781],[527475.3752,4675331.6917],[525786.637,4675467.2975],[524586.4097,4675000.2763],[524525.3774,4675096.6541],[524475.7476,4675196.9219],[524443.9927,4675251.5066],[524397.0253,4675284.2178],[524325.0628,4675299.1489],[524283.3899,4675392.8815],[524035.8323,4675402.3158],[524079.5345,4675494.6123],[523393.8969,4675842.0621],[523148.9153,4675280.1153],[523107.9953,4675175.5507],[523059.9301,4675059.1938]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Fillas de María Inmaculada';
+		area.codigo ='36010794'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[527395.142,4677811.6709],[527035.4046,4677294.4524],[525932.8327,4676872.7316],[525552.5347,4676893.6461],[525356.1088,4677217.8891],[524974.0105,4676805.1676],[524949.9556,4676769.7178],[524902.2202,4676763.2452],[524677.6418,4676725.7519],[524435.8473,4676366.1538],[524490.3515,4676151.5392],[524449.8849,4676084.8881],[524385.3358,4676039.8763],[524344.8188,4676013.8941],[524157.7664,4675636.903],[524004.2098,4675533.5434],[524074.9837,4675497.356],[524034.9519,4675403.3906],[524281.5504,4675394.0068],[524317.2834,4675305.2757],[524326.1622,4675299.488],[524401.2274,4675285.8717],[524443.3607,4675248.9756],[524480.2637,4675197.5304],[524524.9633,4675097.7822],[524585.2897,4675000.1551],[525785.3315,4675465.5487],[527474.4457,4675326.936],[528770.8961,4674622.8535],[531104.297,4674006.6445],[531330.9972,4675826.9765],[527395.142,4677811.6709]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Martín Códax';
+		area.codigo ='36010095'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"multipolygon","coordinates":[[[[523038.466,4676552.8367],[523078.3657,4676103.8207],[523084.9602,4676045.6544],[523102.3914,4676006.1448],[523123.2121,4675988.8771],[523390.947,4675846.0449],[524001.7385,4675536.3957],[524157.0188,4675637.512],[524339.1957,4676009.2414],[524419.3329,4676062.7435],[524468.7313,4676109.6013],[524485.2502,4676147.4691],[524436.8212,4676367.7662],[524678.8814,4676728.1415],[524910.2308,4676764.8196],[524976.1869,4676807.0667],[525352.4356,4677226.4573],[525190.8837,4677434.1749],[525136.5554,4677389.1133],[525066.6667,4677307.5025],[525059.5118,4677286.1141],[525043.5368,4677218.1815],[524944.263,4677243.7397],[524915.2037,4677240.6804],[524885.017,4677242.6827],[524860.2755,4677227.7237],[524847.368,4677242.1451],[524827.0172,4677224.7006],[524803.0315,4677222.048],[524770.4092,4677210.394],[524752.8494,4677214.9154],[524746.2756,4677227.6274],[524686.5385,4677179.9416],[524655.5911,4677150.6756],[524609.1588,4677106.3686],[524598.9514,4677102.757],[524535.8068,4677015.2924],[524527.9754,4677001.4865],[524411.6274,4676917.9124],[524338.7292,4676870.2953],[524304.394,4676866.1523],[524288.9297,4676872.9008],[524199.1194,4676790.076],[523681.4038,4676875.3335],[523371.4327,4677021.3526],[523005.7049,4677010.8767],[523038.466,4676552.8367]]],[[[523034.4863,4676597.6264],[523051.0394,4676377.0601],[523038.466,4676552.8367],[523034.4863,4676597.6264]]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe Alba';
+		area.codigo ='36011531'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[527395.142,4677811.6709],[527035.4046,4677294.4524],[525932.8327,4676872.7316],[525552.5347,4676893.6461],[525356.1088,4677217.8891],[524974.0105,4676805.1676],[524949.9556,4676769.7178],[524902.2202,4676763.2452],[524677.6418,4676725.7519],[524435.8473,4676366.1538],[524490.3515,4676151.5392],[524449.8849,4676084.8881],[524385.3358,4676039.8763],[524344.8188,4676013.8941],[524157.7664,4675636.903],[524004.2098,4675533.5434],[524074.9837,4675497.356],[524034.9519,4675403.3906],[524281.5504,4675394.0068],[524317.2834,4675305.2757],[524326.1622,4675299.488],[524401.2274,4675285.8717],[524443.3607,4675248.9756],[524480.2637,4675197.5304],[524524.9633,4675097.7822],[524585.2897,4675000.1551],[525785.3315,4675465.5487],[527474.4457,4675326.936],[528770.8961,4674622.8535],[531104.297,4674006.6445],[531330.9972,4675826.9765],[527395.142,4677811.6709]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe Alborada';
+		area.codigo ='36010927'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[516593.4794,4674871.7273],[514798.2007,4673190.0244],[514030.9334,4671605.4658],[513850.8736,4668640.8117],[517639.1687,4667349.1729],[518988.623,4667872.2685],[520184.9138,4669249.6987],[520488.9367,4670789.6858],[520998.8653,4671459.1075],[520810.7134,4671636.6675],[520876.7716,4671757.4239],[520998.6428,4671825.3354],[521035.708,4671891.2752],[521081.4306,4672086.4712],[521054.4863,4672156.1783],[520630.7765,4672129.2055],[520607.0271,4672134.3071],[520443.9009,4672405.9191],[520527.7801,4672639.2443],[520607.0281,4672654.4275],[520742.262,4672742.446],[520815.6775,4672870.9311],[520858.6132,4672969.7873],[520954.7596,4673035.7864],[521257.0271,4673116.8128],[521439.2656,4673186.3482],[521653.6183,4673270.411],[521954.0672,4673306.4395],[521951.9712,4673370.5753],[521914.752,4673445.4826],[521739.1653,4673441.5969],[521803.5396,4673490.4052],[521838.0254,4673561.2323],[521848.5399,4673617.7874],[521856.3422,4673675.7434],[521872.1927,4673731.3618],[521929.7661,4673835.2656],[521926.9678,4673860.2768],[521911.8278,4673888.7207],[521892.1816,4673911.6769],[521863.3732,4673935.9708],[521784.1117,4674069.9889],[521729.8016,4674173.2268],[521653.2093,4674168.463],[521636.2616,4674186.6406],[521581.3343,4674257.5706],[521746.0827,4674330.5278],[521827.5555,4674356.0272],[521853.8847,4674372.3761],[521940.0402,4674401.7148],[521984.4364,4674416.2627],[521802.8421,4674718.9754],[521628.5623,4675021.6691],[521051.1359,4676288.6484],[516593.4794,4674871.7273]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe Amor de Dios';
+		area.codigo ='36009925'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[527248.3322,4671579.6545],[525070.1735,4672680.3348],[524680.7063,4672272.8252],[524468.1407,4672334.5887],[523579.575,4673170.9082],[523632.5862,4673483.6348],[523590.4107,4673705.9319],[523479.6124,4673725.5658],[523443.4633,4673799.0327],[523531.1642,4673934.9649],[523513.1059,4674035.3667],[523462.8216,4674094.5014],[523443.6614,4674159.3881],[523420.7978,4674184.2053],[523371.8262,4674170.3004],[523014.7719,4674171.1369],[522968.0251,4674007.4799],[522854.1338,4673912.5692],[522776.8041,4673903.1869],[522635.0973,4673930.7066],[522314.3446,4673812.8571],[522265.9527,4673684.7056],[522180.719,4673603.9691],[522092.9917,4673324.6717],[521634.2084,4673261.053],[521438.2024,4673188.3814],[521289.3768,4673124.6028],[521144.0943,4673081.6737],[521121.2732,4673073.2373],[520986.2827,4673042.9778],[520912.2552,4673008.4649],[520818.2904,4672954.3065],[520795.33,4672830.5823],[520735.9445,4672745.9996],[520649.6218,4672675.0963],[520522.1791,4672647.7329],[520452.6293,4672399.6465],[520607.5508,4672136.9688],[520807.5921,4672157.759],[520986.1616,4672185.3868],[521054.0615,4672224.7028],[521076.1235,4672104.9873],[521048.5654,4671954.849],[521023.652,4671892.4022],[520993.4513,4671834.5434],[520888.9339,4671760.2939],[520845.7039,4671721.5485],[520805.6914,4671641.6918],[520998.6423,4671453.2002],[520493.6451,4670790.9066],[520184.3796,4669245.8481],[519864.1292,4668883.5064],[519804.2763,4668808.1808],[518987.2685,4667872.7553],[517866.5893,4667444.5767],[523452.5959,4666124.9941],[526496.4082,4667033.247],[528422.8226,4670101.0085],[527248.3322,4671579.6545]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe Andersen Augalonga';
+		area.codigo ='36014209'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[523371.7868,4677013.5665],[523670.7869,4676878.0524],[524190.3671,4676794.0509],[524230.5236,4676814.7013],[524258.0751,4676848.0171],[524290.4883,4676870.5941],[524301.9629,4676865.0967],[524337.9487,4676869.9231],[524389.0019,4676902.526],[524526.3471,4677002.9693],[524597.4311,4677101.3654],[524609.206,4677106.6601],[524655.7096,4677150.7556],[524675.9673,4677173.1181],[524706.4425,4677192.5011],[524746.9904,4677226.466],[524751.2867,4677212.5558],[524770.5811,4677210.4179],[524789.7924,4677216.5848],[524825.6437,4677224.8735],[524848.6206,4677244.0398],[524862.5661,4677228.758],[524879.9871,4677240.5441],[524918.4875,4677239.5671],[524943.6079,4677246.0313],[525044.0561,4677220.2032],[525059.5901,4677297.0953],[525137.6132,4677388.7785],[525191.1283,4677436.6443],[525352.3218,4677225.3291],[525530.8131,4676903.6581],[525917.908,4676878.8689],[527037.3777,4677298.0458],[527426.0803,4677774.165],[526434.5271,4679501.1221],[524174.2156,4678984.5807],[523371.7868,4677013.5665]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe Apostol Santiago';
+		area.codigo ='36010903'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[527248.3322,4671579.6545],[525070.1735,4672680.3348],[524680.7063,4672272.8252],[524468.1407,4672334.5887],[523579.575,4673170.9082],[523632.5862,4673483.6348],[523590.4107,4673705.9319],[523479.6124,4673725.5658],[523443.4633,4673799.0327],[523531.1642,4673934.9649],[523513.1059,4674035.3667],[523462.8216,4674094.5014],[523443.6614,4674159.3881],[523420.7978,4674184.2053],[523371.8262,4674170.3004],[523014.7719,4674171.1369],[522968.0251,4674007.4799],[522854.1338,4673912.5692],[522776.8041,4673903.1869],[522635.0973,4673930.7066],[522314.3446,4673812.8571],[522265.9527,4673684.7056],[522180.719,4673603.9691],[522092.9917,4673324.6717],[521634.2084,4673261.053],[521438.2024,4673188.3814],[521289.3768,4673124.6028],[521144.0943,4673081.6737],[521121.2732,4673073.2373],[520986.2827,4673042.9778],[520912.2552,4673008.4649],[520818.2904,4672954.3065],[520795.33,4672830.5823],[520735.9445,4672745.9996],[520649.6218,4672675.0963],[520522.1791,4672647.7329],[520452.6293,4672399.6465],[520607.5508,4672136.9688],[520807.5921,4672157.759],[520986.1616,4672185.3868],[521054.0615,4672224.7028],[521076.1235,4672104.9873],[521048.5654,4671954.849],[521023.652,4671892.4022],[520993.4513,4671834.5434],[520888.9339,4671760.2939],[520845.7039,4671721.5485],[520805.6914,4671641.6918],[520998.6423,4671453.2002],[520493.6451,4670790.9066],[520184.3796,4669245.8481],[519864.1292,4668883.5064],[519804.2763,4668808.1808],[518987.2685,4667872.7553],[517866.5893,4667444.5767],[523452.5959,4666124.9941],[526496.4082,4667033.247],[528422.8226,4670101.0085],[527248.3322,4671579.6545]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe Barreiro';
+		area.codigo ='36010939'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[527395.142,4677811.6709],[527035.4046,4677294.4524],[525932.8327,4676872.7316],[525552.5347,4676893.6461],[525356.1088,4677217.8891],[524974.0105,4676805.1676],[524949.9556,4676769.7178],[524902.2202,4676763.2452],[524677.6418,4676725.7519],[524435.8473,4676366.1538],[524490.3515,4676151.5392],[524449.8849,4676084.8881],[524385.3358,4676039.8763],[524344.8188,4676013.8941],[524157.7664,4675636.903],[524004.2098,4675533.5434],[524074.9837,4675497.356],[524034.9519,4675403.3906],[524281.5504,4675394.0068],[524317.2834,4675305.2757],[524326.1622,4675299.488],[524401.2274,4675285.8717],[524443.3607,4675248.9756],[524480.2637,4675197.5304],[524524.9633,4675097.7822],[524585.2897,4675000.1551],[525785.3315,4675465.5487],[527474.4457,4675326.936],[528770.8961,4674622.8535],[531104.297,4674006.6445],[531330.9972,4675826.9765],[527395.142,4677811.6709]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe Bouza Brey';
+		area.codigo ='36024057'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[523018.5451,4677020.9003],[521054.7344,4676261.9927],[521629.7047,4675001.171],[521802.426,4674713.4076],[521883.0255,4674746.5246],[522083.4586,4675140.9963],[522082.9569,4675078.5664],[522102.306,4675034.6028],[522133.1739,4674991.1554],[522211.3382,4674929.0555],[522240.166,4674920.616],[522242.0712,4674869.0934],[522224.2147,4674847.594],[522176.6744,4674821.5462],[522275.2043,4674650.7338],[522403.8636,4674708.5959],[522548.106,4674464.8286],[522654.1319,4674530.2988],[522976.5258,4674859.7066],[523148.055,4675277.2708],[523394.4131,4675846.2829],[523101.3986,4676007.8158],[523085.0587,4676054.8237],[523077.9695,4676107.7745],[523063.5881,4676267.9784],[523051.9383,4676379.207],[523027.5566,4676594.8347],[523018.5451,4677020.9003]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe Compañía de María';
+		area.codigo ='36010976'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[516593.4794,4674871.7273],[514798.2007,4673190.0244],[514030.9334,4671605.4658],[513850.8736,4668640.8117],[517639.1687,4667349.1729],[518988.623,4667872.2685],[520184.9138,4669249.6987],[520488.9367,4670789.6858],[520998.8653,4671459.1075],[520810.7134,4671636.6675],[520876.7716,4671757.4239],[520998.6428,4671825.3354],[521035.708,4671891.2752],[521081.4306,4672086.4712],[521054.4863,4672156.1783],[520630.7765,4672129.2055],[520607.0271,4672134.3071],[520443.9009,4672405.9191],[520527.7801,4672639.2443],[520607.0281,4672654.4275],[520742.262,4672742.446],[520815.6775,4672870.9311],[520858.6132,4672969.7873],[520954.7596,4673035.7864],[521257.0271,4673116.8128],[521439.2656,4673186.3482],[521653.6183,4673270.411],[521954.0672,4673306.4395],[521951.9712,4673370.5753],[521914.752,4673445.4826],[521739.1653,4673441.5969],[521803.5396,4673490.4052],[521838.0254,4673561.2323],[521848.5399,4673617.7874],[521856.3422,4673675.7434],[521872.1927,4673731.3618],[521929.7661,4673835.2656],[521926.9678,4673860.2768],[521911.8278,4673888.7207],[521892.1816,4673911.6769],[521863.3732,4673935.9708],[521784.1117,4674069.9889],[521729.8016,4674173.2268],[521653.2093,4674168.463],[521636.2616,4674186.6406],[521581.3343,4674257.5706],[521746.0827,4674330.5278],[521827.5555,4674356.0272],[521853.8847,4674372.3761],[521940.0402,4674401.7148],[521984.4364,4674416.2627],[521802.8421,4674718.9754],[521628.5623,4675021.6691],[521051.1359,4676288.6484],[516593.4794,4674871.7273]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe Divino Salvador';
+		area.codigo ='36010216'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[516593.4794,4674871.7273],[514798.2007,4673190.0244],[514030.9334,4671605.4658],[513850.8736,4668640.8117],[517639.1687,4667349.1729],[518988.623,4667872.2685],[520184.9138,4669249.6987],[520488.9367,4670789.6858],[520998.8653,4671459.1075],[520810.7134,4671636.6675],[520876.7716,4671757.4239],[520998.6428,4671825.3354],[521035.708,4671891.2752],[521081.4306,4672086.4712],[521054.4863,4672156.1783],[520630.7765,4672129.2055],[520607.0271,4672134.3071],[520443.9009,4672405.9191],[520527.7801,4672639.2443],[520607.0281,4672654.4275],[520742.262,4672742.446],[520815.6775,4672870.9311],[520858.6132,4672969.7873],[520954.7596,4673035.7864],[521257.0271,4673116.8128],[521439.2656,4673186.3482],[521653.6183,4673270.411],[521954.0672,4673306.4395],[521951.9712,4673370.5753],[521914.752,4673445.4826],[521739.1653,4673441.5969],[521803.5396,4673490.4052],[521838.0254,4673561.2323],[521848.5399,4673617.7874],[521856.3422,4673675.7434],[521872.1927,4673731.3618],[521929.7661,4673835.2656],[521926.9678,4673860.2768],[521911.8278,4673888.7207],[521892.1816,4673911.6769],[521863.3732,4673935.9708],[521784.1117,4674069.9889],[521729.8016,4674173.2268],[521653.2093,4674168.463],[521636.2616,4674186.6406],[521581.3343,4674257.5706],[521746.0827,4674330.5278],[521827.5555,4674356.0272],[521853.8847,4674372.3761],[521940.0402,4674401.7148],[521984.4364,4674416.2627],[521802.8421,4674718.9754],[521628.5623,4675021.6691],[521051.1359,4676288.6484],[516593.4794,4674871.7273]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe Don Bosco';
+		area.codigo ='36011750'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[523018.5451,4677020.9003],[521054.7344,4676261.9927],[521629.7047,4675001.171],[521802.426,4674713.4076],[521883.0255,4674746.5246],[522083.4586,4675140.9963],[522082.9569,4675078.5664],[522102.306,4675034.6028],[522133.1739,4674991.1554],[522211.3382,4674929.0555],[522240.166,4674920.616],[522242.0712,4674869.0934],[522224.2147,4674847.594],[522176.6744,4674821.5462],[522275.2043,4674650.7338],[522403.8636,4674708.5959],[522548.106,4674464.8286],[522654.1319,4674530.2988],[522976.5258,4674859.7066],[523148.055,4675277.2708],[523394.4131,4675846.2829],[523101.3986,4676007.8158],[523085.0587,4676054.8237],[523077.9695,4676107.7745],[523063.5881,4676267.9784],[523051.9383,4676379.207],[523027.5566,4676594.8347],[523018.5451,4677020.9003]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe El Castro';
+		area.codigo ='36010435'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[523018.5451,4677020.9003],[521054.7344,4676261.9927],[521629.7047,4675001.171],[521802.426,4674713.4076],[521883.0255,4674746.5246],[522083.4586,4675140.9963],[522082.9569,4675078.5664],[522102.306,4675034.6028],[522133.1739,4674991.1554],[522211.3382,4674929.0555],[522240.166,4674920.616],[522242.0712,4674869.0934],[522224.2147,4674847.594],[522176.6744,4674821.5462],[522275.2043,4674650.7338],[522403.8636,4674708.5959],[522548.106,4674464.8286],[522654.1319,4674530.2988],[522976.5258,4674859.7066],[523148.055,4675277.2708],[523394.4131,4675846.2829],[523101.3986,4676007.8158],[523085.0587,4676054.8237],[523077.9695,4676107.7745],[523063.5881,4676267.9784],[523051.9383,4676379.207],[523027.5566,4676594.8347],[523018.5451,4677020.9003]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe El Pilar';
+		area.codigo ='36011257'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[527395.142,4677811.6709],[527035.4046,4677294.4524],[525932.8327,4676872.7316],[525552.5347,4676893.6461],[525356.1088,4677217.8891],[524974.0105,4676805.1676],[524949.9556,4676769.7178],[524902.2202,4676763.2452],[524677.6418,4676725.7519],[524435.8473,4676366.1538],[524490.3515,4676151.5392],[524449.8849,4676084.8881],[524385.3358,4676039.8763],[524344.8188,4676013.8941],[524157.7664,4675636.903],[524004.2098,4675533.5434],[524074.9837,4675497.356],[524034.9519,4675403.3906],[524281.5504,4675394.0068],[524317.2834,4675305.2757],[524326.1622,4675299.488],[524401.2274,4675285.8717],[524443.3607,4675248.9756],[524480.2637,4675197.5304],[524524.9633,4675097.7822],[524585.2897,4675000.1551],[525785.3315,4675465.5487],[527474.4457,4675326.936],[528770.8961,4674622.8535],[531104.297,4674006.6445],[531330.9972,4675826.9765],[527395.142,4677811.6709]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe Escuelas Nieto';
+		area.codigo ='36010356'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[523018.5451,4677020.9003],[521054.7344,4676261.9927],[521629.7047,4675001.171],[521802.426,4674713.4076],[521883.0255,4674746.5246],[522083.4586,4675140.9963],[522082.9569,4675078.5664],[522102.306,4675034.6028],[522133.1739,4674991.1554],[522211.3382,4674929.0555],[522240.166,4674920.616],[522242.0712,4674869.0934],[522224.2147,4674847.594],[522176.6744,4674821.5462],[522275.2043,4674650.7338],[522403.8636,4674708.5959],[522548.106,4674464.8286],[522654.1319,4674530.2988],[522976.5258,4674859.7066],[523148.055,4675277.2708],[523394.4131,4675846.2829],[523101.3986,4676007.8158],[523085.0587,4676054.8237],[523077.9695,4676107.7745],[523063.5881,4676267.9784],[523051.9383,4676379.207],[523027.5566,4676594.8347],[523018.5451,4677020.9003]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe Labor';
+		area.codigo ='36011099'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[523059.9301,4675059.1938],[523114.1186,4675026.1305],[523213.5959,4674922.7631],[523283.1188,4674873.3813],[523335.0528,4674819.1273],[523378.8793,4674814.1022],[523378.898,4674756.3715],[523369.5259,4674719.0061],[523371.3717,4674674.0635],[523396.7882,4674638.5827],[523359.7314,4674540.6859],[523370.8386,4674483.0705],[523379.0267,4674416.7508],[523379.7957,4674349.0517],[523380.526,4674319.0833],[523364.2874,4674268.285],[523400.2735,4674212.8756],[523442.1353,4674144.7971],[523464.788,4674089.2431],[523499.9988,4674046.363],[523518.2241,4674032.4049],[523511.5822,4674007.7106],[523527.0088,4673961.1422],[523536.1168,4673937.7965],[523489.137,4673876.435],[523443.3425,4673789.8971],[523473.0576,4673729.2561],[523577.0602,4673695.511],[523595.9828,4673708.2887],[523596.3805,4673720.6655],[523921.0611,4673953.9321],[523828.7881,4673865.4999],[523595.9828,4673708.2887],[523595.5913,4673696.1027],[523624.3342,4673480.4495],[523571.0985,4673183.5019],[524452.1641,4672339.3168],[524679.258,4672273.1748],[524833.9549,4672464.0135],[525056.0718,4672694.8935],[527234.8854,4671567.6233],[531104.4669,4674017.4165],[528766.1707,4674622.3781],[527475.3752,4675331.6917],[525786.637,4675467.2975],[524586.4097,4675000.2763],[524525.3774,4675096.6541],[524475.7476,4675196.9219],[524443.9927,4675251.5066],[524397.0253,4675284.2178],[524325.0628,4675299.1489],[524283.3899,4675392.8815],[524035.8323,4675402.3158],[524079.5345,4675494.6123],[523393.8969,4675842.0621],[523148.9153,4675280.1153],[523107.9953,4675175.5507],[523059.9301,4675059.1938]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe Las Acacias';
+		area.codigo ='36011831'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[527395.142,4677811.6709],[527035.4046,4677294.4524],[525932.8327,4676872.7316],[525552.5347,4676893.6461],[525356.1088,4677217.8891],[524974.0105,4676805.1676],[524949.9556,4676769.7178],[524902.2202,4676763.2452],[524677.6418,4676725.7519],[524435.8473,4676366.1538],[524490.3515,4676151.5392],[524449.8849,4676084.8881],[524385.3358,4676039.8763],[524344.8188,4676013.8941],[524157.7664,4675636.903],[524004.2098,4675533.5434],[524074.9837,4675497.356],[524034.9519,4675403.3906],[524281.5504,4675394.0068],[524317.2834,4675305.2757],[524326.1622,4675299.488],[524401.2274,4675285.8717],[524443.3607,4675248.9756],[524480.2637,4675197.5304],[524524.9633,4675097.7822],[524585.2897,4675000.1551],[525785.3315,4675465.5487],[527474.4457,4675326.936],[528770.8961,4674622.8535],[531104.297,4674006.6445],[531330.9972,4675826.9765],[527395.142,4677811.6709]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe Losada';
+		area.codigo ='36011117'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[523018.5451,4677020.9003],[521054.7344,4676261.9927],[521629.7047,4675001.171],[521802.426,4674713.4076],[521883.0255,4674746.5246],[522083.4586,4675140.9963],[522082.9569,4675078.5664],[522102.306,4675034.6028],[522133.1739,4674991.1554],[522211.3382,4674929.0555],[522240.166,4674920.616],[522242.0712,4674869.0934],[522224.2147,4674847.594],[522176.6744,4674821.5462],[522275.2043,4674650.7338],[522403.8636,4674708.5959],[522548.106,4674464.8286],[522654.1319,4674530.2988],[522976.5258,4674859.7066],[523148.055,4675277.2708],[523394.4131,4675846.2829],[523101.3986,4676007.8158],[523085.0587,4676054.8237],[523077.9695,4676107.7745],[523063.5881,4676267.9784],[523051.9383,4676379.207],[523027.5566,4676594.8347],[523018.5451,4677020.9003]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe María Auxiliadora';
+		area.codigo ='36011142'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[523018.5451,4677020.9003],[521054.7344,4676261.9927],[521629.7047,4675001.171],[521802.426,4674713.4076],[521883.0255,4674746.5246],[522083.4586,4675140.9963],[522082.9569,4675078.5664],[522102.306,4675034.6028],[522133.1739,4674991.1554],[522211.3382,4674929.0555],[522240.166,4674920.616],[522242.0712,4674869.0934],[522224.2147,4674847.594],[522176.6744,4674821.5462],[522275.2043,4674650.7338],[522403.8636,4674708.5959],[522548.106,4674464.8286],[522654.1319,4674530.2988],[522976.5258,4674859.7066],[523148.055,4675277.2708],[523394.4131,4675846.2829],[523101.3986,4676007.8158],[523085.0587,4676054.8237],[523077.9695,4676107.7745],[523063.5881,4676267.9784],[523051.9383,4676379.207],[523027.5566,4676594.8347],[523018.5451,4677020.9003]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe María Inmaculada';
+		area.codigo ='36011166'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[523059.9301,4675059.1938],[523114.1186,4675026.1305],[523213.5959,4674922.7631],[523283.1188,4674873.3813],[523335.0528,4674819.1273],[523378.8793,4674814.1022],[523378.898,4674756.3715],[523369.5259,4674719.0061],[523371.3717,4674674.0635],[523396.7882,4674638.5827],[523359.7314,4674540.6859],[523370.8386,4674483.0705],[523379.0267,4674416.7508],[523379.7957,4674349.0517],[523380.526,4674319.0833],[523364.2874,4674268.285],[523400.2735,4674212.8756],[523442.1353,4674144.7971],[523464.788,4674089.2431],[523499.9988,4674046.363],[523518.2241,4674032.4049],[523511.5822,4674007.7106],[523527.0088,4673961.1422],[523536.1168,4673937.7965],[523489.137,4673876.435],[523443.3425,4673789.8971],[523473.0576,4673729.2561],[523577.0602,4673695.511],[523595.9828,4673708.2887],[523596.3805,4673720.6655],[523921.0611,4673953.9321],[523828.7881,4673865.4999],[523595.9828,4673708.2887],[523595.5913,4673696.1027],[523624.3342,4673480.4495],[523571.0985,4673183.5019],[524452.1641,4672339.3168],[524679.258,4672273.1748],[524833.9549,4672464.0135],[525056.0718,4672694.8935],[527234.8854,4671567.6233],[531104.4669,4674017.4165],[528766.1707,4674622.3781],[527475.3752,4675331.6917],[525786.637,4675467.2975],[524586.4097,4675000.2763],[524525.3774,4675096.6541],[524475.7476,4675196.9219],[524443.9927,4675251.5066],[524397.0253,4675284.2178],[524325.0628,4675299.1489],[524283.3899,4675392.8815],[524035.8323,4675402.3158],[524079.5345,4675494.6123],[523393.8969,4675842.0621],[523148.9153,4675280.1153],[523107.9953,4675175.5507],[523059.9301,4675059.1938]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe Mariano';
+		area.codigo ='36011181'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[522544.482,4674462.1683],[522405.6193,4674707.2193],[522278.4103,4674649.6797],[522177.2595,4674821.1238],[522229.5311,4674842.6922],[522241.8601,4674865.1959],[522238.7614,4674921.9789],[522214.2828,4674926.7682],[522131.4461,4674986.0253],[522095.1675,4675035.6268],[522082.7009,4675076.3828],[522086.8533,4675130.0647],[522083.9091,4675137.3657],[521882.7341,4674742.767],[521803.5021,4674715.6009],[521987.8817,4674412.5177],[521855.6623,4674372.068],[521827.2345,4674358.2118],[521808.7443,4674349.7104],[521578.8586,4674256.7554],[521637.0924,4674187.9103],[521651.235,4674171.373],[521728.1942,4674174.6105],[521782.5438,4674070.4711],[521860.4009,4673937.9377],[521887.8276,4673915.2791],[521910.4012,4673890.673],[521927.7453,4673859.8652],[521927.3481,4673840.0521],[521871.8243,4673734.4386],[521855.0127,4673666.3167],[521849.8841,4673624.2905],[521840.7401,4673578.3406],[521816.2785,4673514.6783],[521798.5437,4673486.8718],[521750.3085,4673462.9732],[521747.3359,4673445.6997],[521917.6844,4673446.0889],[521953.6308,4673370.9739],[521960.7097,4673306.4099],[522099.7978,4673327.9679],[522183.9627,4673608.3636],[522267.6404,4673683.8158],[522311.319,4673809.8996],[522403.3774,4673835.8759],[522521.467,4673894.3661],[522636.6778,4673933.9859],[522784.6016,4673905.4221],[522853.2542,4673917.1435],[522966.5948,4674007.3896],[523012.7694,4674175.4589],[523158.1202,4674163.1784],[523373.6062,4674173.2942],[523418.435,4674188.0143],[523361.2185,4674275.1932],[523379.3001,4674315.8733],[523378.3875,4674347.3016],[523379.465,4674391.8691],[523382.6009,4674413.9702],[523370.9191,4674481.5554],[523362.6079,4674513.7121],[523356.4422,4674543.4819],[523394.5815,4674640.5681],[523370.2894,4674677.5934],[523366.6361,4674711.9644],[523379.6269,4674760.053],[523378.9123,4674818.2019],[523346.3629,4674817.09],[523334.6398,4674816.8335],[523284.3679,4674873.6281],[523264.07,4674892.0848],[523212.2738,4674921.7628],[523161.5679,4674978.3494],[523117.14,4675023.7112],[523104.1104,4675036.6734],[523056.6931,4675058.3317],[522976.5685,4674858.1847],[522655.9357,4674534.7217],[522544.482,4674462.1683]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe Mercantil';
+		area.codigo ='36011518'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[522544.482,4674462.1683],[522405.6193,4674707.2193],[522278.4103,4674649.6797],[522177.2595,4674821.1238],[522229.5311,4674842.6922],[522241.8601,4674865.1959],[522238.7614,4674921.9789],[522214.2828,4674926.7682],[522131.4461,4674986.0253],[522095.1675,4675035.6268],[522082.7009,4675076.3828],[522086.8533,4675130.0647],[522083.9091,4675137.3657],[521882.7341,4674742.767],[521803.5021,4674715.6009],[521987.8817,4674412.5177],[521855.6623,4674372.068],[521827.2345,4674358.2118],[521808.7443,4674349.7104],[521578.8586,4674256.7554],[521637.0924,4674187.9103],[521651.235,4674171.373],[521728.1942,4674174.6105],[521782.5438,4674070.4711],[521860.4009,4673937.9377],[521887.8276,4673915.2791],[521910.4012,4673890.673],[521927.7453,4673859.8652],[521927.3481,4673840.0521],[521871.8243,4673734.4386],[521855.0127,4673666.3167],[521849.8841,4673624.2905],[521840.7401,4673578.3406],[521816.2785,4673514.6783],[521798.5437,4673486.8718],[521750.3085,4673462.9732],[521747.3359,4673445.6997],[521917.6844,4673446.0889],[521953.6308,4673370.9739],[521960.7097,4673306.4099],[522099.7978,4673327.9679],[522183.9627,4673608.3636],[522267.6404,4673683.8158],[522311.319,4673809.8996],[522403.3774,4673835.8759],[522521.467,4673894.3661],[522636.6778,4673933.9859],[522784.6016,4673905.4221],[522853.2542,4673917.1435],[522966.5948,4674007.3896],[523012.7694,4674175.4589],[523158.1202,4674163.1784],[523373.6062,4674173.2942],[523418.435,4674188.0143],[523361.2185,4674275.1932],[523379.3001,4674315.8733],[523378.3875,4674347.3016],[523379.465,4674391.8691],[523382.6009,4674413.9702],[523370.9191,4674481.5554],[523362.6079,4674513.7121],[523356.4422,4674543.4819],[523394.5815,4674640.5681],[523370.2894,4674677.5934],[523366.6361,4674711.9644],[523379.6269,4674760.053],[523378.9123,4674818.2019],[523346.3629,4674817.09],[523334.6398,4674816.8335],[523284.3679,4674873.6281],[523264.07,4674892.0848],[523212.2738,4674921.7628],[523161.5679,4674978.3494],[523117.14,4675023.7112],[523104.1104,4675036.6734],[523056.6931,4675058.3317],[522976.5685,4674858.1847],[522655.9357,4674534.7217],[522544.482,4674462.1683]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe Miralba';
+		area.codigo ='36011178'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[523059.9301,4675059.1938],[523114.1186,4675026.1305],[523213.5959,4674922.7631],[523283.1188,4674873.3813],[523335.0528,4674819.1273],[523378.8793,4674814.1022],[523378.898,4674756.3715],[523369.5259,4674719.0061],[523371.3717,4674674.0635],[523396.7882,4674638.5827],[523359.7314,4674540.6859],[523370.8386,4674483.0705],[523379.0267,4674416.7508],[523379.7957,4674349.0517],[523380.526,4674319.0833],[523364.2874,4674268.285],[523400.2735,4674212.8756],[523442.1353,4674144.7971],[523464.788,4674089.2431],[523499.9988,4674046.363],[523518.2241,4674032.4049],[523511.5822,4674007.7106],[523527.0088,4673961.1422],[523536.1168,4673937.7965],[523489.137,4673876.435],[523443.3425,4673789.8971],[523473.0576,4673729.2561],[523577.0602,4673695.511],[523595.9828,4673708.2887],[523596.3805,4673720.6655],[523921.0611,4673953.9321],[523828.7881,4673865.4999],[523595.9828,4673708.2887],[523595.5913,4673696.1027],[523624.3342,4673480.4495],[523571.0985,4673183.5019],[524452.1641,4672339.3168],[524679.258,4672273.1748],[524833.9549,4672464.0135],[525056.0718,4672694.8935],[527234.8854,4671567.6233],[531104.4669,4674017.4165],[528766.1707,4674622.3781],[527475.3752,4675331.6917],[525786.637,4675467.2975],[524586.4097,4675000.2763],[524525.3774,4675096.6541],[524475.7476,4675196.9219],[524443.9927,4675251.5066],[524397.0253,4675284.2178],[524325.0628,4675299.1489],[524283.3899,4675392.8815],[524035.8323,4675402.3158],[524079.5345,4675494.6123],[523393.8969,4675842.0621],[523148.9153,4675280.1153],[523107.9953,4675175.5507],[523059.9301,4675059.1938]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe Montecastelo';
+		area.codigo ='36011191'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[527395.142,4677811.6709],[527035.4046,4677294.4524],[525932.8327,4676872.7316],[525552.5347,4676893.6461],[525356.1088,4677217.8891],[524974.0105,4676805.1676],[524949.9556,4676769.7178],[524902.2202,4676763.2452],[524677.6418,4676725.7519],[524435.8473,4676366.1538],[524490.3515,4676151.5392],[524449.8849,4676084.8881],[524385.3358,4676039.8763],[524344.8188,4676013.8941],[524157.7664,4675636.903],[524004.2098,4675533.5434],[524074.9837,4675497.356],[524034.9519,4675403.3906],[524281.5504,4675394.0068],[524317.2834,4675305.2757],[524326.1622,4675299.488],[524401.2274,4675285.8717],[524443.3607,4675248.9756],[524480.2637,4675197.5304],[524524.9633,4675097.7822],[524585.2897,4675000.1551],[525785.3315,4675465.5487],[527474.4457,4675326.936],[528770.8961,4674622.8535],[531104.297,4674006.6445],[531330.9972,4675826.9765],[527395.142,4677811.6709]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe Monterrey';
+		area.codigo ='36010824'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[516593.4794,4674871.7273],[514798.2007,4673190.0244],[514030.9334,4671605.4658],[513850.8736,4668640.8117],[517639.1687,4667349.1729],[518988.623,4667872.2685],[520184.9138,4669249.6987],[520488.9367,4670789.6858],[520998.8653,4671459.1075],[520810.7134,4671636.6675],[520876.7716,4671757.4239],[520998.6428,4671825.3354],[521035.708,4671891.2752],[521081.4306,4672086.4712],[521054.4863,4672156.1783],[520630.7765,4672129.2055],[520607.0271,4672134.3071],[520443.9009,4672405.9191],[520527.7801,4672639.2443],[520607.0281,4672654.4275],[520742.262,4672742.446],[520815.6775,4672870.9311],[520858.6132,4672969.7873],[520954.7596,4673035.7864],[521257.0271,4673116.8128],[521439.2656,4673186.3482],[521653.6183,4673270.411],[521954.0672,4673306.4395],[521951.9712,4673370.5753],[521914.752,4673445.4826],[521739.1653,4673441.5969],[521803.5396,4673490.4052],[521838.0254,4673561.2323],[521848.5399,4673617.7874],[521856.3422,4673675.7434],[521872.1927,4673731.3618],[521929.7661,4673835.2656],[521926.9678,4673860.2768],[521911.8278,4673888.7207],[521892.1816,4673911.6769],[521863.3732,4673935.9708],[521784.1117,4674069.9889],[521729.8016,4674173.2268],[521653.2093,4674168.463],[521636.2616,4674186.6406],[521581.3343,4674257.5706],[521746.0827,4674330.5278],[521827.5555,4674356.0272],[521853.8847,4674372.3761],[521940.0402,4674401.7148],[521984.4364,4674416.2627],[521802.8421,4674718.9754],[521628.5623,4675021.6691],[521051.1359,4676288.6484],[516593.4794,4674871.7273]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe Montesol';
+		area.codigo ='36016097'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"multipolygon","coordinates":[[[[523038.466,4676552.8367],[523078.3657,4676103.8207],[523084.9602,4676045.6544],[523102.3914,4676006.1448],[523123.2121,4675988.8771],[523390.947,4675846.0449],[524001.7385,4675536.3957],[524157.0188,4675637.512],[524339.1957,4676009.2414],[524419.3329,4676062.7435],[524468.7313,4676109.6013],[524485.2502,4676147.4691],[524436.8212,4676367.7662],[524678.8814,4676728.1415],[524910.2308,4676764.8196],[524976.1869,4676807.0667],[525352.4356,4677226.4573],[525190.8837,4677434.1749],[525136.5554,4677389.1133],[525066.6667,4677307.5025],[525059.5118,4677286.1141],[525043.5368,4677218.1815],[524944.263,4677243.7397],[524915.2037,4677240.6804],[524885.017,4677242.6827],[524860.2755,4677227.7237],[524847.368,4677242.1451],[524827.0172,4677224.7006],[524803.0315,4677222.048],[524770.4092,4677210.394],[524752.8494,4677214.9154],[524746.2756,4677227.6274],[524686.5385,4677179.9416],[524655.5911,4677150.6756],[524609.1588,4677106.3686],[524598.9514,4677102.757],[524535.8068,4677015.2924],[524527.9754,4677001.4865],[524411.6274,4676917.9124],[524338.7292,4676870.2953],[524304.394,4676866.1523],[524288.9297,4676872.9008],[524199.1194,4676790.076],[523681.4038,4676875.3335],[523371.4327,4677021.3526],[523005.7049,4677010.8767],[523038.466,4676552.8367]]],[[[523034.4863,4676597.6264],[523051.0394,4676377.0601],[523038.466,4676552.8367],[523034.4863,4676597.6264]]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe Niño Jesús de Praga';
+		area.codigo ='36010800'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[523059.9301,4675059.1938],[523114.1186,4675026.1305],[523213.5959,4674922.7631],[523283.1188,4674873.3813],[523335.0528,4674819.1273],[523378.8793,4674814.1022],[523378.898,4674756.3715],[523369.5259,4674719.0061],[523371.3717,4674674.0635],[523396.7882,4674638.5827],[523359.7314,4674540.6859],[523370.8386,4674483.0705],[523379.0267,4674416.7508],[523379.7957,4674349.0517],[523380.526,4674319.0833],[523364.2874,4674268.285],[523400.2735,4674212.8756],[523442.1353,4674144.7971],[523464.788,4674089.2431],[523499.9988,4674046.363],[523518.2241,4674032.4049],[523511.5822,4674007.7106],[523527.0088,4673961.1422],[523536.1168,4673937.7965],[523489.137,4673876.435],[523443.3425,4673789.8971],[523473.0576,4673729.2561],[523577.0602,4673695.511],[523595.9828,4673708.2887],[523596.3805,4673720.6655],[523921.0611,4673953.9321],[523828.7881,4673865.4999],[523595.9828,4673708.2887],[523595.5913,4673696.1027],[523624.3342,4673480.4495],[523571.0985,4673183.5019],[524452.1641,4672339.3168],[524679.258,4672273.1748],[524833.9549,4672464.0135],[525056.0718,4672694.8935],[527234.8854,4671567.6233],[531104.4669,4674017.4165],[528766.1707,4674622.3781],[527475.3752,4675331.6917],[525786.637,4675467.2975],[524586.4097,4675000.2763],[524525.3774,4675096.6541],[524475.7476,4675196.9219],[524443.9927,4675251.5066],[524397.0253,4675284.2178],[524325.0628,4675299.1489],[524283.3899,4675392.8815],[524035.8323,4675402.3158],[524079.5345,4675494.6123],[523393.8969,4675842.0621],[523148.9153,4675280.1153],[523107.9953,4675175.5507],[523059.9301,4675059.1938]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe Ntra. Señora de la Esperanza';
+		area.codigo ='36011385'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"multipolygon","coordinates":[[[[523038.466,4676552.8367],[523078.3657,4676103.8207],[523084.9602,4676045.6544],[523102.3914,4676006.1448],[523123.2121,4675988.8771],[523390.947,4675846.0449],[524001.7385,4675536.3957],[524157.0188,4675637.512],[524339.1957,4676009.2414],[524419.3329,4676062.7435],[524468.7313,4676109.6013],[524485.2502,4676147.4691],[524436.8212,4676367.7662],[524678.8814,4676728.1415],[524910.2308,4676764.8196],[524976.1869,4676807.0667],[525352.4356,4677226.4573],[525190.8837,4677434.1749],[525136.5554,4677389.1133],[525066.6667,4677307.5025],[525059.5118,4677286.1141],[525043.5368,4677218.1815],[524944.263,4677243.7397],[524915.2037,4677240.6804],[524885.017,4677242.6827],[524860.2755,4677227.7237],[524847.368,4677242.1451],[524827.0172,4677224.7006],[524803.0315,4677222.048],[524770.4092,4677210.394],[524752.8494,4677214.9154],[524746.2756,4677227.6274],[524686.5385,4677179.9416],[524655.5911,4677150.6756],[524609.1588,4677106.3686],[524598.9514,4677102.757],[524535.8068,4677015.2924],[524527.9754,4677001.4865],[524411.6274,4676917.9124],[524338.7292,4676870.2953],[524304.394,4676866.1523],[524288.9297,4676872.9008],[524199.1194,4676790.076],[523681.4038,4676875.3335],[523371.4327,4677021.3526],[523005.7049,4677010.8767],[523038.466,4676552.8367]]],[[[523034.4863,4676597.6264],[523051.0394,4676377.0601],[523038.466,4676552.8367],[523034.4863,4676597.6264]]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe Padre Míguez';
+		area.codigo ='36011221'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[523371.7868,4677013.5665],[523670.7869,4676878.0524],[524190.3671,4676794.0509],[524230.5236,4676814.7013],[524258.0751,4676848.0171],[524290.4883,4676870.5941],[524301.9629,4676865.0967],[524337.9487,4676869.9231],[524389.0019,4676902.526],[524526.3471,4677002.9693],[524597.4311,4677101.3654],[524609.206,4677106.6601],[524655.7096,4677150.7556],[524675.9673,4677173.1181],[524706.4425,4677192.5011],[524746.9904,4677226.466],[524751.2867,4677212.5558],[524770.5811,4677210.4179],[524789.7924,4677216.5848],[524825.6437,4677224.8735],[524848.6206,4677244.0398],[524862.5661,4677228.758],[524879.9871,4677240.5441],[524918.4875,4677239.5671],[524943.6079,4677246.0313],[525044.0561,4677220.2032],[525059.5901,4677297.0953],[525137.6132,4677388.7785],[525191.1283,4677436.6443],[525352.3218,4677225.3291],[525530.8131,4676903.6581],[525917.908,4676878.8689],[527037.3777,4677298.0458],[527426.0803,4677774.165],[526434.5271,4679501.1221],[524174.2156,4678984.5807],[523371.7868,4677013.5665]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe Possumus';
+		area.codigo ='36011491'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[523059.9301,4675059.1938],[523114.1186,4675026.1305],[523213.5959,4674922.7631],[523283.1188,4674873.3813],[523335.0528,4674819.1273],[523378.8793,4674814.1022],[523378.898,4674756.3715],[523369.5259,4674719.0061],[523371.3717,4674674.0635],[523396.7882,4674638.5827],[523359.7314,4674540.6859],[523370.8386,4674483.0705],[523379.0267,4674416.7508],[523379.7957,4674349.0517],[523380.526,4674319.0833],[523364.2874,4674268.285],[523400.2735,4674212.8756],[523442.1353,4674144.7971],[523464.788,4674089.2431],[523499.9988,4674046.363],[523518.2241,4674032.4049],[523511.5822,4674007.7106],[523527.0088,4673961.1422],[523536.1168,4673937.7965],[523489.137,4673876.435],[523443.3425,4673789.8971],[523473.0576,4673729.2561],[523577.0602,4673695.511],[523595.9828,4673708.2887],[523596.3805,4673720.6655],[523921.0611,4673953.9321],[523828.7881,4673865.4999],[523595.9828,4673708.2887],[523595.5913,4673696.1027],[523624.3342,4673480.4495],[523571.0985,4673183.5019],[524452.1641,4672339.3168],[524679.258,4672273.1748],[524833.9549,4672464.0135],[525056.0718,4672694.8935],[527234.8854,4671567.6233],[531104.4669,4674017.4165],[528766.1707,4674622.3781],[527475.3752,4675331.6917],[525786.637,4675467.2975],[524586.4097,4675000.2763],[524525.3774,4675096.6541],[524475.7476,4675196.9219],[524443.9927,4675251.5066],[524397.0253,4675284.2178],[524325.0628,4675299.1489],[524283.3899,4675392.8815],[524035.8323,4675402.3158],[524079.5345,4675494.6123],[523393.8969,4675842.0621],[523148.9153,4675280.1153],[523107.9953,4675175.5507],[523059.9301,4675059.1938]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe Rosalía de Castro';
+		area.codigo ='36011270'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[523059.9301,4675059.1938],[523114.1186,4675026.1305],[523213.5959,4674922.7631],[523283.1188,4674873.3813],[523335.0528,4674819.1273],[523378.8793,4674814.1022],[523378.898,4674756.3715],[523369.5259,4674719.0061],[523371.3717,4674674.0635],[523396.7882,4674638.5827],[523359.7314,4674540.6859],[523370.8386,4674483.0705],[523379.0267,4674416.7508],[523379.7957,4674349.0517],[523380.526,4674319.0833],[523364.2874,4674268.285],[523400.2735,4674212.8756],[523442.1353,4674144.7971],[523464.788,4674089.2431],[523499.9988,4674046.363],[523518.2241,4674032.4049],[523511.5822,4674007.7106],[523527.0088,4673961.1422],[523536.1168,4673937.7965],[523489.137,4673876.435],[523443.3425,4673789.8971],[523473.0576,4673729.2561],[523577.0602,4673695.511],[523595.9828,4673708.2887],[523596.3805,4673720.6655],[523921.0611,4673953.9321],[523828.7881,4673865.4999],[523595.9828,4673708.2887],[523595.5913,4673696.1027],[523624.3342,4673480.4495],[523571.0985,4673183.5019],[524452.1641,4672339.3168],[524679.258,4672273.1748],[524833.9549,4672464.0135],[525056.0718,4672694.8935],[527234.8854,4671567.6233],[531104.4669,4674017.4165],[528766.1707,4674622.3781],[527475.3752,4675331.6917],[525786.637,4675467.2975],[524586.4097,4675000.2763],[524525.3774,4675096.6541],[524475.7476,4675196.9219],[524443.9927,4675251.5066],[524397.0253,4675284.2178],[524325.0628,4675299.1489],[524283.3899,4675392.8815],[524035.8323,4675402.3158],[524079.5345,4675494.6123],[523393.8969,4675842.0621],[523148.9153,4675280.1153],[523107.9953,4675175.5507],[523059.9301,4675059.1938]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe San Blas - Vista Alegre';
+		area.codigo ='36011300'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[522544.482,4674462.1683],[522405.6193,4674707.2193],[522278.4103,4674649.6797],[522177.2595,4674821.1238],[522229.5311,4674842.6922],[522241.8601,4674865.1959],[522238.7614,4674921.9789],[522214.2828,4674926.7682],[522131.4461,4674986.0253],[522095.1675,4675035.6268],[522082.7009,4675076.3828],[522086.8533,4675130.0647],[522083.9091,4675137.3657],[521882.7341,4674742.767],[521803.5021,4674715.6009],[521987.8817,4674412.5177],[521855.6623,4674372.068],[521827.2345,4674358.2118],[521808.7443,4674349.7104],[521578.8586,4674256.7554],[521637.0924,4674187.9103],[521651.235,4674171.373],[521728.1942,4674174.6105],[521782.5438,4674070.4711],[521860.4009,4673937.9377],[521887.8276,4673915.2791],[521910.4012,4673890.673],[521927.7453,4673859.8652],[521927.3481,4673840.0521],[521871.8243,4673734.4386],[521855.0127,4673666.3167],[521849.8841,4673624.2905],[521840.7401,4673578.3406],[521816.2785,4673514.6783],[521798.5437,4673486.8718],[521750.3085,4673462.9732],[521747.3359,4673445.6997],[521917.6844,4673446.0889],[521953.6308,4673370.9739],[521960.7097,4673306.4099],[522099.7978,4673327.9679],[522183.9627,4673608.3636],[522267.6404,4673683.8158],[522311.319,4673809.8996],[522403.3774,4673835.8759],[522521.467,4673894.3661],[522636.6778,4673933.9859],[522784.6016,4673905.4221],[522853.2542,4673917.1435],[522966.5948,4674007.3896],[523012.7694,4674175.4589],[523158.1202,4674163.1784],[523373.6062,4674173.2942],[523418.435,4674188.0143],[523361.2185,4674275.1932],[523379.3001,4674315.8733],[523378.3875,4674347.3016],[523379.465,4674391.8691],[523382.6009,4674413.9702],[523370.9191,4674481.5554],[523362.6079,4674513.7121],[523356.4422,4674543.4819],[523394.5815,4674640.5681],[523370.2894,4674677.5934],[523366.6361,4674711.9644],[523379.6269,4674760.053],[523378.9123,4674818.2019],[523346.3629,4674817.09],[523334.6398,4674816.8335],[523284.3679,4674873.6281],[523264.07,4674892.0848],[523212.2738,4674921.7628],[523161.5679,4674978.3494],[523117.14,4675023.7112],[523104.1104,4675036.6734],[523056.6931,4675058.3317],[522976.5685,4674858.1847],[522655.9357,4674534.7217],[522544.482,4674462.1683]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe San Fernando';
+		area.codigo ='36010848'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[523059.9301,4675059.1938],[523114.1186,4675026.1305],[523213.5959,4674922.7631],[523283.1188,4674873.3813],[523335.0528,4674819.1273],[523378.8793,4674814.1022],[523378.898,4674756.3715],[523369.5259,4674719.0061],[523371.3717,4674674.0635],[523396.7882,4674638.5827],[523359.7314,4674540.6859],[523370.8386,4674483.0705],[523379.0267,4674416.7508],[523379.7957,4674349.0517],[523380.526,4674319.0833],[523364.2874,4674268.285],[523400.2735,4674212.8756],[523442.1353,4674144.7971],[523464.788,4674089.2431],[523499.9988,4674046.363],[523518.2241,4674032.4049],[523511.5822,4674007.7106],[523527.0088,4673961.1422],[523536.1168,4673937.7965],[523489.137,4673876.435],[523443.3425,4673789.8971],[523473.0576,4673729.2561],[523577.0602,4673695.511],[523595.9828,4673708.2887],[523596.3805,4673720.6655],[523921.0611,4673953.9321],[523828.7881,4673865.4999],[523595.9828,4673708.2887],[523595.5913,4673696.1027],[523624.3342,4673480.4495],[523571.0985,4673183.5019],[524452.1641,4672339.3168],[524679.258,4672273.1748],[524833.9549,4672464.0135],[525056.0718,4672694.8935],[527234.8854,4671567.6233],[531104.4669,4674017.4165],[528766.1707,4674622.3781],[527475.3752,4675331.6917],[525786.637,4675467.2975],[524586.4097,4675000.2763],[524525.3774,4675096.6541],[524475.7476,4675196.9219],[524443.9927,4675251.5066],[524397.0253,4675284.2178],[524325.0628,4675299.1489],[524283.3899,4675392.8815],[524035.8323,4675402.3158],[524079.5345,4675494.6123],[523393.8969,4675842.0621],[523148.9153,4675280.1153],[523107.9953,4675175.5507],[523059.9301,4675059.1938]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe San José de Cluny';
+		area.codigo ='36011351'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[523371.7868,4677013.5665],[523670.7869,4676878.0524],[524190.3671,4676794.0509],[524230.5236,4676814.7013],[524258.0751,4676848.0171],[524290.4883,4676870.5941],[524301.9629,4676865.0967],[524337.9487,4676869.9231],[524389.0019,4676902.526],[524526.3471,4677002.9693],[524597.4311,4677101.3654],[524609.206,4677106.6601],[524655.7096,4677150.7556],[524675.9673,4677173.1181],[524706.4425,4677192.5011],[524746.9904,4677226.466],[524751.2867,4677212.5558],[524770.5811,4677210.4179],[524789.7924,4677216.5848],[524825.6437,4677224.8735],[524848.6206,4677244.0398],[524862.5661,4677228.758],[524879.9871,4677240.5441],[524918.4875,4677239.5671],[524943.6079,4677246.0313],[525044.0561,4677220.2032],[525059.5901,4677297.0953],[525137.6132,4677388.7785],[525191.1283,4677436.6443],[525352.3218,4677225.3291],[525530.8131,4676903.6581],[525917.908,4676878.8689],[527037.3777,4677298.0458],[527426.0803,4677774.165],[526434.5271,4679501.1221],[524174.2156,4678984.5807],[523371.7868,4677013.5665]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe San José de la Guía';
+		area.codigo ='36011361'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[522544.482,4674462.1683],[522405.6193,4674707.2193],[522278.4103,4674649.6797],[522177.2595,4674821.1238],[522229.5311,4674842.6922],[522241.8601,4674865.1959],[522238.7614,4674921.9789],[522214.2828,4674926.7682],[522131.4461,4674986.0253],[522095.1675,4675035.6268],[522082.7009,4675076.3828],[522086.8533,4675130.0647],[522083.9091,4675137.3657],[521882.7341,4674742.767],[521803.5021,4674715.6009],[521987.8817,4674412.5177],[521855.6623,4674372.068],[521827.2345,4674358.2118],[521808.7443,4674349.7104],[521578.8586,4674256.7554],[521637.0924,4674187.9103],[521651.235,4674171.373],[521728.1942,4674174.6105],[521782.5438,4674070.4711],[521860.4009,4673937.9377],[521887.8276,4673915.2791],[521910.4012,4673890.673],[521927.7453,4673859.8652],[521927.3481,4673840.0521],[521871.8243,4673734.4386],[521855.0127,4673666.3167],[521849.8841,4673624.2905],[521840.7401,4673578.3406],[521816.2785,4673514.6783],[521798.5437,4673486.8718],[521750.3085,4673462.9732],[521747.3359,4673445.6997],[521917.6844,4673446.0889],[521953.6308,4673370.9739],[521960.7097,4673306.4099],[522099.7978,4673327.9679],[522183.9627,4673608.3636],[522267.6404,4673683.8158],[522311.319,4673809.8996],[522403.3774,4673835.8759],[522521.467,4673894.3661],[522636.6778,4673933.9859],[522784.6016,4673905.4221],[522853.2542,4673917.1435],[522966.5948,4674007.3896],[523012.7694,4674175.4589],[523158.1202,4674163.1784],[523373.6062,4674173.2942],[523418.435,4674188.0143],[523361.2185,4674275.1932],[523379.3001,4674315.8733],[523378.3875,4674347.3016],[523379.465,4674391.8691],[523382.6009,4674413.9702],[523370.9191,4674481.5554],[523362.6079,4674513.7121],[523356.4422,4674543.4819],[523394.5815,4674640.5681],[523370.2894,4674677.5934],[523366.6361,4674711.9644],[523379.6269,4674760.053],[523378.9123,4674818.2019],[523346.3629,4674817.09],[523334.6398,4674816.8335],[523284.3679,4674873.6281],[523264.07,4674892.0848],[523212.2738,4674921.7628],[523161.5679,4674978.3494],[523117.14,4675023.7112],[523104.1104,4675036.6734],[523056.6931,4675058.3317],[522976.5685,4674858.1847],[522655.9357,4674534.7217],[522544.482,4674462.1683]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Plurilingüe San Miguel 2';
+		area.codigo ='36011211'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[527395.142,4677811.6709],[527035.4046,4677294.4524],[525932.8327,4676872.7316],[525552.5347,4676893.6461],[525356.1088,4677217.8891],[524974.0105,4676805.1676],[524949.9556,4676769.7178],[524902.2202,4676763.2452],[524677.6418,4676725.7519],[524435.8473,4676366.1538],[524490.3515,4676151.5392],[524449.8849,4676084.8881],[524385.3358,4676039.8763],[524344.8188,4676013.8941],[524157.7664,4675636.903],[524004.2098,4675533.5434],[524074.9837,4675497.356],[524034.9519,4675403.3906],[524281.5504,4675394.0068],[524317.2834,4675305.2757],[524326.1622,4675299.488],[524401.2274,4675285.8717],[524443.3607,4675248.9756],[524480.2637,4675197.5304],[524524.9633,4675097.7822],[524585.2897,4675000.1551],[525785.3315,4675465.5487],[527474.4457,4675326.936],[528770.8961,4674622.8535],[531104.297,4674006.6445],[531330.9972,4675826.9765],[527395.142,4677811.6709]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Quiñones de León';
+		area.codigo ='36011865'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[527395.142,4677811.6709],[527035.4046,4677294.4524],[525932.8327,4676872.7316],[525552.5347,4676893.6461],[525356.1088,4677217.8891],[524974.0105,4676805.1676],[524949.9556,4676769.7178],[524902.2202,4676763.2452],[524677.6418,4676725.7519],[524435.8473,4676366.1538],[524490.3515,4676151.5392],[524449.8849,4676084.8881],[524385.3358,4676039.8763],[524344.8188,4676013.8941],[524157.7664,4675636.903],[524004.2098,4675533.5434],[524074.9837,4675497.356],[524034.9519,4675403.3906],[524281.5504,4675394.0068],[524317.2834,4675305.2757],[524326.1622,4675299.488],[524401.2274,4675285.8717],[524443.3607,4675248.9756],[524480.2637,4675197.5304],[524524.9633,4675097.7822],[524585.2897,4675000.1551],[525785.3315,4675465.5487],[527474.4457,4675326.936],[528770.8961,4674622.8535],[531104.297,4674006.6445],[531330.9972,4675826.9765],[527395.142,4677811.6709]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'CPR Santa Cristina';
+		area.codigo ='36010897'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[523371.7868,4677013.5665],[523670.7869,4676878.0524],[524190.3671,4676794.0509],[524230.5236,4676814.7013],[524258.0751,4676848.0171],[524290.4883,4676870.5941],[524301.9629,4676865.0967],[524337.9487,4676869.9231],[524389.0019,4676902.526],[524526.3471,4677002.9693],[524597.4311,4677101.3654],[524609.206,4677106.6601],[524655.7096,4677150.7556],[524675.9673,4677173.1181],[524706.4425,4677192.5011],[524746.9904,4677226.466],[524751.2867,4677212.5558],[524770.5811,4677210.4179],[524789.7924,4677216.5848],[524825.6437,4677224.8735],[524848.6206,4677244.0398],[524862.5661,4677228.758],[524879.9871,4677240.5441],[524918.4875,4677239.5671],[524943.6079,4677246.0313],[525044.0561,4677220.2032],[525059.5901,4677297.0953],[525137.6132,4677388.7785],[525191.1283,4677436.6443],[525352.3218,4677225.3291],[525530.8131,4676903.6581],[525917.908,4676878.8689],[527037.3777,4677298.0458],[527426.0803,4677774.165],[526434.5271,4679501.1221],[524174.2156,4678984.5807],[523371.7868,4677013.5665]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'IES A Guía';
+		area.codigo ='36011579'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[516593.4794,4674871.7273],[514798.2007,4673190.0244],[514030.9334,4671605.4658],[513850.8736,4668640.8117],[517639.1687,4667349.1729],[518988.623,4667872.2685],[520184.9138,4669249.6987],[520488.9367,4670789.6858],[520998.8653,4671459.1075],[520810.7134,4671636.6675],[520876.7716,4671757.4239],[520998.6428,4671825.3354],[521035.708,4671891.2752],[521081.4306,4672086.4712],[521054.4863,4672156.1783],[520630.7765,4672129.2055],[520607.0271,4672134.3071],[520443.9009,4672405.9191],[520527.7801,4672639.2443],[520607.0281,4672654.4275],[520742.262,4672742.446],[520815.6775,4672870.9311],[520858.6132,4672969.7873],[520954.7596,4673035.7864],[521257.0271,4673116.8128],[521439.2656,4673186.3482],[521653.6183,4673270.411],[521954.0672,4673306.4395],[521951.9712,4673370.5753],[521914.752,4673445.4826],[521739.1653,4673441.5969],[521803.5396,4673490.4052],[521838.0254,4673561.2323],[521848.5399,4673617.7874],[521856.3422,4673675.7434],[521872.1927,4673731.3618],[521929.7661,4673835.2656],[521926.9678,4673860.2768],[521911.8278,4673888.7207],[521892.1816,4673911.6769],[521863.3732,4673935.9708],[521784.1117,4674069.9889],[521729.8016,4674173.2268],[521653.2093,4674168.463],[521636.2616,4674186.6406],[521581.3343,4674257.5706],[521746.0827,4674330.5278],[521827.5555,4674356.0272],[521853.8847,4674372.3761],[521940.0402,4674401.7148],[521984.4364,4674416.2627],[521802.8421,4674718.9754],[521628.5623,4675021.6691],[521051.1359,4676288.6484],[516593.4794,4674871.7273]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'IES Alexandre Bóveda';
+		area.codigo ='36011798'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[516593.4794,4674871.7273],[514798.2007,4673190.0244],[514030.9334,4671605.4658],[513850.8736,4668640.8117],[517639.1687,4667349.1729],[518988.623,4667872.2685],[520184.9138,4669249.6987],[520488.9367,4670789.6858],[520998.8653,4671459.1075],[520810.7134,4671636.6675],[520876.7716,4671757.4239],[520998.6428,4671825.3354],[521035.708,4671891.2752],[521081.4306,4672086.4712],[521054.4863,4672156.1783],[520630.7765,4672129.2055],[520607.0271,4672134.3071],[520443.9009,4672405.9191],[520527.7801,4672639.2443],[520607.0281,4672654.4275],[520742.262,4672742.446],[520815.6775,4672870.9311],[520858.6132,4672969.7873],[520954.7596,4673035.7864],[521257.0271,4673116.8128],[521439.2656,4673186.3482],[521653.6183,4673270.411],[521954.0672,4673306.4395],[521951.9712,4673370.5753],[521914.752,4673445.4826],[521739.1653,4673441.5969],[521803.5396,4673490.4052],[521838.0254,4673561.2323],[521848.5399,4673617.7874],[521856.3422,4673675.7434],[521872.1927,4673731.3618],[521929.7661,4673835.2656],[521926.9678,4673860.2768],[521911.8278,4673888.7207],[521892.1816,4673911.6769],[521863.3732,4673935.9708],[521784.1117,4674069.9889],[521729.8016,4674173.2268],[521653.2093,4674168.463],[521636.2616,4674186.6406],[521581.3343,4674257.5706],[521746.0827,4674330.5278],[521827.5555,4674356.0272],[521853.8847,4674372.3761],[521940.0402,4674401.7148],[521984.4364,4674416.2627],[521802.8421,4674718.9754],[521628.5623,4675021.6691],[521051.1359,4676288.6484],[516593.4794,4674871.7273]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'IES Álvaro Cunqueiro';
+		area.codigo ='36014601'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[523059.9301,4675059.1938],[523114.1186,4675026.1305],[523213.5959,4674922.7631],[523283.1188,4674873.3813],[523335.0528,4674819.1273],[523378.8793,4674814.1022],[523378.898,4674756.3715],[523369.5259,4674719.0061],[523371.3717,4674674.0635],[523396.7882,4674638.5827],[523359.7314,4674540.6859],[523370.8386,4674483.0705],[523379.0267,4674416.7508],[523379.7957,4674349.0517],[523380.526,4674319.0833],[523364.2874,4674268.285],[523400.2735,4674212.8756],[523442.1353,4674144.7971],[523464.788,4674089.2431],[523499.9988,4674046.363],[523518.2241,4674032.4049],[523511.5822,4674007.7106],[523527.0088,4673961.1422],[523536.1168,4673937.7965],[523489.137,4673876.435],[523443.3425,4673789.8971],[523473.0576,4673729.2561],[523577.0602,4673695.511],[523595.9828,4673708.2887],[523596.3805,4673720.6655],[523921.0611,4673953.9321],[523828.7881,4673865.4999],[523595.9828,4673708.2887],[523595.5913,4673696.1027],[523624.3342,4673480.4495],[523571.0985,4673183.5019],[524452.1641,4672339.3168],[524679.258,4672273.1748],[524833.9549,4672464.0135],[525056.0718,4672694.8935],[527234.8854,4671567.6233],[531104.4669,4674017.4165],[528766.1707,4674622.3781],[527475.3752,4675331.6917],[525786.637,4675467.2975],[524586.4097,4675000.2763],[524525.3774,4675096.6541],[524475.7476,4675196.9219],[524443.9927,4675251.5066],[524397.0253,4675284.2178],[524325.0628,4675299.1489],[524283.3899,4675392.8815],[524035.8323,4675402.3158],[524079.5345,4675494.6123],[523393.8969,4675842.0621],[523148.9153,4675280.1153],[523107.9953,4675175.5507],[523059.9301,4675059.1938]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'IES Carlos Casares';
+		area.codigo ='36016681'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[527395.142,4677811.6709],[527035.4046,4677294.4524],[525932.8327,4676872.7316],[525552.5347,4676893.6461],[525356.1088,4677217.8891],[524974.0105,4676805.1676],[524949.9556,4676769.7178],[524902.2202,4676763.2452],[524677.6418,4676725.7519],[524435.8473,4676366.1538],[524490.3515,4676151.5392],[524449.8849,4676084.8881],[524385.3358,4676039.8763],[524344.8188,4676013.8941],[524157.7664,4675636.903],[524004.2098,4675533.5434],[524074.9837,4675497.356],[524034.9519,4675403.3906],[524281.5504,4675394.0068],[524317.2834,4675305.2757],[524326.1622,4675299.488],[524401.2274,4675285.8717],[524443.3607,4675248.9756],[524480.2637,4675197.5304],[524524.9633,4675097.7822],[524585.2897,4675000.1551],[525785.3315,4675465.5487],[527474.4457,4675326.936],[528770.8961,4674622.8535],[531104.297,4674006.6445],[531330.9972,4675826.9765],[527395.142,4677811.6709]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'IES Castelao';
+		area.codigo ='36011567'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[516593.4794,4674871.7273],[514798.2007,4673190.0244],[514030.9334,4671605.4658],[513850.8736,4668640.8117],[517639.1687,4667349.1729],[518988.623,4667872.2685],[520184.9138,4669249.6987],[520488.9367,4670789.6858],[520998.8653,4671459.1075],[520810.7134,4671636.6675],[520876.7716,4671757.4239],[520998.6428,4671825.3354],[521035.708,4671891.2752],[521081.4306,4672086.4712],[521054.4863,4672156.1783],[520630.7765,4672129.2055],[520607.0271,4672134.3071],[520443.9009,4672405.9191],[520527.7801,4672639.2443],[520607.0281,4672654.4275],[520742.262,4672742.446],[520815.6775,4672870.9311],[520858.6132,4672969.7873],[520954.7596,4673035.7864],[521257.0271,4673116.8128],[521439.2656,4673186.3482],[521653.6183,4673270.411],[521954.0672,4673306.4395],[521951.9712,4673370.5753],[521914.752,4673445.4826],[521739.1653,4673441.5969],[521803.5396,4673490.4052],[521838.0254,4673561.2323],[521848.5399,4673617.7874],[521856.3422,4673675.7434],[521872.1927,4673731.3618],[521929.7661,4673835.2656],[521926.9678,4673860.2768],[521911.8278,4673888.7207],[521892.1816,4673911.6769],[521863.3732,4673935.9708],[521784.1117,4674069.9889],[521729.8016,4674173.2268],[521653.2093,4674168.463],[521636.2616,4674186.6406],[521581.3343,4674257.5706],[521746.0827,4674330.5278],[521827.5555,4674356.0272],[521853.8847,4674372.3761],[521940.0402,4674401.7148],[521984.4364,4674416.2627],[521802.8421,4674718.9754],[521628.5623,4675021.6691],[521051.1359,4676288.6484],[516593.4794,4674871.7273]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'IES Coruxo';
+		area.codigo ='36019426'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[527248.3322,4671579.6545],[525070.1735,4672680.3348],[524680.7063,4672272.8252],[524468.1407,4672334.5887],[523579.575,4673170.9082],[523632.5862,4673483.6348],[523590.4107,4673705.9319],[523479.6124,4673725.5658],[523443.4633,4673799.0327],[523531.1642,4673934.9649],[523513.1059,4674035.3667],[523462.8216,4674094.5014],[523443.6614,4674159.3881],[523420.7978,4674184.2053],[523371.8262,4674170.3004],[523014.7719,4674171.1369],[522968.0251,4674007.4799],[522854.1338,4673912.5692],[522776.8041,4673903.1869],[522635.0973,4673930.7066],[522314.3446,4673812.8571],[522265.9527,4673684.7056],[522180.719,4673603.9691],[522092.9917,4673324.6717],[521634.2084,4673261.053],[521438.2024,4673188.3814],[521289.3768,4673124.6028],[521144.0943,4673081.6737],[521121.2732,4673073.2373],[520986.2827,4673042.9778],[520912.2552,4673008.4649],[520818.2904,4672954.3065],[520795.33,4672830.5823],[520735.9445,4672745.9996],[520649.6218,4672675.0963],[520522.1791,4672647.7329],[520452.6293,4672399.6465],[520607.5508,4672136.9688],[520807.5921,4672157.759],[520986.1616,4672185.3868],[521054.0615,4672224.7028],[521076.1235,4672104.9873],[521048.5654,4671954.849],[521023.652,4671892.4022],[520993.4513,4671834.5434],[520888.9339,4671760.2939],[520845.7039,4671721.5485],[520805.6914,4671641.6918],[520998.6423,4671453.2002],[520493.6451,4670790.9066],[520184.3796,4669245.8481],[519864.1292,4668883.5064],[519804.2763,4668808.1808],[518987.2685,4667872.7553],[517866.5893,4667444.5767],[523452.5959,4666124.9941],[526496.4082,4667033.247],[528422.8226,4670101.0085],[527248.3322,4671579.6545]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'IES de Beade';
+		area.codigo ='36019050'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[523371.7868,4677013.5665],[523670.7869,4676878.0524],[524190.3671,4676794.0509],[524230.5236,4676814.7013],[524258.0751,4676848.0171],[524290.4883,4676870.5941],[524301.9629,4676865.0967],[524337.9487,4676869.9231],[524389.0019,4676902.526],[524526.3471,4677002.9693],[524597.4311,4677101.3654],[524609.206,4677106.6601],[524655.7096,4677150.7556],[524675.9673,4677173.1181],[524706.4425,4677192.5011],[524746.9904,4677226.466],[524751.2867,4677212.5558],[524770.5811,4677210.4179],[524789.7924,4677216.5848],[524825.6437,4677224.8735],[524848.6206,4677244.0398],[524862.5661,4677228.758],[524879.9871,4677240.5441],[524918.4875,4677239.5671],[524943.6079,4677246.0313],[525044.0561,4677220.2032],[525059.5901,4677297.0953],[525137.6132,4677388.7785],[525191.1283,4677436.6443],[525352.3218,4677225.3291],[525530.8131,4676903.6581],[525917.908,4676878.8689],[527037.3777,4677298.0458],[527426.0803,4677774.165],[526434.5271,4679501.1221],[524174.2156,4678984.5807],[523371.7868,4677013.5665]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'IES de Teis';
+		area.codigo ='36018173'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[523018.5451,4677020.9003],[521054.7344,4676261.9927],[521629.7047,4675001.171],[521802.426,4674713.4076],[521883.0255,4674746.5246],[522083.4586,4675140.9963],[522082.9569,4675078.5664],[522102.306,4675034.6028],[522133.1739,4674991.1554],[522211.3382,4674929.0555],[522240.166,4674920.616],[522242.0712,4674869.0934],[522224.2147,4674847.594],[522176.6744,4674821.5462],[522275.2043,4674650.7338],[522403.8636,4674708.5959],[522548.106,4674464.8286],[522654.1319,4674530.2988],[522976.5258,4674859.7066],[523148.055,4675277.2708],[523394.4131,4675846.2829],[523101.3986,4676007.8158],[523085.0587,4676054.8237],[523077.9695,4676107.7745],[523063.5881,4676267.9784],[523051.9383,4676379.207],[523027.5566,4676594.8347],[523018.5451,4677020.9003]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'IES do Castro';
+		area.codigo ='36019670'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[527248.3322,4671579.6545],[525070.1735,4672680.3348],[524680.7063,4672272.8252],[524468.1407,4672334.5887],[523579.575,4673170.9082],[523632.5862,4673483.6348],[523590.4107,4673705.9319],[523479.6124,4673725.5658],[523443.4633,4673799.0327],[523531.1642,4673934.9649],[523513.1059,4674035.3667],[523462.8216,4674094.5014],[523443.6614,4674159.3881],[523420.7978,4674184.2053],[523371.8262,4674170.3004],[523014.7719,4674171.1369],[522968.0251,4674007.4799],[522854.1338,4673912.5692],[522776.8041,4673903.1869],[522635.0973,4673930.7066],[522314.3446,4673812.8571],[522265.9527,4673684.7056],[522180.719,4673603.9691],[522092.9917,4673324.6717],[521634.2084,4673261.053],[521438.2024,4673188.3814],[521289.3768,4673124.6028],[521144.0943,4673081.6737],[521121.2732,4673073.2373],[520986.2827,4673042.9778],[520912.2552,4673008.4649],[520818.2904,4672954.3065],[520795.33,4672830.5823],[520735.9445,4672745.9996],[520649.6218,4672675.0963],[520522.1791,4672647.7329],[520452.6293,4672399.6465],[520607.5508,4672136.9688],[520807.5921,4672157.759],[520986.1616,4672185.3868],[521054.0615,4672224.7028],[521076.1235,4672104.9873],[521048.5654,4671954.849],[521023.652,4671892.4022],[520993.4513,4671834.5434],[520888.9339,4671760.2939],[520845.7039,4671721.5485],[520805.6914,4671641.6918],[520998.6423,4671453.2002],[520493.6451,4670790.9066],[520184.3796,4669245.8481],[519864.1292,4668883.5064],[519804.2763,4668808.1808],[518987.2685,4667872.7553],[517866.5893,4667444.5767],[523452.5959,4666124.9941],[526496.4082,4667033.247],[528422.8226,4670101.0085],[527248.3322,4671579.6545]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'IES Plurilingüe Valadares';
+		area.codigo ='36020374'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[523018.5451,4677020.9003],[521054.7344,4676261.9927],[521629.7047,4675001.171],[521802.426,4674713.4076],[521883.0255,4674746.5246],[522083.4586,4675140.9963],[522082.9569,4675078.5664],[522102.306,4675034.6028],[522133.1739,4674991.1554],[522211.3382,4674929.0555],[522240.166,4674920.616],[522242.0712,4674869.0934],[522224.2147,4674847.594],[522176.6744,4674821.5462],[522275.2043,4674650.7338],[522403.8636,4674708.5959],[522548.106,4674464.8286],[522654.1319,4674530.2988],[522976.5258,4674859.7066],[523148.055,4675277.2708],[523394.4131,4675846.2829],[523101.3986,4676007.8158],[523085.0587,4676054.8237],[523077.9695,4676107.7745],[523063.5881,4676267.9784],[523051.9383,4676379.207],[523027.5566,4676594.8347],[523018.5451,4677020.9003]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'IES Politécnico de Vigo';
+		area.codigo ='36011634'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"multipolygon","coordinates":[[[[523038.466,4676552.8367],[523078.3657,4676103.8207],[523084.9602,4676045.6544],[523102.3914,4676006.1448],[523123.2121,4675988.8771],[523390.947,4675846.0449],[524001.7385,4675536.3957],[524157.0188,4675637.512],[524339.1957,4676009.2414],[524419.3329,4676062.7435],[524468.7313,4676109.6013],[524485.2502,4676147.4691],[524436.8212,4676367.7662],[524678.8814,4676728.1415],[524910.2308,4676764.8196],[524976.1869,4676807.0667],[525352.4356,4677226.4573],[525190.8837,4677434.1749],[525136.5554,4677389.1133],[525066.6667,4677307.5025],[525059.5118,4677286.1141],[525043.5368,4677218.1815],[524944.263,4677243.7397],[524915.2037,4677240.6804],[524885.017,4677242.6827],[524860.2755,4677227.7237],[524847.368,4677242.1451],[524827.0172,4677224.7006],[524803.0315,4677222.048],[524770.4092,4677210.394],[524752.8494,4677214.9154],[524746.2756,4677227.6274],[524686.5385,4677179.9416],[524655.5911,4677150.6756],[524609.1588,4677106.3686],[524598.9514,4677102.757],[524535.8068,4677015.2924],[524527.9754,4677001.4865],[524411.6274,4676917.9124],[524338.7292,4676870.2953],[524304.394,4676866.1523],[524288.9297,4676872.9008],[524199.1194,4676790.076],[523681.4038,4676875.3335],[523371.4327,4677021.3526],[523005.7049,4677010.8767],[523038.466,4676552.8367]]],[[[523034.4863,4676597.6264],[523051.0394,4676377.0601],[523038.466,4676552.8367],[523034.4863,4676597.6264]]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'IES República Oriental do Uruguai';
+		area.codigo ='36018461'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[523059.9301,4675059.1938],[523114.1186,4675026.1305],[523213.5959,4674922.7631],[523283.1188,4674873.3813],[523335.0528,4674819.1273],[523378.8793,4674814.1022],[523378.898,4674756.3715],[523369.5259,4674719.0061],[523371.3717,4674674.0635],[523396.7882,4674638.5827],[523359.7314,4674540.6859],[523370.8386,4674483.0705],[523379.0267,4674416.7508],[523379.7957,4674349.0517],[523380.526,4674319.0833],[523364.2874,4674268.285],[523400.2735,4674212.8756],[523442.1353,4674144.7971],[523464.788,4674089.2431],[523499.9988,4674046.363],[523518.2241,4674032.4049],[523511.5822,4674007.7106],[523527.0088,4673961.1422],[523536.1168,4673937.7965],[523489.137,4673876.435],[523443.3425,4673789.8971],[523473.0576,4673729.2561],[523577.0602,4673695.511],[523595.9828,4673708.2887],[523596.3805,4673720.6655],[523921.0611,4673953.9321],[523828.7881,4673865.4999],[523595.9828,4673708.2887],[523595.5913,4673696.1027],[523624.3342,4673480.4495],[523571.0985,4673183.5019],[524452.1641,4672339.3168],[524679.258,4672273.1748],[524833.9549,4672464.0135],[525056.0718,4672694.8935],[527234.8854,4671567.6233],[531104.4669,4674017.4165],[528766.1707,4674622.3781],[527475.3752,4675331.6917],[525786.637,4675467.2975],[524586.4097,4675000.2763],[524525.3774,4675096.6541],[524475.7476,4675196.9219],[524443.9927,4675251.5066],[524397.0253,4675284.2178],[524325.0628,4675299.1489],[524283.3899,4675392.8815],[524035.8323,4675402.3158],[524079.5345,4675494.6123],[523393.8969,4675842.0621],[523148.9153,4675280.1153],[523107.9953,4675175.5507],[523059.9301,4675059.1938]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'IES Ricardo Mella';
+		area.codigo ='36017430'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"multipolygon","coordinates":[[[[523038.466,4676552.8367],[523078.3657,4676103.8207],[523084.9602,4676045.6544],[523102.3914,4676006.1448],[523123.2121,4675988.8771],[523390.947,4675846.0449],[524001.7385,4675536.3957],[524157.0188,4675637.512],[524339.1957,4676009.2414],[524419.3329,4676062.7435],[524468.7313,4676109.6013],[524485.2502,4676147.4691],[524436.8212,4676367.7662],[524678.8814,4676728.1415],[524910.2308,4676764.8196],[524976.1869,4676807.0667],[525352.4356,4677226.4573],[525190.8837,4677434.1749],[525136.5554,4677389.1133],[525066.6667,4677307.5025],[525059.5118,4677286.1141],[525043.5368,4677218.1815],[524944.263,4677243.7397],[524915.2037,4677240.6804],[524885.017,4677242.6827],[524860.2755,4677227.7237],[524847.368,4677242.1451],[524827.0172,4677224.7006],[524803.0315,4677222.048],[524770.4092,4677210.394],[524752.8494,4677214.9154],[524746.2756,4677227.6274],[524686.5385,4677179.9416],[524655.5911,4677150.6756],[524609.1588,4677106.3686],[524598.9514,4677102.757],[524535.8068,4677015.2924],[524527.9754,4677001.4865],[524411.6274,4676917.9124],[524338.7292,4676870.2953],[524304.394,4676866.1523],[524288.9297,4676872.9008],[524199.1194,4676790.076],[523681.4038,4676875.3335],[523371.4327,4677021.3526],[523005.7049,4677010.8767],[523038.466,4676552.8367]]],[[[523034.4863,4676597.6264],[523051.0394,4676377.0601],[523038.466,4676552.8367],[523034.4863,4676597.6264]]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'IES Rosais 2';
+		area.codigo ='36019062'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[522544.482,4674462.1683],[522405.6193,4674707.2193],[522278.4103,4674649.6797],[522177.2595,4674821.1238],[522229.5311,4674842.6922],[522241.8601,4674865.1959],[522238.7614,4674921.9789],[522214.2828,4674926.7682],[522131.4461,4674986.0253],[522095.1675,4675035.6268],[522082.7009,4675076.3828],[522086.8533,4675130.0647],[522083.9091,4675137.3657],[521882.7341,4674742.767],[521803.5021,4674715.6009],[521987.8817,4674412.5177],[521855.6623,4674372.068],[521827.2345,4674358.2118],[521808.7443,4674349.7104],[521578.8586,4674256.7554],[521637.0924,4674187.9103],[521651.235,4674171.373],[521728.1942,4674174.6105],[521782.5438,4674070.4711],[521860.4009,4673937.9377],[521887.8276,4673915.2791],[521910.4012,4673890.673],[521927.7453,4673859.8652],[521927.3481,4673840.0521],[521871.8243,4673734.4386],[521855.0127,4673666.3167],[521849.8841,4673624.2905],[521840.7401,4673578.3406],[521816.2785,4673514.6783],[521798.5437,4673486.8718],[521750.3085,4673462.9732],[521747.3359,4673445.6997],[521917.6844,4673446.0889],[521953.6308,4673370.9739],[521960.7097,4673306.4099],[522099.7978,4673327.9679],[522183.9627,4673608.3636],[522267.6404,4673683.8158],[522311.319,4673809.8996],[522403.3774,4673835.8759],[522521.467,4673894.3661],[522636.6778,4673933.9859],[522784.6016,4673905.4221],[522853.2542,4673917.1435],[522966.5948,4674007.3896],[523012.7694,4674175.4589],[523158.1202,4674163.1784],[523373.6062,4674173.2942],[523418.435,4674188.0143],[523361.2185,4674275.1932],[523379.3001,4674315.8733],[523378.3875,4674347.3016],[523379.465,4674391.8691],[523382.6009,4674413.9702],[523370.9191,4674481.5554],[523362.6079,4674513.7121],[523356.4422,4674543.4819],[523394.5815,4674640.5681],[523370.2894,4674677.5934],[523366.6361,4674711.9644],[523379.6269,4674760.053],[523378.9123,4674818.2019],[523346.3629,4674817.09],[523334.6398,4674816.8335],[523284.3679,4674873.6281],[523264.07,4674892.0848],[523212.2738,4674921.7628],[523161.5679,4674978.3494],[523117.14,4675023.7112],[523104.1104,4675036.6734],[523056.6931,4675058.3317],[522976.5685,4674858.1847],[522655.9357,4674534.7217],[522544.482,4674462.1683]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'IES San Tomé de Freixeiro';
+		area.codigo ='36011580'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		area = {};
+		areaJSON ={"type":"polygon","coordinates":[[[522544.482,4674462.1683],[522405.6193,4674707.2193],[522278.4103,4674649.6797],[522177.2595,4674821.1238],[522229.5311,4674842.6922],[522241.8601,4674865.1959],[522238.7614,4674921.9789],[522214.2828,4674926.7682],[522131.4461,4674986.0253],[522095.1675,4675035.6268],[522082.7009,4675076.3828],[522086.8533,4675130.0647],[522083.9091,4675137.3657],[521882.7341,4674742.767],[521803.5021,4674715.6009],[521987.8817,4674412.5177],[521855.6623,4674372.068],[521827.2345,4674358.2118],[521808.7443,4674349.7104],[521578.8586,4674256.7554],[521637.0924,4674187.9103],[521651.235,4674171.373],[521728.1942,4674174.6105],[521782.5438,4674070.4711],[521860.4009,4673937.9377],[521887.8276,4673915.2791],[521910.4012,4673890.673],[521927.7453,4673859.8652],[521927.3481,4673840.0521],[521871.8243,4673734.4386],[521855.0127,4673666.3167],[521849.8841,4673624.2905],[521840.7401,4673578.3406],[521816.2785,4673514.6783],[521798.5437,4673486.8718],[521750.3085,4673462.9732],[521747.3359,4673445.6997],[521917.6844,4673446.0889],[521953.6308,4673370.9739],[521960.7097,4673306.4099],[522099.7978,4673327.9679],[522183.9627,4673608.3636],[522267.6404,4673683.8158],[522311.319,4673809.8996],[522403.3774,4673835.8759],[522521.467,4673894.3661],[522636.6778,4673933.9859],[522784.6016,4673905.4221],[522853.2542,4673917.1435],[522966.5948,4674007.3896],[523012.7694,4674175.4589],[523158.1202,4674163.1784],[523373.6062,4674173.2942],[523418.435,4674188.0143],[523361.2185,4674275.1932],[523379.3001,4674315.8733],[523378.3875,4674347.3016],[523379.465,4674391.8691],[523382.6009,4674413.9702],[523370.9191,4674481.5554],[523362.6079,4674513.7121],[523356.4422,4674543.4819],[523394.5815,4674640.5681],[523370.2894,4674677.5934],[523366.6361,4674711.9644],[523379.6269,4674760.053],[523378.9123,4674818.2019],[523346.3629,4674817.09],[523334.6398,4674816.8335],[523284.3679,4674873.6281],[523264.07,4674892.0848],[523212.2738,4674921.7628],[523161.5679,4674978.3494],[523117.14,4675023.7112],[523104.1104,4675036.6734],[523056.6931,4675058.3317],[522976.5685,4674858.1847],[522655.9357,4674534.7217],[522544.482,4674462.1683]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}};			
+		area.graphics = calculaGraficoArea (i, areaJSON);
+		area.name= 'IES Santa Irene';
+		area.codigo ='36011592'; 			
+		areasInfluencia [area.codigo] = area;
+		i++;		
+		
+		return i;
+	}
+
+});
+
+</script>
+
+				
+				
+				
+	
+			</div>
+		</main>
+		
+		<div id="logosExtra">
+			<!--  para pintar outros logos.. FEDER, XACOBEO...
+			  -->
+		</div>
+	</div>
+
+
+	<!-- PE -->		
+    
+
+
+ 
+
+
+
+
+<footer>
+	<div class="footerLogo">
+		<a class="linkImaxeCabeceira" href="https://www.edu.xunta.gal/" accesskey="x" 
+				title='Ir a Portal Educativo da Xunta de Galicia. Acceso teclado: ALT+x' >
+			
+			<img alt="Portal Educativo da Xunta de Galicia" src="https://recursosweb.edu.xunta.gal/recursosweb/imaxes/logos/cons_cultura_eou-cor-neg.png"/>
+		</a>
+	</div>
+	<div class="footerContact">
+		<ul>
+			<li style="border-right: 1px dotted rgba(238,238,238,.7);">
+				<i class="glyphicon glyphicon-bookmark" aria-hidden="true"></i>&nbsp;centroseducativos 2.24.0
+			</li>
+			<li>
+				 	
+				<a href="/centroseducativos/VerContacto.do" class="linkPe" accesskey="c" 
+						title='Como contactar coa consellería?. Atallo de teclado: c' >
+					<i class="glyphicon glyphicon-envelope" aria-hidden="true" 
+						aria-label='Contacto'></i>&nbsp;Contacto
+				</a>
+			</li>
+		</ul>
+	</div>	
+</footer>
+</body>
+</html>

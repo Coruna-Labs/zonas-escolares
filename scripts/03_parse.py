@@ -12,10 +12,12 @@ cargarDatos() function:
     areasInfluencia [area.codigo] = area;
 
 Cross-checked against the separate checkCentro[] checkbox list for all
-12 raw files (see raw/sweep_manifest.json combos): checkbox codes and
+raw files (see raw/sweep_manifest.json combos): checkbox codes and
 areaJSON codes are an exact 1:1 match in every file, confirming the
 10-result display cap is UI-only, not a data truncation, and that the
-areaJSON regex isn't missing or double-counting anything.
+areaJSON regex isn't missing or double-counting anything. Originally
+verified against the 12 A Coruna-only combos, re-confirmed against the
+full 38-combo Xunta-wide sweep.
 """
 
 import json
@@ -38,7 +40,8 @@ def unescape_js_string(s: str) -> str:
     return s.replace("\\'", "'").replace('\\"', '"').replace("\\\\", "\\")
 
 
-def parse_file(path: str, concello_codigo: str, concello_nome: str,
+def parse_file(path: str, provincia_codigo: str, provincia_nome: str,
+                concello_codigo: str, concello_nome: str,
                 ensinanza_codigo: str, ensinanza_nome: str) -> list[dict]:
     with open(path, encoding="utf-8") as f:
         html = f.read()
@@ -49,6 +52,8 @@ def parse_file(path: str, concello_codigo: str, concello_nome: str,
         records.append({
             "codigo": codigo,
             "nome": unescape_js_string(name_raw),
+            "provincia_codigo": provincia_codigo,
+            "provincia_nome": provincia_nome,
             "concello_codigo": concello_codigo,
             "concello_nome": concello_nome,
             "ensinanza_codigo": ensinanza_codigo,
@@ -72,11 +77,12 @@ def main():
             continue
         records = parse_file(
             entry["file"],
+            entry["provincia_codigo"], entry["provincia_nome"],
             entry["concello_codigo"], entry["concello_nome"],
             entry["ensinanza_codigo"], entry["ensinanza_nome"],
         )
         print(f"{entry['file']}: parsed {len(records)} records "
-              f"({entry['concello_nome']} / {entry['ensinanza_nome']})")
+              f"({entry['concello_nome']}, {entry['provincia_nome']} / {entry['ensinanza_nome']})")
         all_records.extend(records)
 
     with open(f"{DATA_DIR}/parsed_records.json", "w", encoding="utf-8") as f:
