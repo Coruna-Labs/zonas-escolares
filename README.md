@@ -19,7 +19,7 @@ a fair number of schools, IES campuses especially, have a genuinely different
 shape per level, not one shape for the whole building.
 
 A permanent rail lists every school, grouped by city, with the same colored
-chips as the map. The legend chips double as filters: click one to isolate
+chips as the map. The legend chips double as filters; click one to isolate
 that education level everywhere at once. Search an address and the rail
 narrows to whatever matches, with the non-matching zones fading into the
 background; click any result to drill in, or back out to the full list
@@ -79,8 +79,8 @@ scraping saga:
 
 **Scope isn't a province, it's a fixed list of 11 concellos.** The original
 brief assumed "A Coruña province" as a starting scope, implying dozens of
-concellos. That's not how the catchment tool works in either direction:
-address-based lookup only exists for 11 concellos total, confirmed against
+concellos. That's not how the catchment tool works in either direction.
+Address-based lookup only exists for 11 concellos total, confirmed against
 the tool's own JavaScript, not assumed. Going Xunta-wide from there added
 only 8 more concellos and 26 more search combos on top of the original
 scope (genuinely cheap), which is why the project covers all of Galicia
@@ -143,9 +143,9 @@ Coordinates are EPSG:4326 (lon, lat), ready for MapLibre.
 
 ## Verification performed
 
-- **Endpoint verification against live JS**, not documentation: confirmed
-  the search POST fields and response shape by inspecting real page
-  captures, not the tool's own help text.
+- **Endpoint verification**: confirmed the search POST fields and response
+  shape by inspecting real page captures, not the tool's own help text or
+  documentation.
 - **10-result display cap check**: cross-checked `checkCentro[]` checkbox
   codes against `areaJSON` blocks in all 38 raw responses, an exact 1:1 match
   every time (e.g. 85/85 for Vigo infantil), confirming the Xunta site's
@@ -160,7 +160,7 @@ Coordinates are EPSG:4326 (lon, lat), ready for MapLibre.
   geocoder, and checked whether the point falls inside that school's own
   parsed catchment polygon. 4 of 5 landed exactly inside (0.0 distance,
   including both shapes for 2 multi-geometry schools). The Ourense case was
-  inconclusive rather than failing: the geocoder fell back to a
+  inconclusive rather than failing. The geocoder fell back to a
   low-confidence, citywide match rather than resolving the exact street,
   landing about 5m outside the boundary, a geocoder precision limit on that
   one address rather than a sign the polygon or reprojection is wrong.
@@ -171,18 +171,18 @@ Coordinates are EPSG:4326 (lon, lat), ready for MapLibre.
 
 The Xunta already publishes this data through its own *Centros educativos*
 tool, and it remains the authoritative source. MisEducativos doesn't
-replace it, just removes the friction around it: three mandatory filters
-before anything displays, a hard 10-result cap on what's shown, and an
-address-search feature that exists but is hidden behind a checkbox most
-visitors never find. Enter an address or click a school, see the catchment
-immediately.
+replace it, just removes the friction around it. The official tool requires
+three mandatory filters before anything displays, caps results at 10 even
+when more exist, and hides its address-search feature behind a checkbox
+most visitors never find. Here, entering an address or clicking a school
+shows the catchment immediately.
 
 ---
 
 ## Directory layout
 
 ```
-index.html             the whole frontend: masthead, rail, search, map
+index.html             the whole frontend (masthead, rail, search, map)
 DISCOVERY.md           the original investigation this pipeline was built from
 scripts/               numbered pipeline steps, run in order
 raw/                   cached raw HTML responses + JSON enumeration (don't re-scrape to iterate the parser)
@@ -196,8 +196,9 @@ requirements.txt
 - The Ourense spot-check should be redone with a higher-confidence address
   match before treating that concello's data as fully verified. The miss
   looked like a geocoder issue, but it's only one data point.
-- We don't know *why* the 11-concello list is what it is (not simply "the
-  biggest city per province": Cervo, Xove, and Lourenzá break that theory).
+- We don't know *why* the 11-concello list is what it is. It's not simply
+  "the biggest city per province," since Cervo, Xove, and Lourenzá break
+  that theory.
   Worth keeping in mind if the Xunta ever adds more concellos to the tool;
   nothing here should assume the list of 11 is permanent.
 - School markers show catchment zones, not the school building's own
