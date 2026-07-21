@@ -73,14 +73,22 @@
   .city-menu .opt .count{font-size:10.5px;color:var(--faint);font-variant-numeric:tabular-nums}
   .city-menu .allopt{border-bottom:1px solid var(--hairline);margin-bottom:4px;padding-bottom:8px}
 
+  /* ---------- Address autocomplete dropdown ---------- */
+  .addr-menu{position:absolute;top:calc(100% + 8px);left:0;right:0;max-height:280px;overflow-y:auto;
+    z-index:10;background:var(--panel);border:1px solid var(--hairline);border-radius:12px;
+    box-shadow:0 1px 2px rgba(0,0,0,.03),0 14px 34px rgba(0,0,0,.14);padding:6px;display:none}
+  .addr-menu.open{display:block}
+  .addr-menu .opt{padding:8px 10px;border-radius:8px;font-size:12.5px;color:var(--muted);cursor:pointer}
+  .addr-menu .opt:hover,.addr-menu .opt.hi{background:#f4f5f6;color:var(--ink)}
+
   /* ---------- City markers (DOM, not GL symbol layer — full type control) ---------- */
   .city-marker{pointer-events:auto;cursor:pointer;display:flex;flex-direction:column;align-items:center;
-    gap:4px;transition:opacity .2s}
+    gap:4px}
   .city-marker .dot{width:9px;height:9px;border-radius:50%;background:var(--panel);
     border:2px solid var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.25);transition:background .15s,transform .15s}
   .city-marker .tag{font-size:10.5px;font-weight:660;color:var(--ink);background:rgba(251,251,250,.92);
     padding:2px 7px;border-radius:5px;white-space:nowrap;box-shadow:0 1px 2px rgba(0,0,0,.08);
-    transform:translateY(-1px)}
+    transform:translateY(-1px);transition:opacity .2s}
   .city-marker:hover .dot{transform:scale(1.25)}
   .city-marker.active .dot{background:var(--ink)}
   .city-marker.active .tag{background:var(--ink);color:#fff}
@@ -116,10 +124,23 @@
   .panel__school{padding:10px 0;border-top:1px solid var(--hairline)}
   .panel__school:first-of-type{border-top:none}
   .panel__school-name{font-size:12.5px;font-weight:660;color:var(--ink);margin:0 0 4px}
+  .panel__school-meta{font-size:11px;color:var(--muted);margin:0 0 5px}
   .panel__school-tags{display:flex;gap:4px;flex-wrap:wrap;margin:0 0 5px}
   .panel__school a{font-size:11px;color:var(--muted);text-decoration:underline;text-underline-offset:2px}
   .panel__note{margin-top:16px;padding-top:12px;border-top:1px solid var(--hairline);
     font-size:11px;color:var(--faint);line-height:1.45}
+
+  /* ---------- Legend: ensinanza color key ---------- */
+  .legend{position:absolute;left:14px;bottom:78px;z-index:5;background:var(--panel);
+    border:1px solid var(--hairline);border-radius:10px;padding:9px 11px;
+    box-shadow:0 1px 2px rgba(0,0,0,.03),0 8px 22px rgba(0,0,0,.07)}
+  .legend-row{display:flex;align-items:center;gap:7px;font-size:10.5px;color:var(--muted);
+    padding:2px 0}
+  .legend-dot{width:9px;height:9px;border-radius:3px;flex:0 0 auto}
+
+  /* ---------- Search-result pin (distinct from city markers) ---------- */
+  .result-pin{width:13px;height:13px;border-radius:50% 50% 50% 0;background:var(--ink);
+    transform:rotate(-45deg);box-shadow:0 1px 3px rgba(0,0,0,.35);border:2px solid #fff}
 
   /* ---------- Toast ---------- */
   .toast{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:6;
@@ -130,6 +151,7 @@
   @media (max-width:640px){
     .masthead{width:100%;max-width:none}
     .maplibregl-ctrl-bottom-left{display:none}
+    .legend{display:none}
   }
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -160,8 +182,11 @@
       <button class="seg-clear" id="addr-clear" aria-label="×">&times;</button>
     </div>
     <div class="city-menu" id="city-menu" role="listbox"></div>
+    <div class="addr-menu" id="addr-menu" role="listbox"></div>
   </div>
 </div>
+
+<div class="legend" id="legend"></div>
 
 <aside class="panel" aria-live="polite">
   <div class="panel__inner"></div>
@@ -183,30 +208,47 @@ const I18N = {
   gl:{ title:"MisEducativos", sub:"Áreas de influencia dos centros educativos de Galicia.",
        note:"Dispoñible en 11 concellos, por agora.",
        loading:"Cargando…", error:"Non se puideron cargar os datos.",
-       allCities:"Toda Galicia", searchPlaceholder:"Busca un enderezo…",
+       allCities:"Todas as zonas", searchPlaceholder:"Busca un enderezo…",
        notCovered:(loc)=>`${loc} aínda non está cuberto — por agora só nestes 11 concellos.`,
        noMatch:"Non se atopou ese enderezo.",
        schoolsIn:(n,count)=>`${count} centro${count===1?"":"s"} en ${n}`,
        panelNote:"Fai clic nun centro do mapa para máis detalle. Liga á ficha oficial da Xunta.",
-       officialLink:"Ver ficha oficial" },
+       officialLink:"Ver ficha oficial",
+       resultTitle:"Resultado da busca", resultSubtitle:(addr)=>addr,
+       ensinanzaNames:{"22":"Infantil","25":"Primaria","24":"ESO","29":"Bacharelato"} },
   es:{ title:"MisEducativos", sub:"Áreas de influencia de los centros educativos de Galicia.",
        note:"Disponible en 11 concellos, por ahora.",
        loading:"Cargando…", error:"No se pudieron cargar los datos.",
-       allCities:"Toda Galicia", searchPlaceholder:"Busca una dirección…",
+       allCities:"Todas las zonas", searchPlaceholder:"Busca una dirección…",
        notCovered:(loc)=>`${loc} aún no está cubierto — por ahora solo en estos 11 concellos.`,
        noMatch:"No se encontró esa dirección.",
        schoolsIn:(n,count)=>`${count} centro${count===1?"":"s"} en ${n}`,
        panelNote:"Haz clic en un centro del mapa para más detalle. Enlaza a la ficha oficial de la Xunta.",
-       officialLink:"Ver ficha oficial" },
+       officialLink:"Ver ficha oficial",
+       resultTitle:"Resultado de la búsqueda", resultSubtitle:(addr)=>addr,
+       ensinanzaNames:{"22":"Infantil","25":"Primaria","24":"ESO","29":"Bachillerato"} },
   en:{ title:"MisEducativos", sub:"School catchment zones across Galicia.",
        note:"Available in 11 concellos, for now.",
        loading:"Loading…", error:"Couldn't load the data.",
-       allCities:"All Galicia", searchPlaceholder:"Search an address…",
+       allCities:"All zones", searchPlaceholder:"Search an address…",
        notCovered:(loc)=>`${loc} isn't covered yet — only these 11 concellos, for now.`,
        noMatch:"Couldn't find that address.",
        schoolsIn:(n,count)=>`${count} school${count===1?"":"s"} in ${n}`,
        panelNote:"Click a school on the map for more detail. Links to the Xunta's official page.",
-       officialLink:"View official page" },
+       officialLink:"View official page",
+       resultTitle:"Search result", resultSubtitle:(addr)=>addr,
+       ensinanzaNames:{"22":"Infantil","25":"Primary","24":"ESO","29":"Bacharelato"} },
+};
+
+// Ensinanza color key, reused for the catchment fill layer and the legend.
+// Priority order for a feature covering more than one level (see
+// dominant_ensinanza_codigo in the data pipeline): infantil, primaria,
+// eso, bacharelato -- earliest stage wins.
+const ENSINANZA_COLORS = {
+  "22": "#4F9FCE", // infantil — blue
+  "25": "#9B7FC7", // primaria — purple
+  "24": "#5FAE7B", // eso — green
+  "29": "#D9954E", // bacharelato — amber
 };
 const LANGS = ["gl","es","en"];
 const STORAGE_KEY = "miseducativos.lang";
@@ -244,6 +286,7 @@ function applyText(){
   if(toast.style.display==="block" && !toast.classList.contains("err")) toast.textContent=t.loading;
   renderCityTrigger();
   renderCityMenu();
+  renderLegend();
   if(panel.classList.contains("open") && state.selectedCity) openCityPanel(state.selectedCity);
 }
 // Called once state/panel (declared further below) exist -- see bottom of
@@ -289,14 +332,53 @@ const state = {
   resultPopup: null,
 };
 
-/* ---------- roads-above-polygons (same technique as adrh-mapper) ---------- */
-function roadsBeforeId(){
-  const layers = map.getStyle().layers || [];
-  const isRoad = l => /road|street|highway|tunnel|bridge|transport/i.test(l.id) && l.type==="line";
-  const road = layers.find(isRoad);
-  if(road) return road.id;
-  const sym = layers.find(l=>l.type==="symbol");
-  return sym ? sym.id : undefined;
+/* ---------- catchment paint expressions: category color x zoom x selection ---------- */
+// Zoom-based crossfade with the overview markers (see updateMarkerOpacity):
+// polygons are the wrong thing to look at zoomed all the way out -- 400+
+// tiny shapes compress into a handful of dark smudges, which is exactly
+// the "just overlaying all the polygons" problem the markers exist to
+// solve instead. So the fill/line stay at zero opacity below zoom 9 and
+// ramp in by 10.5, roughly as the markers' text labels fade out.
+//
+// MapLibre requires a "zoom" expression to be the direct, top-level input
+// of an interpolate/step -- it can't be nested inside another operator
+// like "*" (tried that first; addLayer rejected it at runtime). The
+// supported way to combine a zoom ramp with a data-driven value is to put
+// the data expression directly in the interpolate's stop output instead.
+//
+// FILL stays faint everywhere except the selected city: dense areas
+// (central Vigo especially) can have a dozen-plus overlapping catchments
+// in different ensinanza colors, and translucent overlapping fills of
+// *different* hues don't compound cleanly like the old monochrome version
+// did -- they blend into a muddy olive/brown smear. Found this by testing
+// in-browser, not guessed. LINE stays meaningfully visible always, since
+// a colored outline reads fine even stacked a dozen deep -- that's what
+// actually carries the category signal while browsing; fill lighting up
+// is reserved for "here's the one city you're looking at."
+function fillOpacityExpr(){
+  const sel = state.selectedCity || "__none__";
+  const byCity = ["case", ["==",["get","concello_codigo"], sel], 0.25, 0.05];
+  return ["interpolate", ["linear"], ["zoom"], 9, 0, 10.5, byCity];
+}
+function lineOpacityExpr(){
+  const sel = state.selectedCity || "__none__";
+  const byCity = ["case", ["==",["get","concello_codigo"], sel], 0.9, 0.65];
+  return ["interpolate", ["linear"], ["zoom"], 9, 0, 10.5, byCity];
+}
+function fillColorExpr(){
+  return ["match", ["get","dominant_ensinanza_codigo"],
+    "22", ENSINANZA_COLORS["22"],
+    "25", ENSINANZA_COLORS["25"],
+    "24", ENSINANZA_COLORS["24"],
+    "29", ENSINANZA_COLORS["29"],
+    "#16181a"];
+}
+function lineWidthExpr(){
+  const sel = state.selectedCity || "__none__";
+  // Unselected width bumped up from the original 0.6 -- the outline is
+  // now the primary way to read the category color while browsing (see
+  // fillOpacityExpr above), so it needs to actually be legible on its own.
+  return ["case", ["==",["get","concello_codigo"], sel], 1.8, 1.0];
 }
 
 /* ---------- TOOL-SPECIFIC: data + layers ---------- */
@@ -330,37 +412,26 @@ whenStyleReady(async () => {
       if(map.getLayer(id)) map.setLayoutProperty(id,"visibility","none");
     });
 
-    const beforeId = roadsBeforeId();
+    // No beforeId here on purpose -- catchments render on top of the
+    // basemap's own roads/labels like a normal data layer. An earlier
+    // draft kept roads above the fill (the technique adrh-mapper uses),
+    // but that read as unnecessary fuss for this tool.
     map.addSource("catchments", {type:"geojson", data:catchments});
     map.addLayer({
       id:"catchments-fill", type:"fill", source:"catchments",
       paint:{
-        "fill-color": "#16181a",
-        // Kept low because catchment polygons overlap heavily in dense
-        // urban cores (Vigo especially — many schools' zones genuinely
-        // cover the same ground) and MapLibre compounds fill-opacity
-        // per overlapping feature. At 0.22 a dozen-plus stacked polygons
-        // rendered as a near-solid black block; 0.08/0.22 stays legible
-        // against the basemap even where a lot of zones overlap.
-        "fill-opacity": [
-          "case",
-          ["==", ["get","concello_codigo"], state.selectedCity || "__none__"], 0.22,
-          0.08,
-        ],
+        "fill-color": fillColorExpr(),
+        "fill-opacity": fillOpacityExpr(),
       },
-    }, beforeId);
+    });
     map.addLayer({
       id:"catchments-line", type:"line", source:"catchments",
       paint:{
-        "line-color":"#16181a",
-        "line-width": [
-          "case",
-          ["==", ["get","concello_codigo"], state.selectedCity || "__none__"], 1.6,
-          0.6,
-        ],
-        "line-opacity":0.55,
+        "line-color": fillColorExpr(),
+        "line-width": lineWidthExpr(),
+        "line-opacity": lineOpacityExpr(),
       },
-    }, beforeId);
+    });
 
     map.on("click","catchments-fill",(e)=>{
       const f = e.features[0];
@@ -373,6 +444,7 @@ whenStyleReady(async () => {
     renderCityMenu();
     renderCityMarkers();
     updateCatchmentHighlight();
+    renderLegend();
 
     hideToast();
   }catch(e){
@@ -380,6 +452,16 @@ whenStyleReady(async () => {
     console.error(e);
   }
 });
+
+function renderLegend(){
+  const t = I18N[lang];
+  const order = ["22","25","24","29"];
+  document.getElementById("legend").innerHTML = order.map(code => `
+    <div class="legend-row">
+      <span class="legend-dot" style="background:${ENSINANZA_COLORS[code]}"></span>
+      <span>${t.ensinanzaNames[code]}</span>
+    </div>`).join("");
+}
 
 function buildCityGroups(){
   const byProvincia = new Map();
@@ -414,12 +496,15 @@ function renderCityMarkers(){
 }
 function updateMarkerOpacity(){
   const z = map.getZoom();
-  // Fully visible through zoom 9.5, fades out by zoom 11.5 as real
-  // catchment polygons become the more useful thing on screen.
-  const op = z <= 9.5 ? 1 : z >= 11.5 ? 0 : 1 - (z-9.5)/2;
+  // The dot itself never disappears -- a marker vanishing on zoom would
+  // be its own kind of disorienting. Only the name label fades out, over
+  // the same zoom range the catchment polygons fade in (9 -> 10.5), so
+  // one becomes the useful thing on screen as the other stops being it.
+  const labelOp = z <= 9 ? 1 : z >= 10.5 ? 0 : 1 - (z-9)/1.5;
   for(const {el} of Object.values(state.markerEls)){
-    el.style.opacity = op;
-    el.style.pointerEvents = op < 0.05 ? "none" : "auto";
+    const tag = el.querySelector(".tag");
+    tag.style.opacity = labelOp;
+    tag.style.pointerEvents = labelOp < 0.05 ? "none" : "auto";
   }
 }
 
@@ -437,11 +522,9 @@ function selectCity(codigo, {openPanel=true} = {}){
 }
 function updateCatchmentHighlight(){
   if(!map.getLayer("catchments-fill")) return;
-  const sel = state.selectedCity || "__none__";
-  map.setPaintProperty("catchments-fill","fill-opacity",
-    ["case", ["==",["get","concello_codigo"], sel], 0.22, 0.08]);
-  map.setPaintProperty("catchments-line","line-width",
-    ["case", ["==",["get","concello_codigo"], sel], 1.6, 0.6]);
+  map.setPaintProperty("catchments-fill","fill-opacity", fillOpacityExpr());
+  map.setPaintProperty("catchments-line","line-opacity", lineOpacityExpr());
+  map.setPaintProperty("catchments-line","line-width", lineWidthExpr());
 }
 
 /* ---------- city trigger + dropdown ---------- */
@@ -498,7 +581,7 @@ const panel = document.querySelector(".panel");
 function openPanel(html){
   panel.querySelector(".panel__inner").innerHTML =
     `<button class="panel__close" aria-label="×">&times;</button>` + html;
-  panel.querySelector(".panel__close").addEventListener("click", ()=>selectCity(null));
+  panel.querySelector(".panel__close").addEventListener("click", closeEverything);
   panel.classList.add("open");
 }
 function closePanel(){ panel.classList.remove("open"); }
@@ -536,26 +619,98 @@ function openCityPanel(codigo){
   `);
 }
 
-/* ---------- search: geocode + point-in-polygon via queryRenderedFeatures ---------- */
+/* ---------- search: suggest-as-you-type, geocode, point-in-polygon ---------- */
+// Same Xunta ArcGIS instance we already trust for the exact-match geocode
+// -- confirmed it also exposes Suggest (capabilities: "Geocode,
+// ReverseGeocode,Suggest") and CORS is open on that endpoint too, so this
+// stays on infrastructure we've already verified rather than adding a
+// second provider (Google needs a billed key and a backend to hide it;
+// Nominatim's usage policy disallows autocomplete-style querying against
+// its public instance) just for the suggestion dropdown.
 const GEOCODER = "https://ideg2.xunta.gal/arcgis/rest/services/Geocoder/GeocodeServer/findAddressCandidates";
+const SUGGEST = "https://ideg2.xunta.gal/arcgis/rest/services/Geocoder/GeocodeServer/suggest";
 const addrInput = document.getElementById("addr-input");
 const addrClear = document.getElementById("addr-clear");
+const addrMenu = document.getElementById("addr-menu");
+
+let suggestTimer = null;
+let addrSuggestions = [];
+let addrMenuIndex = -1;
 
 addrInput.addEventListener("input",()=>{
   addrClear.classList.toggle("show", addrInput.value.length>0);
+  scheduleSuggest(addrInput.value);
 });
 addrClear.addEventListener("click",()=>{
   addrInput.value=""; addrClear.classList.remove("show"); addrInput.focus();
-  clearResult();
+  clearResult(); closeAddrMenu();
 });
 addrInput.addEventListener("keydown",(e)=>{
-  if(e.key==="Enter" && addrInput.value.trim()) runSearch(addrInput.value.trim());
+  if(addrMenu.classList.contains("open") && addrSuggestions.length){
+    if(e.key==="ArrowDown"){ e.preventDefault(); addrMenuIndex=Math.min(addrMenuIndex+1,addrSuggestions.length-1); highlightAddrMenu(); return; }
+    if(e.key==="ArrowUp"){ e.preventDefault(); addrMenuIndex=Math.max(addrMenuIndex-1,0); highlightAddrMenu(); return; }
+    if(e.key==="Enter" && addrMenuIndex>=0){ e.preventDefault(); chooseSuggestion(addrMenuIndex); return; }
+  }
+  if(e.key==="Enter" && addrInput.value.trim()){ closeAddrMenu(); runSearch(addrInput.value.trim()); }
+  if(e.key==="Escape") closeAddrMenu();
 });
+
+function scheduleSuggest(query){
+  clearTimeout(suggestTimer);
+  if(query.trim().length < 3){ closeAddrMenu(); return; }
+  suggestTimer = setTimeout(()=>fetchSuggestions(query.trim()), 300);
+}
+async function fetchSuggestions(query){
+  try{
+    const url = `${SUGGEST}?f=pjson&text=${encodeURIComponent(query)}&Region=Galicia`;
+    const res = await fetch(url);
+    const json = await res.json();
+    addrSuggestions = (json.suggestions || []).filter(s=>!s.isCollection).slice(0,6);
+    renderAddrMenu();
+  }catch(e){ console.error(e); }
+}
+function renderAddrMenu(){
+  addrMenuIndex = -1;
+  if(!addrSuggestions.length){ closeAddrMenu(); return; }
+  addrMenu.innerHTML = addrSuggestions.map((s,i)=>`<div class="opt" data-i="${i}">${s.text}</div>`).join("");
+  addrMenu.classList.add("open");
+}
+function highlightAddrMenu(){
+  [...addrMenu.children].forEach((el,i)=>el.classList.toggle("hi", i===addrMenuIndex));
+}
+function closeAddrMenu(){ addrMenu.classList.remove("open"); addrSuggestions=[]; addrMenuIndex=-1; }
+addrMenu.addEventListener("click",(e)=>{
+  const opt = e.target.closest(".opt"); if(!opt) return;
+  chooseSuggestion(+opt.dataset.i);
+});
+document.addEventListener("click",(e)=>{
+  if(!e.target.closest(".searchbar")) closeAddrMenu();
+});
+
+async function chooseSuggestion(i){
+  const s = addrSuggestions[i]; if(!s) return;
+  addrInput.value = s.text;
+  closeAddrMenu();
+  const t = I18N[lang];
+  showToast(t.loading, false);
+  try{
+    const url = `${GEOCODER}?f=pjson&magicKey=${encodeURIComponent(s.magicKey)}&outSR=4326`;
+    const res = await fetch(url);
+    const json = await res.json();
+    hideToast();
+    const cand = json.candidates && json.candidates[0];
+    if(!cand){ showToast(t.noMatch, true); setTimeout(hideToast, 2600); return; }
+    handleGeocodeResult(cand);
+  }catch(e){
+    hideToast(); showToast(t.error, true); console.error(e);
+  }
+}
 
 function clearResult(){
   if(state.resultMarker){ state.resultMarker.remove(); state.resultMarker=null; }
   if(state.resultPopup){ state.resultPopup.remove(); state.resultPopup=null; }
 }
+function closeEverything(){ selectCity(null); clearResult(); }
 
 async function runSearch(query){
   const t = I18N[lang];
@@ -567,31 +722,31 @@ async function runSearch(query){
     hideToast();
     const cand = json.candidates && json.candidates[0];
     if(!cand){ showToast(t.noMatch, true); setTimeout(hideToast, 2600); return; }
-
-    const lngLat = [cand.location.x, cand.location.y];
-    clearResult();
-    map.flyTo({center:lngLat, zoom:15.5, duration:900});
-
-    // Neither "moveend" nor "idle" proved reliable here for timing the
-    // hit-test: "moveend" can fire before the newly-panned-to tiles finish
-    // rendering (queryRenderedFeatures then misses features that are
-    // clearly there moments later), and "idle" is edge-triggered on the
-    // busy->idle transition, so it can fire immediately from the
-    // *pre-existing* idle state before this flyTo's animation has even
-    // started moving. A fixed delay past the flyTo duration sidesteps
-    // both races and is imperceptible for a search action.
-    setTimeout(() => {
-      const hits = map.queryRenderedFeatures(map.project(lngLat), {layers:["catchments-fill"]});
-      openSchoolPopup(lngLat, hits, cand.address);
-      if(hits.length){
-        selectCity(hits[0].properties.concello_codigo, {openPanel:false});
-      }
-    }, 1100);
+    handleGeocodeResult(cand);
   }catch(e){
     hideToast();
     showToast(t.error, true);
     console.error(e);
   }
+}
+
+function handleGeocodeResult(cand){
+  const lngLat = [cand.location.x, cand.location.y];
+  clearResult();
+  map.flyTo({center:lngLat, zoom:15.5, duration:900});
+
+  // Neither "moveend" nor "idle" proved reliable here for timing the
+  // hit-test: "moveend" can fire before the newly-panned-to tiles finish
+  // rendering (queryRenderedFeatures then misses features that are
+  // clearly there moments later), and "idle" is edge-triggered on the
+  // busy->idle transition, so it can fire immediately from the
+  // *pre-existing* idle state before this flyTo's animation has even
+  // started moving. A fixed delay past the flyTo duration sidesteps
+  // both races and is imperceptible for a search action.
+  setTimeout(() => {
+    const hits = map.queryRenderedFeatures(map.project(lngLat), {layers:["catchments-fill"]});
+    showSearchResult(lngLat, hits, cand.address);
+  }, 1100);
 }
 
 // Geocoder address strings look like "Rua X 22, 36213, Vigo, Pontevedra,
@@ -607,25 +762,78 @@ function extractLocality(addr){
   return filtered[filtered.length-1] || addr;
 }
 
-function openSchoolPopup(lngLat, feats, resolvedAddress){
-  const t = I18N[lang];
+function makeResultPinEl(){
+  const el = document.createElement("div");
+  el.className = "result-pin";
+  return el;
+}
+
+// Search results go in the docked panel (same surface city-browsing
+// uses), not a small popup -- a popup only has room for 1-3 facts and a
+// matched school has more to say than that. The popup stays reserved for
+// the honest "not covered" message, which really is just a short note
+// tied to a point on the map.
+function showSearchResult(lngLat, hits, resolvedAddress){
   clearResult();
-  if(!feats.length){
-    const html = resolvedAddress
-      ? `<p class="pop-title pop-warn">${t.notCovered(extractLocality(resolvedAddress))}</p>`
-      : `<p class="pop-title pop-warn">${t.noMatch}</p>`;
+  state.resultMarker = new maplibregl.Marker({element:makeResultPinEl(), anchor:"bottom"})
+    .setLngLat(lngLat).addTo(map);
+
+  if(!hits.length){
+    const t = I18N[lang];
+    const html = `<p class="pop-title pop-warn">${t.notCovered(extractLocality(resolvedAddress))}</p>`;
     state.resultPopup = new maplibregl.Popup({closeButton:true, offset:12}).setLngLat(lngLat).setHTML(html).addTo(map);
     return;
   }
+  selectCity(hits[0].properties.concello_codigo, {openPanel:false});
+  openSearchResultPanel(hits, resolvedAddress);
+}
+
+// MapLibre stringifies non-primitive GeoJSON properties (arrays/objects)
+// for features that come back from queryRenderedFeatures/click events --
+// vector tiles have no native way to hold nested structures, so
+// "ensinanzas" arrives as a JSON string there, not the real array it is
+// on state.catchments.features (which openCityPanel reads directly, no
+// tiling involved). Found this the hard way: openSchoolPopup and
+// openSearchResultPanel both throw on .map() without this.
+function parseEnsinanzas(raw){
+  return typeof raw === "string" ? JSON.parse(raw) : raw;
+}
+
+function openSearchResultPanel(feats, resolvedAddress){
+  const t = I18N[lang];
+  const rows = feats.map(f=>{
+    const p = f.properties;
+    const tags = parseEnsinanzas(p.ensinanzas).map(e=>`<span class="pop-tag">${e.nome}</span>`).join("");
+    return `<div class="panel__school">
+      <p class="panel__school-name">${p.nome}</p>
+      <p class="panel__school-meta">${p.concello_nome}</p>
+      <div class="panel__school-tags">${tags}</div>
+      <a href="${p.detail_url}" target="_blank" rel="noopener">${t.officialLink} ↗</a>
+    </div>`;
+  }).join("");
+
+  openPanel(`
+    <p class="panel__title">${t.resultTitle}</p>
+    <p class="panel__subtitle">${t.resultSubtitle(resolvedAddress)}</p>
+    ${rows}
+  `);
+}
+
+// Direct click on a catchment shape on the map -- unlike search, this
+// stays a small native popup (1-3 quick facts), matching the template's
+// default callout convention for "clicked a thing that's already visible."
+function openSchoolPopup(lngLat, feats){
+  const t = I18N[lang];
+  if(!feats.length) return;
   const html = feats.map(f=>{
     const p = f.properties;
-    const tags = p.ensinanzas.map(e=>`<span class="pop-tag">${e.nome}</span>`).join("");
+    const tags = parseEnsinanzas(p.ensinanzas).map(e=>`<span class="pop-tag">${e.nome}</span>`).join("");
     return `<p class="pop-title">${p.nome}</p>
       <p class="pop-sub">${p.concello_nome}</p>
       <div class="pop-tags">${tags}</div>
       <a class="pop-link" href="${p.detail_url}" target="_blank" rel="noopener">${t.officialLink} ↗</a>`;
   }).join("<hr style='border:none;border-top:1px solid var(--hairline);margin:8px 0'>");
-  state.resultPopup = new maplibregl.Popup({closeButton:true, offset:12}).setLngLat(lngLat).setHTML(html).addTo(map);
+  new maplibregl.Popup({closeButton:true, offset:12}).setLngLat(lngLat).setHTML(html).addTo(map);
 }
 </script>
 </body>

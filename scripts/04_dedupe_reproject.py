@@ -37,6 +37,19 @@ DATA_DIR = "data"
 SRC_CRS = "EPSG:25829"
 DST_CRS = "EPSG:4326"
 
+# Priority for picking one "dominant" ensinanza per feature, for the
+# frontend's color-coding -- earliest stage wins when a shape covers more
+# than one (e.g. a CEIP's combined Infantil+Primaria shape reads as
+# Infantil, the "youngest" stage present, rather than an arbitrary pick).
+ENSINANZA_PRIORITY = ["22", "25", "24", "29"]  # infantil, primaria, eso, bacharelato
+
+
+def dominant_ensinanza(ensinanza_codes: set) -> str:
+    for codigo in ENSINANZA_PRIORITY:
+        if codigo in ensinanza_codes:
+            return codigo
+    return sorted(ensinanza_codes)[0]  # fallback, shouldn't hit in practice
+
 # Sanity bounds for all of Galicia (Xunta-wide), used as an integrity
 # check on the reprojected output (lon, lat), not a filter.
 BBOX_LON = (-9.5, -6.5)
@@ -84,6 +97,7 @@ def main():
             ensinanzas = sorted(
                 {(r["ensinanza_codigo"], r["ensinanza_nome"]) for r in group_rows}
             )
+            dominant = dominant_ensinanza({c for c, n in ensinanzas})
 
             feature = {
                 "type": "Feature",
@@ -99,6 +113,7 @@ def main():
                     "concello_codigo": first["concello_codigo"],
                     "concello_nome": first["concello_nome"],
                     "ensinanzas": [{"codigo": c, "nome": n} for c, n in ensinanzas],
+                    "dominant_ensinanza_codigo": dominant,
                     "detail_url": first["detail_url"],
                 },
             }
