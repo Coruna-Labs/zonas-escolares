@@ -133,7 +133,10 @@
   @media (max-width:719px){
     .rail{left:0;right:0;bottom:0;height:40vh;border-radius:12px 12px 0 0}
   }
-  .rail__legend{display:flex;flex-wrap:wrap;gap:6px;padding:12px 12px 10px;border-bottom:1px solid var(--hairline)}
+  .rail__legend-wrap{padding:12px 12px 10px;border-bottom:1px solid var(--hairline)}
+  .rail__legend-hint{margin:0 0 6px;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--faint);font-weight:600}
+  .rail__legend{display:flex;flex-wrap:wrap;gap:6px}
   /* .legend-toggle pairs with .pop-tag + .ens-tag-XX in the HTML -- same
      filled chip as the rail tags, just a real <button> with a hover/off
      state on top. Deliberately no size overrides here (padding, font)
@@ -170,6 +173,11 @@
     overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .rail__school-tags{display:flex;gap:3px;flex-wrap:wrap;margin:3px 0 0}
   .rail__empty{padding:20px 14px;font-size:12px;color:var(--faint);text-align:center}
+
+  .rail__foot{padding:10px 14px;border-top:1px solid var(--hairline);font-size:10px;
+    line-height:1.6;color:var(--faint)}
+  .rail__foot a{color:var(--faint);text-decoration:underline;text-underline-offset:2px}
+  .rail__foot a:hover{color:var(--muted)}
 
   /* ---------- Search-result pin (distinct from city markers) ----------
      Sized up from 13px -- at the original size it read as a bit timid for
@@ -221,12 +229,16 @@
 </div>
 
 <aside class="rail" aria-label="Centros">
-  <div class="rail__legend" id="rail-legend"></div>
+  <div class="rail__legend-wrap">
+    <p class="rail__legend-hint" id="rail-legend-hint"></p>
+    <div class="rail__legend" id="rail-legend"></div>
+  </div>
   <div class="rail__status">
     <span class="count" id="rail-count"></span>
     <button class="reset" id="rail-reset"></button>
   </div>
   <div class="rail__scroll" id="rail-list"></div>
+  <div class="rail__foot" id="rail-foot"></div>
 </aside>
 
 <div class="toast" id="toast"></div>
@@ -256,6 +268,8 @@ const I18N = {
        railCountSearch:(n)=>`${n} resultado${n===1?"":"s"}`,
        railEmpty:"Ningún centro coincide coa selección.",
        railReset:"Ver todos", railBack:"← Volver",
+       legendHint:"Filtrar por tipo",
+       railFoot:'Datos: <a href="https://www.edu.xunta.gal/centroseducativos/" target="_blank" rel="noopener">Xunta de Galicia — Centros educativos</a> (fonte oficial)<br><a href="https://github.com/Coruna-Labs/mis-educativos" target="_blank" rel="noopener">Código fonte ↗</a>',
        ensinanzaNames:{"22":"Infantil","25":"Primaria","24":"ESO","29":"Bacharelato"} },
   es:{ title:"MisEducativos", sub:"Áreas de influencia de los centros educativos de Galicia.",
        note:"Disponible en 11 concellos, por ahora.",
@@ -269,6 +283,8 @@ const I18N = {
        railCountSearch:(n)=>`${n} resultado${n===1?"":"s"}`,
        railEmpty:"Ningún centro coincide con la selección.",
        railReset:"Ver todos", railBack:"← Volver",
+       legendHint:"Filtrar por tipo",
+       railFoot:'Datos: <a href="https://www.edu.xunta.gal/centroseducativos/" target="_blank" rel="noopener">Xunta de Galicia — Centros educativos</a> (fuente oficial)<br><a href="https://github.com/Coruna-Labs/mis-educativos" target="_blank" rel="noopener">Código fuente ↗</a>',
        ensinanzaNames:{"22":"Infantil","25":"Primaria","24":"ESO","29":"Bachillerato"} },
   en:{ title:"MisEducativos", sub:"School catchment zones across Galicia.",
        note:"Available in 11 concellos, for now.",
@@ -282,6 +298,8 @@ const I18N = {
        railCountSearch:(n)=>`${n} result${n===1?"":"s"}`,
        railEmpty:"No school matches this selection.",
        railReset:"See all", railBack:"← Back",
+       legendHint:"Filter by type",
+       railFoot:'Data: <a href="https://www.edu.xunta.gal/centroseducativos/" target="_blank" rel="noopener">Xunta de Galicia — Centros educativos</a> (official source)<br><a href="https://github.com/Coruna-Labs/mis-educativos" target="_blank" rel="noopener">Source code ↗</a>',
        ensinanzaNames:{"22":"Infantil","25":"Primary","24":"ESO","29":"Bacharelato"} },
 };
 
@@ -327,6 +345,8 @@ function applyText(){
   document.getElementById("m-sub").textContent = t.sub;
   document.getElementById("m-note").textContent = t.note || "";
   document.getElementById("addr-input").placeholder = t.searchPlaceholder;
+  document.getElementById("rail-legend-hint").textContent = t.legendHint;
+  document.getElementById("rail-foot").innerHTML = t.railFoot;
   document.querySelectorAll(".langs button").forEach(b=>b.classList.toggle("on",b.dataset.lang===lang));
   if(toast.style.display==="block" && !toast.classList.contains("err")) toast.textContent=t.loading;
   renderCityTrigger();
@@ -455,12 +475,24 @@ function highlightFillOpacity(){
   const target = 0.35;
   return 1 - Math.pow(1 - target, 1 / n);
 }
+// The "not matched" baseline also depends on why something isn't
+// matched: plain browsing (nothing selected) wants everything at a
+// gentle, even baseline; an active address search wants the non-matches
+// to recede further, since the whole point of searching is "show me
+// what's relevant here" -- a search result that's only slightly more
+// prominent than everything else undersells the answer.
+function faintFillOpacity(){
+  return (state.searchMatchCodigos && state.searchMatchCodigos.size) ? 0.02 : 0.05;
+}
+function faintLineOpacity(){
+  return (state.searchMatchCodigos && state.searchMatchCodigos.size) ? 0.2 : 0.65;
+}
 function fillOpacityExpr(){
-  const byMatch = ["case", highlightCondition(), highlightFillOpacity(), 0.05];
+  const byMatch = ["case", highlightCondition(), highlightFillOpacity(), faintFillOpacity()];
   return ["interpolate", ["linear"], ["zoom"], 9, 0, 10.5, byMatch];
 }
 function lineOpacityExpr(){
-  const byMatch = ["case", highlightCondition(), 1, 0.65];
+  const byMatch = ["case", highlightCondition(), 1, faintLineOpacity()];
   return ["interpolate", ["linear"], ["zoom"], 9, 0, 10.5, byMatch];
 }
 function lineWidthExpr(){
@@ -784,7 +816,11 @@ railListEl.addEventListener("click",(e)=>{
   const school = state.allSchools.find(s=>s.codigo===row.dataset.codigo);
   if(!school) return;
   state.previousMatch = captureBackTarget();
-  clearResult();
+  // No clearResult() here -- this can run while drilling into one school
+  // *from* an active address search, and the pin marks that original
+  // searched point, which is still exactly relevant. clearResult() was
+  // wiping it out even though no new search happened. A genuinely new
+  // search already clears the old pin itself, in showSearchResult().
   state.searchMatchCodigos = new Set([school.codigo]);
   selectCity(school.concello_codigo, {fromSearch:true});
   const feat = state.catchments.features.find(f=>f.properties.codigo===school.codigo);
