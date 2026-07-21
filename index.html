@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="gl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>MisEducativos · Coruña Labs</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.min.js"></script>
+<style>
+  /* ===== Coruña Labs shared design tokens — extracted from Bus Works ===== */
+  :root{
+    --ink:#16181a;--muted:#6b7177;--faint:#9aa0a6;--hairline:#e2e3e5;
+    --paper:#fbfbfa;--panel:#ffffff;--rest:#b4b8bc;
+    --error:#a50813;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{font-family:"Inter","Helvetica Neue",Arial,system-ui,sans-serif;color:var(--ink);
+    background:var(--paper);-webkit-font-smoothing:antialiased;overflow:hidden}
+  #map{position:absolute;inset:0}
+
+  /* ---------- Masthead: gradient bleed, flush top-left, no card/shadow ---------- */
+  .masthead{position:absolute;top:0;left:0;z-index:5;padding:20px 22px 26px;width:360px;max-width:92vw;
+    background:linear-gradient(180deg,rgba(251,251,250,.96),rgba(251,251,250,.7) 75%,rgba(251,251,250,0))}
+  .masthead .top{display:flex;align-items:baseline;justify-content:space-between;gap:16px;pointer-events:none}
+  .lab{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);
+    font-weight:600;margin:0 0 7px;display:flex;align-items:center;gap:7px}
+  .lab a{color:inherit;text-decoration:none;pointer-events:auto}
+  .lab a:hover{color:var(--ink)}
+  .masthead h1{font-size:23px;line-height:1.12;margin:0;font-weight:660;letter-spacing:-.015em}
+  .masthead p.sub{font-size:12.5px;line-height:1.5;color:var(--muted);margin:9px 0 0;max-width:320px;pointer-events:none}
+  .masthead p.note{font-size:11.5px;color:var(--faint);margin:7px 0 0;font-style:italic;pointer-events:none}
+
+  .langs{pointer-events:auto;display:flex;gap:2px;flex:0 0 auto;margin-top:2px}
+  .langs button{background:none;border:none;font:inherit;font-size:11px;font-weight:600;
+    letter-spacing:.04em;color:var(--faint);cursor:pointer;padding:3px 6px;border-radius:5px;
+    text-transform:uppercase}
+  .langs button:hover{color:var(--muted);background:rgba(0,0,0,.04)}
+  .langs button.on{color:var(--ink);background:rgba(0,0,0,.06)}
+
+  /* ---------- Search bar: inline connected bar (city segment + address segment) ---------- */
+  .searchbar{pointer-events:auto;margin-top:13px;display:flex;align-items:stretch;
+    background:var(--panel);border:1px solid var(--hairline);border-radius:10px;
+    box-shadow:0 1px 2px rgba(0,0,0,.04),0 8px 22px rgba(0,0,0,.06);overflow:visible;position:relative}
+  .seg-city{display:flex;align-items:center;gap:5px;padding:9px 11px;font:inherit;font-size:12.5px;
+    font-weight:600;color:var(--ink);background:none;border:none;border-right:1px solid var(--hairline);
+    white-space:nowrap;cursor:pointer;border-radius:10px 0 0 10px;max-width:150px;overflow:hidden}
+  .seg-city.placeholder{color:var(--faint);font-weight:500}
+  .seg-city span.label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .seg-city .chev{font-size:9px;color:var(--faint);flex:0 0 auto;transition:transform .15s}
+  .seg-city.open .chev{transform:rotate(180deg)}
+  .seg-city:hover{background:rgba(0,0,0,.03)}
+  .seg-search{display:flex;align-items:center;gap:8px;padding:9px 12px;flex:1;min-width:0}
+  .seg-search svg{flex:0 0 auto;color:var(--faint)}
+  .seg-search input{border:none;outline:none;font:inherit;font-size:12.5px;color:var(--ink);
+    background:none;flex:1;min-width:0}
+  .seg-search input::placeholder{color:var(--faint)}
+  .seg-clear{flex:0 0 auto;background:none;border:none;color:var(--faint);cursor:pointer;
+    font-size:15px;line-height:1;padding:2px 4px;display:none}
+  .seg-clear.show{display:block}
+  .seg-clear:hover{color:var(--ink)}
+
+  .city-menu{position:absolute;top:calc(100% + 8px);left:0;width:260px;max-height:340px;overflow-y:auto;
+    z-index:10;background:var(--panel);border:1px solid var(--hairline);border-radius:12px;
+    box-shadow:0 1px 2px rgba(0,0,0,.03),0 14px 34px rgba(0,0,0,.14);padding:7px;display:none}
+  .city-menu.open{display:block}
+  .city-menu .grp{padding:8px 10px 4px;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--faint);font-weight:700}
+  .city-menu .opt{display:flex;align-items:center;justify-content:space-between;gap:8px;
+    padding:7px 10px;border-radius:8px;font-size:12.5px;color:var(--muted);cursor:pointer}
+  .city-menu .opt:hover{background:#f4f5f6;color:var(--ink)}
+  .city-menu .opt.sel{background:#f0f1f2;color:var(--ink);font-weight:600}
+  .city-menu .opt .count{font-size:10.5px;color:var(--faint);font-variant-numeric:tabular-nums}
+  .city-menu .allopt{border-bottom:1px solid var(--hairline);margin-bottom:4px;padding-bottom:8px}
+
+  /* ---------- City markers (DOM, not GL symbol layer — full type control) ---------- */
+  .city-marker{pointer-events:auto;cursor:pointer;display:flex;flex-direction:column;align-items:center;
+    gap:4px;transition:opacity .2s}
+  .city-marker .dot{width:9px;height:9px;border-radius:50%;background:var(--panel);
+    border:2px solid var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.25);transition:background .15s,transform .15s}
+  .city-marker .tag{font-size:10.5px;font-weight:660;color:var(--ink);background:rgba(251,251,250,.92);
+    padding:2px 7px;border-radius:5px;white-space:nowrap;box-shadow:0 1px 2px rgba(0,0,0,.08);
+    transform:translateY(-1px)}
+  .city-marker:hover .dot{transform:scale(1.25)}
+  .city-marker.active .dot{background:var(--ink)}
+  .city-marker.active .tag{background:var(--ink);color:#fff}
+
+  /* ---------- Callout: native MapLibre popup — search result ---------- */
+  .maplibregl-popup-content{font-family:inherit;border-radius:10px;padding:12px 14px;
+    box-shadow:0 8px 28px rgba(0,0,0,.16);border:1px solid var(--hairline)}
+  .pop-title{font-size:13px;font-weight:660;margin:0 0 3px}
+  .pop-sub{font-size:11px;color:var(--muted);margin:0 0 6px;line-height:1.45}
+  .pop-tags{display:flex;gap:4px;flex-wrap:wrap;margin:0 0 6px}
+  .pop-tag{font-size:9.5px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;
+    color:var(--muted);background:var(--hairline);padding:2px 6px;border-radius:5px}
+  .pop-link{font-size:11px;color:var(--ink);text-decoration:underline;text-underline-offset:2px}
+  .pop-warn{color:var(--error);font-weight:600}
+
+  /* ---------- Docked panel — city browse ---------- */
+  .panel{position:absolute;z-index:20;background:var(--panel);border:1px solid var(--hairline);
+    box-shadow:0 1px 2px rgba(0,0,0,.03),0 10px 30px rgba(0,0,0,.07);transition:transform .25s ease}
+  @media (min-width:720px){
+    .panel{top:14px;right:14px;bottom:14px;width:320px;border-radius:12px;transform:translateX(120%)}
+    .panel.open{transform:translateX(0)}
+  }
+  @media (max-width:719px){
+    .panel{left:0;right:0;bottom:0;max-height:64vh;border-radius:12px 12px 0 0;transform:translateY(100%)}
+    .panel.open{transform:translateY(0)}
+  }
+  .panel__inner{padding:18px;overflow-y:auto;height:100%}
+  .panel__close{position:absolute;top:10px;right:10px;background:none;border:none;font-size:1.2rem;
+    line-height:1;color:var(--faint);cursor:pointer;padding:4px 8px;z-index:2}
+  .panel__close:hover{color:var(--ink)}
+  .panel__title{margin:0 30px 2px 0;font-size:16px;font-weight:660;color:var(--ink)}
+  .panel__subtitle{margin:0 0 16px;font-size:11.5px;color:var(--muted);font-weight:600}
+  .panel__school{padding:10px 0;border-top:1px solid var(--hairline)}
+  .panel__school:first-of-type{border-top:none}
+  .panel__school-name{font-size:12.5px;font-weight:660;color:var(--ink);margin:0 0 4px}
+  .panel__school-tags{display:flex;gap:4px;flex-wrap:wrap;margin:0 0 5px}
+  .panel__school a{font-size:11px;color:var(--muted);text-decoration:underline;text-underline-offset:2px}
+  .panel__note{margin-top:16px;padding-top:12px;border-top:1px solid var(--hairline);
+    font-size:11px;color:var(--faint);line-height:1.45}
+
+  /* ---------- Toast ---------- */
+  .toast{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:6;
+    background:var(--panel);border:1px solid var(--hairline);border-radius:9px;padding:14px 18px;
+    font-size:13px;color:var(--muted);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+  .toast.err{color:var(--error)}
+
+  @media (max-width:640px){
+    .masthead{width:100%;max-width:none}
+    .maplibregl-ctrl-bottom-left{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div id="map"></div>
+
+<div class="masthead">
+  <div class="top">
+    <div>
+      <p class="lab"><a href="https://corunalabs.org">Coruña Labs</a></p>
+      <h1 id="m-title">MisEducativos</h1>
+    </div>
+    <div class="langs" id="langs">
+      <button data-lang="gl">GL</button><button data-lang="es">ES</button><button data-lang="en">EN</button>
+    </div>
+  </div>
+  <p class="sub" id="m-sub"></p>
+  <p class="sub note" id="m-note"></p>
+
+  <div class="searchbar">
+    <button class="seg-city placeholder" id="city-trigger" aria-haspopup="listbox" aria-expanded="false">
+      <span class="label" id="city-trigger-label">Toda Galicia</span><span class="chev">▾</span>
+    </button>
+    <div class="seg-search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/></svg>
+      <input type="text" id="addr-input" autocomplete="off" />
+      <button class="seg-clear" id="addr-clear" aria-label="×">&times;</button>
+    </div>
+    <div class="city-menu" id="city-menu" role="listbox"></div>
+  </div>
+</div>
+
+<aside class="panel" aria-live="polite">
+  <div class="panel__inner"></div>
+</aside>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ==========================================================================
+   MisEducativos — Coruña Labs
+   Built from map-template. Rail deliberately omitted for this tool: city
+   markers on the Galicia-wide overview + the inline search bar do that job
+   instead (see project discussion — a persistent grouped list would have
+   been a third redundant surface on top of those two).
+   ========================================================================== */
+
+/* ---------- TOOL-SPECIFIC: strings ---------- */
+const I18N = {
+  gl:{ title:"MisEducativos", sub:"Áreas de influencia dos centros educativos de Galicia.",
+       note:"Dispoñible en 11 concellos, por agora.",
+       loading:"Cargando…", error:"Non se puideron cargar os datos.",
+       allCities:"Toda Galicia", searchPlaceholder:"Busca un enderezo…",
+       notCovered:(loc)=>`${loc} aínda non está cuberto — por agora só nestes 11 concellos.`,
+       noMatch:"Non se atopou ese enderezo.",
+       schoolsIn:(n,count)=>`${count} centro${count===1?"":"s"} en ${n}`,
+       panelNote:"Fai clic nun centro do mapa para máis detalle. Liga á ficha oficial da Xunta.",
+       officialLink:"Ver ficha oficial" },
+  es:{ title:"MisEducativos", sub:"Áreas de influencia de los centros educativos de Galicia.",
+       note:"Disponible en 11 concellos, por ahora.",
+       loading:"Cargando…", error:"No se pudieron cargar los datos.",
+       allCities:"Toda Galicia", searchPlaceholder:"Busca una dirección…",
+       notCovered:(loc)=>`${loc} aún no está cubierto — por ahora solo en estos 11 concellos.`,
+       noMatch:"No se encontró esa dirección.",
+       schoolsIn:(n,count)=>`${count} centro${count===1?"":"s"} en ${n}`,
+       panelNote:"Haz clic en un centro del mapa para más detalle. Enlaza a la ficha oficial de la Xunta.",
+       officialLink:"Ver ficha oficial" },
+  en:{ title:"MisEducativos", sub:"School catchment zones across Galicia.",
+       note:"Available in 11 concellos, for now.",
+       loading:"Loading…", error:"Couldn't load the data.",
+       allCities:"All Galicia", searchPlaceholder:"Search an address…",
+       notCovered:(loc)=>`${loc} isn't covered yet — only these 11 concellos, for now.`,
+       noMatch:"Couldn't find that address.",
+       schoolsIn:(n,count)=>`${count} school${count===1?"":"s"} in ${n}`,
+       panelNote:"Click a school on the map for more detail. Links to the Xunta's official page.",
+       officialLink:"View official page" },
+};
+const LANGS = ["gl","es","en"];
+const STORAGE_KEY = "miseducativos.lang";
+
+/* ---------- SHARED: language via ?lang= + localStorage ---------- */
+const params = new URLSearchParams(location.search);
+function initialLang(){
+  const u = params.get("lang");
+  if(u && LANGS.includes(u)) return u;
+  try{ const s = localStorage.getItem(STORAGE_KEY); if(s && LANGS.includes(s)) return s; }catch(e){}
+  return "gl";
+}
+let lang = initialLang();
+
+function syncURL(extra){
+  const p = new URLSearchParams();
+  if(lang && lang!=="gl") p.set("lang",lang);
+  if(extra) for(const [k,v] of Object.entries(extra)) if(v) p.set(k,v);
+  const qs = p.toString();
+  history.replaceState(null,"", qs ? `?${qs}` : location.pathname);
+}
+
+const toast=document.getElementById("toast");
+const showToast=(m,e)=>{toast.style.display="block";toast.textContent=m;toast.classList.toggle("err",!!e)};
+const hideToast=()=>toast.style.display="none";
+
+function applyText(){
+  const t = I18N[lang];
+  document.documentElement.lang = lang;
+  document.getElementById("m-title").textContent = t.title;
+  document.getElementById("m-sub").textContent = t.sub;
+  document.getElementById("m-note").textContent = t.note || "";
+  document.getElementById("addr-input").placeholder = t.searchPlaceholder;
+  document.querySelectorAll(".langs button").forEach(b=>b.classList.toggle("on",b.dataset.lang===lang));
+  if(toast.style.display==="block" && !toast.classList.contains("err")) toast.textContent=t.loading;
+  renderCityTrigger();
+  renderCityMenu();
+  if(panel.classList.contains("open") && state.selectedCity) openCityPanel(state.selectedCity);
+}
+// Called once state/panel (declared further below) exist -- see bottom of
+// this script, right after their declarations, not here at top-level.
+
+document.getElementById("langs").addEventListener("click",(e)=>{
+  const b=e.target.closest("button"); if(!b) return;
+  lang=b.dataset.lang;
+  try{ localStorage.setItem(STORAGE_KEY,lang); }catch(err){}
+  applyText(); syncURL();
+});
+
+/* ---------- SHARED: map init ---------- */
+const BASEMAP = "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json";
+
+// Galicia-wide, generously padded per project direction.
+const SERVICE_AREA = { north:44.4622, south:41.2952, east:-6.0111, west:-10.0983 };
+const MAX_BOUNDS = [[SERVICE_AREA.west,SERVICE_AREA.south],[SERVICE_AREA.east,SERVICE_AREA.north]];
+const GALICIA_CENTER = [
+  (SERVICE_AREA.east + SERVICE_AREA.west) / 2,
+  (SERVICE_AREA.north + SERVICE_AREA.south) / 2,
+];
+
+const map = new maplibregl.Map({
+  container:"map", style:BASEMAP,
+  center: GALICIA_CENTER, zoom: 7.1,
+  maxBounds: MAX_BOUNDS,
+  minZoom: 6.6,
+  attributionControl:false, dragRotate:false, pitchWithRotate:false
+});
+map.touchZoomRotate.disableRotation();
+map.addControl(new maplibregl.NavigationControl({showCompass:false}),"bottom-left");
+new ResizeObserver(() => map.resize()).observe(document.getElementById("map"));
+
+/* ---------- TOOL-SPECIFIC: state ---------- */
+const state = {
+  selectedCity: null,       // concello_codigo or null ("Toda Galicia")
+  catchments: null,         // parsed GeoJSON, kept in memory for panel filtering + hit-testing
+  cityMarkersData: null,    // parsed city_markers.geojson
+  cityGroups: [],           // [{provincia_nome, cities:[{concello_codigo, concello_nome, school_count}]}]
+  markerEls: {},            // concello_codigo -> {marker, el}
+  resultMarker: null,
+  resultPopup: null,
+};
+
+/* ---------- roads-above-polygons (same technique as adrh-mapper) ---------- */
+function roadsBeforeId(){
+  const layers = map.getStyle().layers || [];
+  const isRoad = l => /road|street|highway|tunnel|bridge|transport/i.test(l.id) && l.type==="line";
+  const road = layers.find(isRoad);
+  if(road) return road.id;
+  const sym = layers.find(l=>l.type==="symbol");
+  return sym ? sym.id : undefined;
+}
+
+/* ---------- TOOL-SPECIFIC: data + layers ---------- */
+// Guard against both (a) the style having already finished loading before
+// this listener attaches, and (b) "load" just not firing reliably in some
+// automated/headless browser contexts observed during dev — poll as a
+// backstop alongside the event, whichever comes first wins, guarded so
+// the callback only ever runs once.
+function whenStyleReady(cb){
+  let done = false;
+  function fire(){ if(done) return; done = true; cb(); }
+  if(map.isStyleLoaded()){ fire(); return; }
+  map.once("load", fire);
+  const poll = setInterval(() => {
+    if(map.isStyleLoaded()){ clearInterval(poll); fire(); }
+  }, 200);
+}
+whenStyleReady(async () => {
+  try{
+    const [catchments, cityMarkers] = await Promise.all([
+      fetch("data/catchments_galicia.geojson").then(r=>{if(!r.ok)throw new Error("catchments");return r.json();}),
+      fetch("data/city_markers.geojson").then(r=>{if(!r.ok)throw new Error("markers");return r.json();}),
+    ]);
+    state.catchments = catchments;
+    state.cityMarkersData = cityMarkers;
+
+    // Positron draws building fills after roads, so they can't be kept
+    // under our translucent layer via beforeId — hide them outright,
+    // same call adrh-mapper made (buildings just clutter a data layer).
+    ["building","building-top"].forEach(id=>{
+      if(map.getLayer(id)) map.setLayoutProperty(id,"visibility","none");
+    });
+
+    const beforeId = roadsBeforeId();
+    map.addSource("catchments", {type:"geojson", data:catchments});
+    map.addLayer({
+      id:"catchments-fill", type:"fill", source:"catchments",
+      paint:{
+        "fill-color": "#16181a",
+        // Kept low because catchment polygons overlap heavily in dense
+        // urban cores (Vigo especially — many schools' zones genuinely
+        // cover the same ground) and MapLibre compounds fill-opacity
+        // per overlapping feature. At 0.22 a dozen-plus stacked polygons
+        // rendered as a near-solid black block; 0.08/0.22 stays legible
+        // against the basemap even where a lot of zones overlap.
+        "fill-opacity": [
+          "case",
+          ["==", ["get","concello_codigo"], state.selectedCity || "__none__"], 0.22,
+          0.08,
+        ],
+      },
+    }, beforeId);
+    map.addLayer({
+      id:"catchments-line", type:"line", source:"catchments",
+      paint:{
+        "line-color":"#16181a",
+        "line-width": [
+          "case",
+          ["==", ["get","concello_codigo"], state.selectedCity || "__none__"], 1.6,
+          0.6,
+        ],
+        "line-opacity":0.55,
+      },
+    }, beforeId);
+
+    map.on("click","catchments-fill",(e)=>{
+      const f = e.features[0];
+      openSchoolPopup(e.lngLat, [f]);
+    });
+    map.on("mouseenter","catchments-fill",()=>map.getCanvas().style.cursor="pointer");
+    map.on("mouseleave","catchments-fill",()=>map.getCanvas().style.cursor="");
+
+    buildCityGroups();
+    renderCityMenu();
+    renderCityMarkers();
+    updateCatchmentHighlight();
+
+    hideToast();
+  }catch(e){
+    showToast(I18N[lang].error,true);
+    console.error(e);
+  }
+});
+
+function buildCityGroups(){
+  const byProvincia = new Map();
+  for(const f of state.cityMarkersData.features){
+    const p = f.properties;
+    if(!byProvincia.has(p.provincia_nome)) byProvincia.set(p.provincia_nome, []);
+    byProvincia.get(p.provincia_nome).push(p);
+  }
+  state.cityGroups = [...byProvincia.entries()]
+    .sort((a,b)=>a[0].localeCompare(b[0]))
+    .map(([provincia_nome, cities]) => ({
+      provincia_nome,
+      cities: cities.sort((a,b)=>a.concello_nome.localeCompare(b.concello_nome)),
+    }));
+}
+
+/* ---------- city markers (DOM, always on the map, fade out on deep zoom) ---------- */
+function renderCityMarkers(){
+  for(const f of state.cityMarkersData.features){
+    const p = f.properties;
+    const el = document.createElement("div");
+    el.className = "city-marker";
+    el.innerHTML = `<span class="tag">${p.concello_nome}</span><span class="dot"></span>`;
+    el.addEventListener("click",(ev)=>{ ev.stopPropagation(); selectCity(p.concello_codigo); });
+    const marker = new maplibregl.Marker({element:el, anchor:"bottom"})
+      .setLngLat(f.geometry.coordinates)
+      .addTo(map);
+    state.markerEls[p.concello_codigo] = {marker, el};
+  }
+  updateMarkerOpacity();
+  map.on("zoom", updateMarkerOpacity);
+}
+function updateMarkerOpacity(){
+  const z = map.getZoom();
+  // Fully visible through zoom 9.5, fades out by zoom 11.5 as real
+  // catchment polygons become the more useful thing on screen.
+  const op = z <= 9.5 ? 1 : z >= 11.5 ? 0 : 1 - (z-9.5)/2;
+  for(const {el} of Object.values(state.markerEls)){
+    el.style.opacity = op;
+    el.style.pointerEvents = op < 0.05 ? "none" : "auto";
+  }
+}
+
+/* ---------- city selection: shared state for markers + dropdown + search ---------- */
+function selectCity(codigo, {openPanel=true} = {}){
+  state.selectedCity = codigo;
+  renderCityTrigger();
+  updateCatchmentHighlight();
+  for(const [c,{el}] of Object.entries(state.markerEls)){
+    el.classList.toggle("active", c===codigo);
+  }
+  if(codigo && openPanel) openCityPanel(codigo);
+  if(!codigo) closePanel();
+  syncURL({city: codigo || ""});
+}
+function updateCatchmentHighlight(){
+  if(!map.getLayer("catchments-fill")) return;
+  const sel = state.selectedCity || "__none__";
+  map.setPaintProperty("catchments-fill","fill-opacity",
+    ["case", ["==",["get","concello_codigo"], sel], 0.22, 0.08]);
+  map.setPaintProperty("catchments-line","line-width",
+    ["case", ["==",["get","concello_codigo"], sel], 1.6, 0.6]);
+}
+
+/* ---------- city trigger + dropdown ---------- */
+const cityTrigger = document.getElementById("city-trigger");
+const cityTriggerLabel = document.getElementById("city-trigger-label");
+const cityMenu = document.getElementById("city-menu");
+
+function renderCityTrigger(){
+  const t = I18N[lang];
+  if(!state.selectedCity){
+    cityTrigger.classList.add("placeholder");
+    cityTriggerLabel.textContent = t.allCities;
+  } else {
+    cityTrigger.classList.remove("placeholder");
+    const f = state.cityMarkersData.features.find(f=>f.properties.concello_codigo===state.selectedCity);
+    cityTriggerLabel.textContent = f ? f.properties.concello_nome : t.allCities;
+  }
+}
+function renderCityMenu(){
+  const t = I18N[lang];
+  let html = `<div class="opt allopt${state.selectedCity?"":" sel"}" data-codigo="">${t.allCities}</div>`;
+  for(const grp of state.cityGroups){
+    html += `<div class="grp">${grp.provincia_nome}</div>`;
+    for(const c of grp.cities){
+      const sel = c.concello_codigo===state.selectedCity;
+      html += `<div class="opt${sel?" sel":""}" data-codigo="${c.concello_codigo}">
+        <span>${c.concello_nome}</span><span class="count">${c.school_count}</span></div>`;
+    }
+  }
+  cityMenu.innerHTML = html;
+}
+function openCityMenu(){ cityMenu.classList.add("open"); cityTrigger.classList.add("open");
+  cityTrigger.setAttribute("aria-expanded","true"); }
+function closeCityMenu(){ cityMenu.classList.remove("open"); cityTrigger.classList.remove("open");
+  cityTrigger.setAttribute("aria-expanded","false"); }
+
+cityTrigger.addEventListener("click",(e)=>{
+  e.stopPropagation();
+  cityMenu.classList.contains("open") ? closeCityMenu() : openCityMenu();
+});
+cityMenu.addEventListener("click",(e)=>{
+  const opt = e.target.closest(".opt"); if(!opt) return;
+  const codigo = opt.dataset.codigo || null;
+  selectCity(codigo);
+  closeCityMenu();
+});
+document.addEventListener("click",(e)=>{
+  if(!e.target.closest(".searchbar")) closeCityMenu();
+});
+document.addEventListener("keydown",(e)=>{ if(e.key==="Escape"){ closeCityMenu(); closePanel(); } });
+
+/* ---------- SHARED-ish: docked panel — city browse ---------- */
+const panel = document.querySelector(".panel");
+function openPanel(html){
+  panel.querySelector(".panel__inner").innerHTML =
+    `<button class="panel__close" aria-label="×">&times;</button>` + html;
+  panel.querySelector(".panel__close").addEventListener("click", ()=>selectCity(null));
+  panel.classList.add("open");
+}
+function closePanel(){ panel.classList.remove("open"); }
+
+// Now that state/panel/cityMenu etc. all exist, do the first text pass and
+// show the loading toast (map data itself arrives async in map.on("load")).
+applyText();
+showToast(I18N[lang].loading,false);
+
+function openCityPanel(codigo){
+  const t = I18N[lang];
+  const feats = state.catchments.features.filter(f=>f.properties.concello_codigo===codigo);
+  const byCode = new Map();
+  for(const f of feats){
+    const p = f.properties;
+    if(!byCode.has(p.codigo)) byCode.set(p.codigo, {nome:p.nome, detail_url:p.detail_url, ensinanzas:new Map()});
+    for(const e of p.ensinanzas) byCode.get(p.codigo).ensinanzas.set(e.codigo, e.nome);
+  }
+  const schools = [...byCode.values()].sort((a,b)=>a.nome.localeCompare(b.nome));
+  const provincia_nome = feats[0]?.properties.provincia_nome || "";
+  const concello_nome = feats[0]?.properties.concello_nome || "";
+
+  const rows = schools.map(s => `
+    <div class="panel__school">
+      <p class="panel__school-name">${s.nome}</p>
+      <div class="panel__school-tags">${[...s.ensinanzas.values()].map(n=>`<span class="pop-tag">${n}</span>`).join("")}</div>
+      <a href="${s.detail_url}" target="_blank" rel="noopener">${t.officialLink} ↗</a>
+    </div>`).join("");
+
+  openPanel(`
+    <p class="panel__title">${concello_nome}</p>
+    <p class="panel__subtitle">${provincia_nome} · ${t.schoolsIn(concello_nome, schools.length)}</p>
+    ${rows}
+    <p class="panel__note">${t.panelNote}</p>
+  `);
+}
+
+/* ---------- search: geocode + point-in-polygon via queryRenderedFeatures ---------- */
+const GEOCODER = "https://ideg2.xunta.gal/arcgis/rest/services/Geocoder/GeocodeServer/findAddressCandidates";
+const addrInput = document.getElementById("addr-input");
+const addrClear = document.getElementById("addr-clear");
+
+addrInput.addEventListener("input",()=>{
+  addrClear.classList.toggle("show", addrInput.value.length>0);
+});
+addrClear.addEventListener("click",()=>{
+  addrInput.value=""; addrClear.classList.remove("show"); addrInput.focus();
+  clearResult();
+});
+addrInput.addEventListener("keydown",(e)=>{
+  if(e.key==="Enter" && addrInput.value.trim()) runSearch(addrInput.value.trim());
+});
+
+function clearResult(){
+  if(state.resultMarker){ state.resultMarker.remove(); state.resultMarker=null; }
+  if(state.resultPopup){ state.resultPopup.remove(); state.resultPopup=null; }
+}
+
+async function runSearch(query){
+  const t = I18N[lang];
+  showToast(t.loading, false);
+  try{
+    const url = `${GEOCODER}?f=pjson&address=${encodeURIComponent(query)}&outSR=4326&Region=Galicia&maxLocations=1`;
+    const res = await fetch(url);
+    const json = await res.json();
+    hideToast();
+    const cand = json.candidates && json.candidates[0];
+    if(!cand){ showToast(t.noMatch, true); setTimeout(hideToast, 2600); return; }
+
+    const lngLat = [cand.location.x, cand.location.y];
+    clearResult();
+    map.flyTo({center:lngLat, zoom:15.5, duration:900});
+
+    // Neither "moveend" nor "idle" proved reliable here for timing the
+    // hit-test: "moveend" can fire before the newly-panned-to tiles finish
+    // rendering (queryRenderedFeatures then misses features that are
+    // clearly there moments later), and "idle" is edge-triggered on the
+    // busy->idle transition, so it can fire immediately from the
+    // *pre-existing* idle state before this flyTo's animation has even
+    // started moving. A fixed delay past the flyTo duration sidesteps
+    // both races and is imperceptible for a search action.
+    setTimeout(() => {
+      const hits = map.queryRenderedFeatures(map.project(lngLat), {layers:["catchments-fill"]});
+      openSchoolPopup(lngLat, hits, cand.address);
+      if(hits.length){
+        selectCity(hits[0].properties.concello_codigo, {openPanel:false});
+      }
+    }, 1100);
+  }catch(e){
+    hideToast();
+    showToast(t.error, true);
+    console.error(e);
+  }
+}
+
+// Geocoder address strings look like "Rua X 22, 36213, Vigo, Pontevedra,
+// Galicia" (with postal code) or sometimes just "Ourense, Orense, Galicia"
+// (city-level fallback, no street/postal at all) -- a fixed split index
+// picks the postal code in the first shape. Filter out anything numeric
+// (postal codes) and the trailing "Galicia"/province instead, so this
+// works for both shapes.
+function extractLocality(addr){
+  const parts = addr.split(",").map(s=>s.trim()).filter(Boolean);
+  const filtered = parts.filter(p => !/^\d+$/.test(p) && p !== "Galicia");
+  if(filtered.length > 1) filtered.pop(); // drop trailing province name
+  return filtered[filtered.length-1] || addr;
+}
+
+function openSchoolPopup(lngLat, feats, resolvedAddress){
+  const t = I18N[lang];
+  clearResult();
+  if(!feats.length){
+    const html = resolvedAddress
+      ? `<p class="pop-title pop-warn">${t.notCovered(extractLocality(resolvedAddress))}</p>`
+      : `<p class="pop-title pop-warn">${t.noMatch}</p>`;
+    state.resultPopup = new maplibregl.Popup({closeButton:true, offset:12}).setLngLat(lngLat).setHTML(html).addTo(map);
+    return;
+  }
+  const html = feats.map(f=>{
+    const p = f.properties;
+    const tags = p.ensinanzas.map(e=>`<span class="pop-tag">${e.nome}</span>`).join("");
+    return `<p class="pop-title">${p.nome}</p>
+      <p class="pop-sub">${p.concello_nome}</p>
+      <div class="pop-tags">${tags}</div>
+      <a class="pop-link" href="${p.detail_url}" target="_blank" rel="noopener">${t.officialLink} ↗</a>`;
+  }).join("<hr style='border:none;border-top:1px solid var(--hairline);margin:8px 0'>");
+  state.resultPopup = new maplibregl.Popup({closeButton:true, offset:12}).setLngLat(lngLat).setHTML(html).addTo(map);
+}
+</script>
+</body>
+</html>
