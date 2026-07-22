@@ -1,0 +1,995 @@
+
+
+
+
+  
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="gl">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Language" content="gl" />
+    <meta name="robots" content="index, nofollow" />
+    <meta name="title" content="centroseducativos" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/> 
+    <meta name="description" content="Consulta e mantemento de centros" />
+    <meta name="author" content='Consellería de Educación, Ciencia, Universidades e Formación Profesional' />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+	
+    <link rel="shortcut icon" href='https://recursosweb.edu.xunta.gal/recursosweb/imaxes//cabeceira/user-image-mini.png' type="image/x-icon">
+    
+    <!-- TITULO -->
+	<title>
+	    centroseducativos
+	</title>
+		
+	
+	<script type="text/javascript">
+		menuActivo = '';					
+	</script>
+	
+	<script type="text/javascript">
+		pageLoader = 'si';					
+	</script>
+  	<!-- HEADER -->
+	
+
+
+
+
+<link charset="UTF-8" href="https://recursosweb.edu.xunta.gal/recursosweb/estilos/principal/glyphicons/glyphicons.css" rel="stylesheet" type="text/css"/>
+<link charset="UTF-8" href="https://recursosweb.edu.xunta.gal/recursosweb/estilos/principal/font-awesome-4.6.3/font-awesome.css" rel="stylesheet" type="text/css"/>
+<link charset="UTF-8" href="https://recursosweb.edu.xunta.gal/recursosweb/estilos/principal/estilosMaquetaAmtega.css" rel="stylesheet" type="text/css"/>
+
+<script charset="UTF-8" src="https://recursosweb.edu.xunta.gal/recursosweb/scripts/jquery.min.js" type="text/javascript"></script>
+<script charset="UTF-8" src="https://recursosweb.edu.xunta.gal/recursosweb/scripts/animacions.js" type="text/javascript"></script>
+<script charset="UTF-8" src="https://recursosweb.edu.xunta.gal/recursosweb/scripts/menu-edu-2.0.0/menu-edu.js" type="text/javascript"></script>
+
+
+<script charset="UTF-8" src="https://recursosweb.edu.xunta.gal/recursosweb/scripts/bowser-1.8.1/bowser.js" type="text/javascript"></script>
+<script charset="UTF-8" src="https://recursosweb.edu.xunta.gal/recursosweb/scripts/support.js" type="text/javascript"></script>
+
+<!-- ********************************************** -->
+<!--            Funcionalidades comúns              -->
+<!-- ********************************************** -->
+
+<!--
+	/*****************************************************************************\
+	Nesta paxina se incluen as funcionalidades comuns para:
+		Estilos para a visualizacion correcta en IE 6 e 7
+		Visualizacion do evento onFocus no IE 7
+		Activa a visualizacion dos divs "js" no caso de haber javascript
+		Definición de bordes estandar para navegadores distintos de IE
+	/*****************************************************************************\
+-->
+<!-- Visualizacion correcta do div de mensaxes e botóns link en ie 8-->
+
+<!--[if IE 8]>
+	<style>
+		a.botazul, 
+		a.botdourado{
+			padding: 0.19em;
+		}			
+	</style>
+<![endif]-->
+
+<!-- Visualizacion correcta do div de mensaxes e botóns link en ie6 e 7-->
+
+<!--[if lte IE 7]>
+	<style>
+		a.botazul, 
+		a.botdourado{
+			display:inline-block;
+			padding: 0.32em;
+		}		
+	</style>
+<![endif]-->
+
+<!-- Visualizacion correcta de combos -->
+
+<!--[if IE 7]>
+	<style>
+		fieldset {
+			padding: 0.5em;
+		}
+		#corpo {
+			padding-top: 0;
+		}
+		.LayoutCamposHorizontal DIV.EtiquetaArriba{	
+			line-height: normal;
+		}
+		.informacionContexto ~ h1 {
+			margin-left:17%;
+		}
+	</style>
+<![endif]-->
+
+<!--  Forzar informacion de contexto a dereita e estilos basicos de controis -->
+<!--[if lt IE 7]>
+	<style>
+		.informacionContexto {
+			text-align: right;
+			padding: 0;
+		}
+		.AnchoMetade .LayoutCamposHorizontal div {
+			margin-right: 6% !important;
+		}		
+		.LayoutCamposHorizontal div {
+		 	margin-right: 3% !important;
+		}		
+		label {
+			float:left;
+		}
+		INPUT, 
+		SELECT,
+		SELECT.combo,
+		SELECT.formularioinactivo, 
+		INPUT.formulario,
+		INPUT.formularioinactivo,
+		TEXTAREA.formulario,
+		TEXTAREA.formularioinactivo,
+		TEXTAREA {
+				clear:left;		
+				color: #000;
+			 	background-color: #fff;	
+			 	border: 0.08em solid #000000;				
+			  	}	
+	</style>
+<![endif]-->
+
+<!-- 
+     Activa a visualizacion dos divs "js" no caso de haber javascript
+     Definicion de bordes estandar para navegadores distintos de IE 
+ -->
+
+<script type="text/javascript">
+
+	// Si javascript esta activo poñemos visible o estilo "js"
+	document.write("<style>.js{ display: block}<\/style>");
+	
+	// Borde negro en firefox, Opera, etc...
+	/*
+	var ie = document.all != undefined;
+	if (!(ie)) {
+	 document.write("<style> fieldset { border: 0.1em solid #BFB8BF; } </style>");
+   	}
+   	*/
+</script>
+
+
+<!--  Indicase o entorno no que nos movemos -->
+<script type="text/javascript">
+	var meuhostname = (document.location.hostname).toLowerCase();
+	
+		if (meuhostname.indexOf("www.edu.xunta.") == 0) {
+		// Se é producción, non visualizamos nada
+	}else {
+		//eliminamos todo o que non aporta info do entorno
+		meuhostname = meuhostname.replace("www","");
+		meuhostname = meuhostname.replace("auth-edu","");
+		meuhostname = meuhostname.replace(".edu","");
+		meuhostname = meuhostname.replace(".edu2","");
+		meuhostname = meuhostname.replace("edu","");
+		meuhostname = meuhostname.replace("edu2","");
+		meuhostname = meuhostname.replace(".extranet","");
+		meuhostname = meuhostname.replace(".xunta","");
+		meuhostname = meuhostname.replace(".es","");
+		meuhostname = meuhostname.replace(".gal","");
+		meuhostname = meuhostname.replace(".local","");
+		
+		//remprazamos cadeas que identifican entorno
+		meuhostname = meuhostname.replace(".des","desenvolvemento");
+		meuhostname = meuhostname.replace(".probas","contorna de probas");
+		meuhostname = meuhostname.replace(/\w*.dev/,"desenvolvemento");
+		meuhostname = meuhostname.replace(/\w*stg2/,"contorna de probas");
+		meuhostname = meuhostname.replace(/\w*.stg/,"contorna de probas");
+		meuhostname = meuhostname.replace(".formacion","formación");
+		
+		document.write("<div id='contorno'><i class='fa fa-cogs'></i>"+meuhostname.toUpperCase()+"</div>");
+	}
+</script>
+
+<!-- ********************************************** -->
+</head>
+
+<body>
+	
+		<!--[if (!IE)|(gt IE 9)]><!-->
+			<div id="page-loader">
+		        <div class="dot"></div>
+		        <div class="dot"></div>
+		    </div>
+		<!--<![endif]-->
+	
+	
+	<!-- CABECEIRA -->
+	
+
+
+
+
+
+
+
+
+
+
+<header>
+	<div id="app_nome">
+		 
+		<div id="nomeAplicacion">
+			<a href="/centroseducativos/" accesskey="i" 
+					title="centroseducativos-Consulta e mantemento de centros-Ir á páxina principal. Atallo de teclado: i" >
+				<h1><img alt="centroseducativos" src="https://recursosweb.edu.xunta.gal/recursosweb/imaxes/svg-apps-educacion/centroseducativos.svg"/><span class="sr-only">centroseducativos</span></h1>
+			</a>
+		</div>
+		<div id="iconoMenu">
+			<a id="linkIconoMenu" href="#" 
+				title='Amosar/Ocultar menú'><span class="glyphicon glyphicon-menu-hamburger" 
+				aria-label='Amosar/Ocultar menú'></span></a>
+		</div>
+	</div>
+	<div id="accesosDirectos">
+
+		 
+		<a href="/centroseducativos/VerAccesibilidade.do" accesskey="a" 
+			title='Pautas de accesibilidade empregadas. Atallo de teclado: a' ><i class="fa fa-universal-access" 
+				aria-label='Accesibilidade e usabilidade' aria-hidden="true"></i></a>
+		
+		 
+		<a href="/centroseducativos/VerAvisoLegal.do" accesskey="v" 
+			title='Avisos legais para usuarios do servizo web. Atallo de teclado: v' ><i class="fa fa-balance-scale" 
+				aria-label='Aviso legal' aria-hidden="true"></i></a>
+	
+			
+
+		
+		
+		<a href="https://www.edu.xunta.gal/buzoninformes/" accesskey="b" target="_buzonInformes"  
+			title='Buzón informes. Atallo teclado: b'><i class="glyphicon glyphicon-inbox" 
+				aria-label='Buzón de informes' aria-hidden="true" ></i></a>
+
+	</div>
+	
+	
+		<div id="botonLogin">
+			 			
+			<a href="/centroseducativos/AbrirSesion.do" accesskey="s" 
+				title='Entrar. Atallo de teclado: s'><i class="glyphicon glyphicon-off p-r-5" 
+				aria-label='Entrar' aria-hidden="true" 
+				style="color:green;"></i></a>
+		</div>
+	
+	
+</header>
+
+
+	<div id="contenedorPrincipal">
+		
+
+
+
+
+
+
+
+
+
+	
+
+		
+		
+		
+				
+			<div class="divEdu-menu" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:html="http://struts.apache.org/tags-html" xmlns:edu="http://www.edu.xunta.es"><ul id="nav" class="edu-menu"><li id="Inicio"><a href="/centroseducativos/PaxinaInicio.do" accesskey="i" id="Inicio"><abbr name="MenuPrincipal" title="Inicio. Atallo teclado: i">		  			
+				1.
+				Inicio</abbr></a></li><li id="BuscaCentros"><a href="/centroseducativos/BuscaCentros.do?DIALOG-EVENT-inic" accesskey="2" id="BuscaCentros"><abbr name="MenuPrincipal" title="Buscar centros">		  			
+				2.
+				Busca</abbr></a></li>
+				
+			
+			<li id="ListaCentro"><a href="/centroseducativos/ListaCentros.do" accesskey="b" id="ListaCentro"><abbr name="MenuPrincipal" title="Gu&iacute;a de centros">		  			
+				3.
+				Gu&iacute;a de centros</abbr></a></li><li id="AreaInfluenciaCentro"><a href="/centroseducativos/CargarAreaInfluenciaCentro.do?DIALOG-EVENT-inicializa" accesskey="a" id="AreaInfluenciaCentro"><abbr name="MenuPrincipal" title="Áreas de influencia dos centros">		  			
+				4.
+				Áreas de influencia</abbr></a></li>
+				
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			</ul></div>				 	
+				<script type="text/javascript">
+					$(document).ready(function(){ menuEdu().iniciarMenu('');});	
+				</script>
+		
+				
+		
+		
+			
+				
+				
+			
+		
+		
+		<main>
+			<!-- CORPO -->			
+			<div id="corpo" class="corpo">
+				
+				
+				
+				
+		
+				
+					
+						
+						
+							
+
+ 
+
+
+
+<div class="informacionContexto">  		
+	
+		<br/>
+    	<strong>Curso acad&eacute;mico</strong>:		
+	    2025/2026
+	    <br/>
+    	<strong>Centro</strong>:		
+	    15020568
+	     - 
+    	CEIP Plurilingüe Labaca
+  </div>
+  
+  
+  
+						 
+					
+					
+					
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					
+		
+					
+
+
+
+
+
+
+
+	
+
+<style>
+
+	#pestanasCabeceira #DetalleDatos a {		
+		border-bottom: 0.1em solid #ffffff; 
+		color: #285983;
+		background-color: #ffffff;
+		z-index:999;
+		position: relative;
+	}
+	
+	#pestanasCorpo {
+		/**
+		 * Propietarias: solución provisional ata adaptar a norma CSS3.
+		 */
+		/*-ms-box-sizing: border-box;*/
+		/*-moz-box-sizing: border-box;*/
+		/**
+		 * CSS3: Buscamos recoller o ancho dos elementos de bloque en base ós bordes, e non ó contido.
+		 */
+		/*box-sizing: border-box*/
+	}
+	
+</style>
+
+
+
+<div id="pestanasCabeceira">        
+	
+
+
+
+
+
+
+
+
+<br/>
+<br/>
+
+<ul class="pestanasListaCabeceira">
+
+
+
+	<li id="DetalleDatos" >		 	
+    	<!-- montaxe de url sen c:url por problemas jsessionid na parte pública -->
+    	<a  href='/centroseducativos/CargarDetalleCentro.do?codigo=15020568' title="Mostrar o detalle dos datos do centro"> Datos centro </a>       
+   	</li>	
+   	
+   	<li id="LugaresDocencia" >		 	 
+    	<!-- montaxe de url sen c:url por problemas jsessionid na parte pública -->
+  		
+    	<a  href='/centroseducativos/CargarLugaresDocencia.do?codigo=15020568' title="Mostrar os lugares de docencia do centro"> Lugares de docencia  </a>       
+   	</li>
+   		
+	<li id="CadroDirectivo" >	  
+		<!-- montaxe de url sen c:url por problemas jsessionid na parte pública -->
+  		
+    	<a href='/centroseducativos/CargarCadroDirectivoCentro.do?codigo=15020568' title="Mostrar equipo directivo do centro. Atallo de teclado: ALT+o">Equipo directivo</a>	    		
+	</li>	
+
+	<li id="OfertaEducativa" >	
+		<!-- montaxe de url sen c:url por problemas jsessionid na parte pública -->
+  		
+    	<a href='/centroseducativos/CargarOfertaCentro.do?codigo=15020568&amp;procedencia=detalleCentro'
+  		 title="Mostrar oferta educativa do centro. Atallo de teclado: ALT+t">  		  		
+    	Oferta educativa
+    	</a> 		
+   </li>   	  
+   
+   	<li id="AdscricionPub" >	  
+		<!-- montaxe de url sen c:url por problemas jsessionid na parte pública -->
+  		
+    	<a href='/centroseducativos/CargarAdscricionPub.do?codigo=15020568' title="Mostrar adscricions do centro.">Adscrición</a>	    		
+	</li>	
+   
+    <li id="Inspeccion">
+  		<!-- montaxe de url sen c:url por problemas jsessionid na parte pública -->
+  		
+  		<a href='/centroseducativos/CargarInspeccion.do?codigo=15020568' title="Mostrar os datos de inspección do centro">Inspección </a> 
+   </li>
+   
+   <li id="Servizos">
+  		<!-- montaxe de url sen c:url por problemas jsessionid na parte pública -->
+  		
+    	<a href='/centroseducativos/CargarServizosComplementarios.do?codigo=15020568' title="Mostrar os servizos complementarios do centro"> Outros datos </a> 
+   </li>    
+</ul>
+
+</div>
+
+
+<div id="pestanasCorpo">
+	<div class="AnchoTotal">
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script charset="UTF-8" src="https://recursosweb.edu.xunta.gal/recursosweb/scripts/text_utils.js" type="text/javascript"></script>
+<script charset="UTF-8" src="https://recursosweb.edu.xunta.gal/recursosweb/scripts/validar_tipodoc.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css"/>
+<script  data-dojo-config='has:{"dojo-inject-jquery": false}, async: true'
+    src="https://js.arcgis.com/4.25/" ></script>
+
+<style type="text/css">
+.no-seleccionable-custom {
+	-webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; 
+	background-color : #edeff5;
+	opacity :1;
+	cursor: not-allowed;
+}
+#map {
+	height: 600px;
+	width: 800px;
+    margin: 0;
+    padding: 0;
+}
+</style>
+ 
+
+
+<h1> Datos do centro</h1> 
+
+
+
+
+
+
+
+
+
+
+<form name="DetalleCentroForm" method="post" action="/centroseducativos/CargarDetalleCentro.do">
+	<input type="hidden" name="OWASP_CSRFTOKEN" value='W4H9-LQFY-CHNB-5VAA-VE6S-MAPU-U48C-VRF9'/>
+
+	<div class="AnchoTotal">
+		<fieldset id="enderezo">
+			<legend>
+				Centro
+			</legend>
+			<div class="LayoutCamposVertical">
+				<div class="LayoutCamposHorizontal">
+					<div>
+						<label for="codigo">Código centro <span class=obrigatorio></span></label>
+						<input type="text" name="codigo" value="15020568" readonly="readonly" id="codigo" style="width:6em">
+					</div>
+					<div>
+						<label for="nome">Nome <span class=obrigatorio></span></label>
+						<input type="text" name="nome" value="CEIP Plurilingüe Labaca" readonly="readonly" id="nome" style="width:30em">
+					</div>
+				</div>
+
+				<div class="LayoutCamposHorizontal">
+					<div>
+						<label for="titular">Titularidade   <span class=obrigatorio></span></label>
+						<input type="text" name="titular" value="Consellería de Educación, Ciencia, Universidades e Formación Profesional" readonly="readonly" style="width:30em">
+					</div>
+
+					
+						<div>
+							<input type="checkbox" name="ensinoConcertado" value="on" disabled="disabled">
+							<label>Ten algún ensino concertado</label>
+							
+						</div>
+					
+				</div>
+			</div>
+		</fieldset>
+	</div>
+
+	<div id="fieldset1" class="AnchoMetade">
+		<div class="LayoutCamposVertical">
+			<fieldset id="enderezo">
+				<legend>  Enderezo </legend>
+				<div class="LayoutCamposVertical">
+					<div>
+						<label for="enderezo">Enderezo <span class=obrigatorio></span></label>
+						<input type="text" name="enderezo.enderezo" value="Rúa Juan Florez, 116  " readonly="readonly" style="width:30em">
+					</div>
+					<div>
+						<label for="localidade">Localidade <span class=obrigatorio></span></label>
+						<input type="text" name="enderezo.localidade.nome" value="A Coruña" readonly="readonly" style="width:30em">
+					</div>
+					<div>
+						<label for="concello">Concello <span class=obrigatorio></span></label>
+						<input type="text" name="enderezo.concello.nome" value="Coruña (A)" readonly="readonly" style="width:30em">
+					</div>
+					<div class="LayoutCamposHorizontal">
+						<div>
+							<label for="CP">Cód. postal <span class=obrigatorio></span></label>
+							<input type="text" name="enderezo.CP" value="15005" readonly="readonly" style="width:4em">
+						</div>
+						<div>
+							<label for="provincia">Provincia <span class=obrigatorio></span></label>
+							<input type="text" name="enderezo.provincia.nome" value="Coruña (A)" readonly="readonly" style="width:8em">
+						</div>
+					</div>
+				</div>
+			</fieldset>
+
+			<fieldset id="contactos">
+				<legend>
+					Contacto
+				</legend>
+				<div class="LayoutCamposVertical">
+					<div class="LayoutCamposHorizontal">
+						<div>
+							<label for="telefono">Teléfono <span class=obrigatorio></span></label>
+							<input type="text" name="contacto.telefono" value="881960284" readonly="readonly" style="width:6em">
+						</div>
+						<div>
+							<label for="fax">Fax <span class=obrigatorio></span></label>
+							<input type="text" name="contacto.fax" value="881960284" readonly="readonly" style="width:6em">
+						</div>
+					</div>
+					<div>
+						<label for="correo">Enderezo electrónico <span class=obrigatorio></span></label>
+						
+							
+							
+								<label> <span id="correo" class="no-seleccionable-custom">ceip.labaca@edu.xunta.gal </span></label>								
+						    
+						
+					</div>
+					<div>
+						<label for="www">Enderezo web <span class=obrigatorio></span></label>
+						<input type="text" name="contacto.www" value="http://www.edu.xunta.gal/centros/ceiplabaca/" readonly="readonly" style="width:30em">
+						
+							<a href='http://www.edu.xunta.gal/centros/ceiplabaca/' class="enlaceExterno"
+								target="_blank" title="URL do centro"> Ver web</a>
+						
+					</div>
+				</div>
+			</fieldset>			
+			<fieldset id="areasInfluencia">
+				<legend> Área de influencia </legend>
+				<div id="axuda_centroseducativos_detallecentro_areainfluencia" > <div class="mensaxeAxuda"><p>Nesta pantalla pode  consultar as áreas de influencia dos centros educativos sostidos con fondos públicos, con efectos exclusivamente  informativos.</p><p>A integración dos datos estase a realizar de forma progresiva, polo que no caso de dúbida ou para completar a información debe dirixirse ao centro educativo/xefatura territorial correspondente.</p></div></div><br>
+				<!-- Area de influencia -->
+				<div class="LayoutCamposHorizontal">
+					<input type="checkbox" name="areaInfluencia" value="on" id="areaInfluencia">
+					<label>Ver área de influencia</label>
+					
+				</div>
+				<a href="CargarAreaInfluenciaCentro.do?DIALOG-EVENT-inicializa" title="Áreas de influencia">
+					Ver outras áreas de influencia
+				</a>
+			</fieldset>
+		</div>
+	</div>
+	
+	<div id="fieldset2" class="AnchoMetade">
+		<fieldset>
+			<legend>
+				Localización
+			</legend>
+			<div id="map"></div>
+		</fieldset>
+	</div>
+</form>
+
+
+
+<script type="text/javascript">
+require([
+	"esri/Map",
+	"esri/views/MapView",
+    "esri/Basemap",
+	"esri/geometry/Point",
+	"esri/geometry/SpatialReference",
+    "esri/layers/FeatureLayer",
+    "esri/Graphic",
+    "esri/layers/GraphicsLayer",
+    "esri/widgets/Home",
+	"esri/layers/TileLayer"
+], (
+    Map,
+    MapView,
+    Basemap,
+    Point, SpatialReference,
+    FeatureLayer,
+    Graphic,
+	GraphicsLayer,
+    Home,
+    TileLayer
+)  => {	
+	
+/*
+ * Funcions utils para a xeolocalizacion (esri)
+ *  
+ */	
+coordenadasGalicia = [];
+coordenadasGalicia[0]  = [-8.547505, 42.871740];
+coordenadasGalicia['15030'] = [-8.411540100000025, 43.3623436];
+coordenadasGalicia['15078'] = [-8.544844499999954, 42.8782132];
+coordenadasGalicia['15036'] = [-8.219345100000055, 43.48964600000001];
+coordenadasGalicia['27028'] = [-7.55675819999999, 43.0097384];
+coordenadasGalicia['32054'] = [-7.863880999999992, 42.33578929999999];
+coordenadasGalicia['36038'] = [-8.644620199999963, 42.4298846];
+coordenadasGalicia['36057'] = [-8.720726799999966, 42.24059889999999];
+coordenadasGalicia['36026'] = [-8.702244, 42.392400];
+coordenadasGalicia['27013'] = [-7.44769, 43.6821];
+coordenadasGalicia['27027'] = [-7.29789, 43.4711];
+coordenadasGalicia['27025'] = [-7.51242, 43.6856];
+
+
+ 	const URL_BASE_MAP= 'https://ideg.xunta.gal/servizos/rest/services/MapasBase/MapaBase_2020/MapServer';
+ 	const URL_GEOCODER= 'https://ideg2.xunta.gal/arcgis/rest/services/Geocoder/GeocodeServer/findAddressCandidates';
+ 	const MAP_SITEMA_REF_ESPACIAL =25829;
+ 	const spatialReference = new SpatialReference ({ wkid:MAP_SITEMA_REF_ESPACIAL}); 
+
+	// create a LAYER 
+	const LAYER_BASE_MAP =  new TileLayer(URL_BASE_MAP,null);  ;
+
+	// create a basemap 
+	const BASE_MAP = new Basemap({ baseLayers: [LAYER_BASE_MAP], title: "Amtega Galicia", id: "baseAmtegaMap" });
+ 	
+ 	const CONSTRAINTS_MAP = {
+		maxZoom: 13
+	};
+	
+ 	const symbol_colexio2 = {
+		type: "web-style",
+		name: "university",        
+        styleName: "Esri2DPointSymbolsStyle"
+    };
+    const symbol_marca = {
+		type: "web-style",
+		name: "tear-pin-1",        
+        styleName: "Esri2DPointSymbolsStyle"
+    };
+
+ 	const symbol_colexio = {
+		type : "simple-marker",
+        color: [226, 119, 40], 
+	    outline: {
+    	    color: [255,255,255],
+        	width: 2
+    	}
+    };
+		
+	function getFeatureColexiosLayer ( source , actions) {	 
+		
+		var accions = actions? actions:[];
+		return new FeatureLayer({
+      // create an instance of esri/layers/support/Field for each field object
+      title: "Colexios de Galicia",
+      fields: [
+        { name: "ObjectID", type: "oid" },
+        { name: "Name", type: "string" },
+		{ name: "NomeCentro", type: "string" },
+        { name: "Codigo", type: "string" },
+        { name: "id", type: "string" }
+      ],
+	  outFields: ['*'],
+      objectIdField: "ObjectID",
+      geometryType: "point",
+      spatialReference: { wkid: MAP_SITEMA_REF_ESPACIAL },
+      source: source, // adding an empty feature collection
+      renderer:  {
+        type: "simple",
+        symbol: symbol_colexio2
+		},
+      popupTemplate: {
+		title :"{NomeCentro}",
+		content: "{Codigo} - {Name}",
+		actions: accions 
+		}				
+    });
+	}
+	
+ 	const arrayAreaInfluenciaAreas = []; 	
+ 	arrayAreaInfluenciaAreas.push ({type: "simple-fill", color: [000, 000, 255, 0.3],  outline: {color: [000, 000, 255], width: 1.5 }});//azul
+ 	arrayAreaInfluenciaAreas.push ({type: "simple-fill", color: [000, 255, 000, 0.3],  outline: {color: [000, 255, 000], width: 1.5 }});// lima
+ 	arrayAreaInfluenciaAreas.push ({type: "simple-fill", color: [255, 000, 000, 0.3],  outline: {color: [255, 000, 000], width: 1.5 }});// roxo
+ 	arrayAreaInfluenciaAreas.push ({type: "simple-fill", color: [000, 255, 255, 0.3],  outline: {color: [000, 255, 255], width: 1.5 }}); // cyan
+ 	arrayAreaInfluenciaAreas.push ({type: "simple-fill", color: [255, 255, 000, 0.3],  outline: {color: [255, 255, 000], width: 1.5 }});// amarillo
+ 	arrayAreaInfluenciaAreas.push ({type: "simple-fill", color: [255, 000, 255, 0.3],  outline: {color: [255, 000, 255], width: 1.5 }}); // magenta 	
+ 	arrayAreaInfluenciaAreas.push ({type: "simple-fill", color: [128, 000, 128, 0.3],  outline: {color: [128, 000, 128], width: 1.5 }}); // 
+ 	arrayAreaInfluenciaAreas.push ({type: "simple-fill", color: [128, 128, 000, 0.3],  outline: {color: [128, 128, 000], width: 1.5 }}); // oliva
+ 	arrayAreaInfluenciaAreas.push ({type: "simple-fill", color: [000, 128, 128, 0.3],  outline: {color: [000, 128, 128], width: 1.5 }}); // tila
+ 	arrayAreaInfluenciaAreas.push ({type: "simple-fill", color: [227, 139, 079, 0.3],  outline: {color: [227, 139, 079], width: 1.5}}); //naranja
+ 	
+ 
+   // mostra os cambios no mapa usando por defecto o layer colexiosLayer 
+    function mostraMapa (layer, edits) {			
+		layer.applyEdits ({addFeatures:edits.mostrar , deleteFeatures: edits.quitar });
+	}
+	
+	// carga a cache dos graficos dos colexios pasados como parametro
+	function calculeColexiosGraphics (cache, colexios) {
+		if ( cache.length ===0 && colexios != null && colexios.length > 0 ) {			
+			let graphics = [];
+			for (let i=0; i<colexios.length; i++){
+				const point = new Point(colexios[i].punto.coordinates, spatialReference );
+				let graphic = new Graphic({ geometry: point , attributes: colexios[i]});
+				graphics.push(graphic);
+			}        	    
+			cache = graphics;
+		}
+		return cache;
+	}
+	// carga a cache de obxetos de areas de influencia
+	function cargarAreaInfluenciaGraphics (cache, areasInfluencia ) {
+		if (!cache || cache.length <= 0) {
+			for (let i=0; i< areasInfluencia.length ; i++) {
+				$.each (areasInfluencia[i], function (key, value ) {
+					cache.push ( new Graphic( { symbol: arrayAreaInfluenciaAreas [i %10], geometry: value}));
+				});					
+			}
+		}
+		return cache;		
+	}
+
+	function getCenterMap (cidade) {
+		let centroCidade = coordenadasGalicia[cidade];		
+		if (!centroCidade ) {
+			centroCidade  = coordenadasGalicia[0];
+		}
+		return centroCidade;
+	}
+	
+	function manageLinkDetallePopup (show) {
+		// Watch for when features are selected
+	    view.popup.watch("selectedFeature", (graphic) => {
+			if (graphic) {
+				const graphicTemplate = graphic.getEffectivePopupTemplate();
+	            graphicTemplate.actions.items[0].visible = show? true : false;
+	        }
+	    });			  
+	}
+	
+	function getAreasInfluenciaPolygon (areaJSON) {
+		let areas = [];
+		let area = {
+			spatialReference: spatialReference,
+			type: areaJSON.type,
+			rings: areaJSON.coordinates			
+		};
+		areas.push (area);
+		if (areaJSON.type === "multipolygon") {
+			areas = [];
+			$.each (areaJSON.coordinates, function (key, value ) {
+				areas.push ( {type:"polygon", spatialReference: spatialReference , rings: value});
+			});
+		} 		
+		return areas;
+	}
+
+	/*
+ * Lectura do array de colexion. precisase unha listaColexios
+ *  
+ */
+ 	let colexios = [];
+	let areasInfluencia = [];
+ 	let indexColexios = 0;
+
+	
+		
+		
+		areasInfluencia.push (getAreasInfluenciaPolygon ({"type":"multipolygon","coordinates":[[[[548358.3713,4801179.9444],[548357.8575,4801182.0467],[548358.8235,4801181.6801],[548357.1574,4801186.4542],[548356.1926,4801186.7993],[548354.3851,4801197.7321],[548351.356,4801201.9131],[548344.6024,4801224.2292],[548331.7166,4801259.6637],[548294.8738,4801361.3462],[548254.4418,4801345.2829],[548236.0278,4801340.2374],[548207.2828,4801327.3375],[548193.7421,4801314.5866],[548177.8805,4801309.5317],[548174.9879,4801309.2306],[548169.7635,4801310.1354],[548155.8864,4801309.5069],[548140.6221,4801308.7505],[548131.1106,4801308.2869],[548125.9313,4801307.7131],[548110.8735,4801307.0846],[548102.3615,4801306.5808],[548079.5075,4801307.0219],[548070.8249,4801306.7161],[548051.3516,4801305.6954],[548041.3966,4801305.3162],[548033.1268,4801305.8465],[548020.7532,4801305.0697],[548010.3413,4801304.4004],[547997.6885,4801305.0041],[547986.5527,4801304.2763],[547974.1039,4801304.7942],[547967.5116,4801304.0849],[547964.9194,4801290.4571],[547955.6253,4801289.1624],[547946.1512,4801289.6997],[547928.6856,4801287.1934],[547919.2478,4801288.4665],[547907.0293,4801288.0862],[547897.0679,4801289.3374],[547891.7073,4801290.9967],[547873.2097,4801305.8435],[547868.4124,4801308.9117],[547858.8379,4801314.3472],[547854.4266,4801314.8724],[547851.755,4801315.8559],[547848.2566,4801317.6671],[547837.1396,4801322.1322],[547827.7687,4801328.8417],[547815.1254,4801337.3095],[547810.6455,4801339.568],[547803.4265,4801343.5114],[547796.2615,4801350.0351],[547791.3421,4801352.6116],[547785.8428,4801356.6783],[547779.3547,4801361.4374],[547774.6407,4801359.4629],[547772.7481,4801345.9167],[547771.1057,4801329.4775],[547769.9124,4801316.0236],[547767.8106,4801304.7991],[547766.9746,4801291.4658],[547765.9068,4801280.1481],[547764.3505,4801269.6267],[547763.3384,4801262.3176],[547761.9173,4801250.2453],[547760.4252,4801235.9231],[547759.5205,4801231.0482],[547758.6073,4801221.0415],[547754.2066,4801203.3591],[547750.9291,4801187.0107],[547747.3107,4801169.4187],[547744.8935,4801153.3921],[547741.4898,4801136.0764],[547737.9652,4801120.9894],[547734.9813,4801104.3458],[547732.9284,4801094.2871],[547729.4117,4801081.256],[547727.2872,4801071.6845],[547724.463,4801062.0632],[547722.5063,4801057.4387],[547731.8554,4801048.5676],[547739.0953,4801043.9024],[547743.931,4801040.399],[547748.8058,4801036.7221],[547756.2447,4801030.7495],[547762.7199,4801027.0635],[547780.9094,4801018.9728],[547792.6603,4801011.3944],[547797.7475,4801009.1322],[547800.6183,4801007.7691],[547796.0712,4800987.3103],[547792.0302,4800971.9046],[547788.3752,4800954.7715],[547785.8142,4800941.5692],[547783.726,4800927.8057],[547780.4092,4800908.5082],[547778.5429,4800900.1837],[547777.0613,4800892.4799],[547776.4546,4800884.3016],[547775.2743,4800878.7605],[547774.1636,4800867.5873],[547776.3266,4800859.9578],[547787.287,4800852.6864],[547805.5338,4800846.6181],[547812.4879,4800841.7439],[547816.777,4800835.0922],[547828.7699,4800822.4729],[547838.5876,4800814.1614],[547841.7215,4800811.6647],[547857.3496,4800803.0218],[547865.3504,4800799.2688],[547875.4833,4800796.6091],[547884.8784,4800792.5635],[547892.4148,4800789.4348],[547897.7557,4800788.1591],[547902.5708,4800786.5452],[547917.9179,4800782.6481],[547932.7595,4800776.6649],[547946.1233,4800772.657],[547980.3932,4800765.8283],[547985.2325,4800781.2426],[547988.3072,4800786.9045],[547992.078,4800795.1061],[547998.9735,4800801.275],[548017.9764,4800804.2101],[548031.2667,4800799.4272],[548060.1902,4800796.1864],[548080.1971,4800790.784],[548096.2538,4800790.1562],[548104.1134,4800786.5239],[548139.354,4800787.4113],[548151.614,4800790.7852],[548171.8779,4800783.7581],[548174.9737,4800775.9585],[548176.1836,4800785.5072],[548180.4491,4800811.1076],[548185.2061,4800838.7211],[548188.7104,4800864.6635],[548193.2112,4800891.1843],[548196.9284,4800920.0177],[548201.2557,4800948.9189],[548203.2896,4800962.7364],[548206.8095,4800981.9352],[548210.609,4801018.1672],[548214.6678,4801052.6466],[548218.9216,4801105.26],[548237.8984,4801068.0445],[548243.5901,4801057.4028],[548257.3115,4801037.1348],[548264.8258,4801022.6618],[548270.826,4801013.9474],[548273.0447,4801011.4415],[548277.3555,4801003.8383],[548285.7177,4800993.0351],[548289.752,4800988.6107],[548300.7061,4800977.3362],[548303.6576,4800972.6023],[548313.2665,4800963.1913],[548324.5722,4800949.0605],[548333.2307,4800939.0325],[548350.0181,4800918.8304],[548362.427,4800904.944],[548376.8465,4800889.69],[548385.0061,4800882.2472],[548388.6189,4800877.7631],[548396.384,4800878.605],[548409.2488,4800877.745],[548421.4323,4800876.4402],[548428.9448,4800877.0632],[548434.2368,4800879.3086],[548440.5346,4800884.579],[548446.3648,4800884.738],[548453.324,4800883.9992],[548457.7557,4800881.0758],[548465.4007,4800880.3559],[548470.6665,4800878.0075],[548475.3509,4800877.1012],[548451.5691,4800926.9783],[548447.495,4800934.5012],[548439.5536,4800948.9791],[548433.5682,4800969.2411],[548426.7545,4800984.9529],[548425.3358,4800992.1288],[548419.4676,4801011.9363],[548414.2505,4801026.5694],[548406.7679,4801044.8557],[548401.317,4801064.1557],[548394.6214,4801082.2129],[548388.1882,4801096.7486],[548383.9786,4801111.0026],[548381.4823,4801121.4524],[548378.0619,4801126.9862],[548372.4137,4801146.9104],[548366.3963,4801159.7624],[548366.1183,4801161.1498],[548358.9118,4801177.9227],[548358.8713,4801177.8982],[548359.1325,4801176.8294],[548358.7738,4801177.8393],[548358.5475,4801177.7028],[548358.6889,4801178.0784],[548357.9438,4801180.1759],[548358.7618,4801178.2721],[548358.7728,4801178.3014],[548358.4982,4801179.4252],[548357.5507,4801181.3069],[548358.3713,4801179.9444]]],[[[548358.9989,4801178.9023],[548359.3966,4801178.2421],[548359.8604,4801178.5781],[548359.8152,4801178.8383],[548359.5733,4801179.5315],[548359.2668,4801179.6145],[548358.9989,4801178.9023]]],[[[548359.9801,4801176.4821],[548360.7793,4801174.895],[548360.7728,4801175.6107],[548360.411,4801176.9924],[548359.9801,4801176.4821]]],[[[548358.8235,4801181.6801],[548359.5733,4801179.5315],[548359.7008,4801179.497],[548359.3567,4801181.4778],[548358.8235,4801181.6801]]],[[[548359.7008,4801179.497],[548359.8152,4801178.8383],[548359.8969,4801178.6044],[548360.7406,4801179.2155],[548359.7008,4801179.497]]],[[[548359.4085,4801178.2222],[548360.1304,4801177.0236],[548359.9003,4801178.3481],[548359.8004,4801178.4587],[548359.4085,4801178.2222]]],[[[548359.1744,4801178.081],[548359.8232,4801176.2963],[548359.9801,4801176.4821],[548359.1744,4801178.081]]],[[[548358.3713,4801179.9444],[548358.4982,4801179.4252],[548358.8974,4801178.6324],[548358.9989,4801178.9023],[548358.3713,4801179.9444]]],[[[548358.7728,4801178.3014],[548358.804,4801178.1738],[548358.9118,4801177.9227],[548359.1744,4801178.081],[548358.8974,4801178.6324],[548358.7728,4801178.3014]]],[[[548358.6889,4801178.0784],[548358.7738,4801177.8393],[548358.8713,4801177.8982],[548358.804,4801178.1738],[548358.7618,4801178.2721],[548358.6889,4801178.0784]]],[[[548359.8604,4801178.5781],[548359.9003,4801178.3481],[548360.0404,4801178.1932],[548359.8969,4801178.6044],[548359.8604,4801178.5781]]],[[[548360.0404,4801178.1932],[548360.2657,4801177.5477],[548360.1195,4801178.1056],[548360.0404,4801178.1932]]],[[[548360.2657,4801177.5477],[548360.411,4801176.9924],[548360.4453,4801177.0329],[548360.2657,4801177.5477]]],[[[548359.1744,4801178.081],[548359.4085,4801178.2222],[548359.3966,4801178.2421],[548359.1744,4801178.081]]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}}));		
+		
+		
+		areasInfluencia.push (getAreasInfluenciaPolygon ({"type":"multipolygon","coordinates":[[[[548358.3713,4801179.9444],[548357.8575,4801182.0467],[548358.8235,4801181.6801],[548357.1574,4801186.4542],[548356.1926,4801186.7993],[548354.3851,4801197.7321],[548351.356,4801201.9131],[548344.6024,4801224.2292],[548331.7166,4801259.6637],[548294.8738,4801361.3462],[548254.4418,4801345.2829],[548236.0278,4801340.2374],[548207.2828,4801327.3375],[548193.7421,4801314.5866],[548177.8805,4801309.5317],[548174.9879,4801309.2306],[548169.7635,4801310.1354],[548155.8864,4801309.5069],[548140.6221,4801308.7505],[548131.1106,4801308.2869],[548125.9313,4801307.7131],[548110.8735,4801307.0846],[548102.3615,4801306.5808],[548079.5075,4801307.0219],[548070.8249,4801306.7161],[548051.3516,4801305.6954],[548041.3966,4801305.3162],[548033.1268,4801305.8465],[548020.7532,4801305.0697],[548010.3413,4801304.4004],[547997.6885,4801305.0041],[547986.5527,4801304.2763],[547974.1039,4801304.7942],[547967.5116,4801304.0849],[547964.9194,4801290.4571],[547955.6253,4801289.1624],[547946.1512,4801289.6997],[547928.6856,4801287.1934],[547919.2478,4801288.4665],[547907.0293,4801288.0862],[547897.0679,4801289.3374],[547891.7073,4801290.9967],[547873.2097,4801305.8435],[547868.4124,4801308.9117],[547858.8379,4801314.3472],[547854.4266,4801314.8724],[547851.755,4801315.8559],[547848.2566,4801317.6671],[547837.1396,4801322.1322],[547827.7687,4801328.8417],[547815.1254,4801337.3095],[547810.6455,4801339.568],[547803.4265,4801343.5114],[547796.2615,4801350.0351],[547791.3421,4801352.6116],[547785.8428,4801356.6783],[547779.3547,4801361.4374],[547774.6407,4801359.4629],[547772.7481,4801345.9167],[547771.1057,4801329.4775],[547769.9124,4801316.0236],[547767.8106,4801304.7991],[547766.9746,4801291.4658],[547765.9068,4801280.1481],[547764.3505,4801269.6267],[547763.3384,4801262.3176],[547761.9173,4801250.2453],[547760.4252,4801235.9231],[547759.5205,4801231.0482],[547758.6073,4801221.0415],[547754.2066,4801203.3591],[547750.9291,4801187.0107],[547747.3107,4801169.4187],[547744.8935,4801153.3921],[547741.4898,4801136.0764],[547737.9652,4801120.9894],[547734.9813,4801104.3458],[547732.9284,4801094.2871],[547729.4117,4801081.256],[547727.2872,4801071.6845],[547724.463,4801062.0632],[547722.5063,4801057.4387],[547731.8554,4801048.5676],[547739.0953,4801043.9024],[547743.931,4801040.399],[547748.8058,4801036.7221],[547756.2447,4801030.7495],[547762.7199,4801027.0635],[547780.9094,4801018.9728],[547792.6603,4801011.3944],[547797.7475,4801009.1322],[547800.6183,4801007.7691],[547796.0712,4800987.3103],[547792.0302,4800971.9046],[547788.3752,4800954.7715],[547785.8142,4800941.5692],[547783.726,4800927.8057],[547780.4092,4800908.5082],[547778.5429,4800900.1837],[547777.0613,4800892.4799],[547776.4546,4800884.3016],[547775.2743,4800878.7605],[547774.1636,4800867.5873],[547776.3266,4800859.9578],[547787.287,4800852.6864],[547805.5338,4800846.6181],[547812.4879,4800841.7439],[547816.777,4800835.0922],[547828.7699,4800822.4729],[547838.5876,4800814.1614],[547841.7215,4800811.6647],[547857.3496,4800803.0218],[547865.3504,4800799.2688],[547875.4833,4800796.6091],[547884.8784,4800792.5635],[547892.4148,4800789.4348],[547897.7557,4800788.1591],[547902.5708,4800786.5452],[547917.9179,4800782.6481],[547932.7595,4800776.6649],[547946.1233,4800772.657],[547980.3932,4800765.8283],[547985.2325,4800781.2426],[547988.3072,4800786.9045],[547992.078,4800795.1061],[547998.9735,4800801.275],[548017.9764,4800804.2101],[548031.2667,4800799.4272],[548060.1902,4800796.1864],[548080.1971,4800790.784],[548096.2538,4800790.1562],[548104.1134,4800786.5239],[548139.354,4800787.4113],[548151.614,4800790.7852],[548171.8779,4800783.7581],[548174.9737,4800775.9585],[548176.1836,4800785.5072],[548180.4491,4800811.1076],[548185.2061,4800838.7211],[548188.7104,4800864.6635],[548193.2112,4800891.1843],[548196.9284,4800920.0177],[548201.2557,4800948.9189],[548203.2896,4800962.7364],[548206.8095,4800981.9352],[548210.609,4801018.1672],[548214.6678,4801052.6466],[548218.9216,4801105.26],[548237.8984,4801068.0445],[548243.5901,4801057.4028],[548257.3115,4801037.1348],[548264.8258,4801022.6618],[548270.826,4801013.9474],[548273.0447,4801011.4415],[548277.3555,4801003.8383],[548285.7177,4800993.0351],[548289.752,4800988.6107],[548300.7061,4800977.3362],[548303.6576,4800972.6023],[548313.2665,4800963.1913],[548324.5722,4800949.0605],[548333.2307,4800939.0325],[548350.0181,4800918.8304],[548362.427,4800904.944],[548376.8465,4800889.69],[548385.0061,4800882.2472],[548388.6189,4800877.7631],[548396.384,4800878.605],[548409.2488,4800877.745],[548421.4323,4800876.4402],[548428.9448,4800877.0632],[548434.2368,4800879.3086],[548440.5346,4800884.579],[548446.3648,4800884.738],[548453.324,4800883.9992],[548457.7557,4800881.0758],[548465.4007,4800880.3559],[548470.6665,4800878.0075],[548475.3509,4800877.1012],[548451.5691,4800926.9783],[548447.495,4800934.5012],[548439.5536,4800948.9791],[548433.5682,4800969.2411],[548426.7545,4800984.9529],[548425.3358,4800992.1288],[548419.4676,4801011.9363],[548414.2505,4801026.5694],[548406.7679,4801044.8557],[548401.317,4801064.1557],[548394.6214,4801082.2129],[548388.1882,4801096.7486],[548383.9786,4801111.0026],[548381.4823,4801121.4524],[548378.0619,4801126.9862],[548372.4137,4801146.9104],[548366.3963,4801159.7624],[548366.1183,4801161.1498],[548358.9118,4801177.9227],[548358.8713,4801177.8982],[548359.1325,4801176.8294],[548358.7738,4801177.8393],[548358.5475,4801177.7028],[548358.6889,4801178.0784],[548357.9438,4801180.1759],[548358.7618,4801178.2721],[548358.7728,4801178.3014],[548358.4982,4801179.4252],[548357.5507,4801181.3069],[548358.3713,4801179.9444]]],[[[548358.9989,4801178.9023],[548359.3966,4801178.2421],[548359.8604,4801178.5781],[548359.8152,4801178.8383],[548359.5733,4801179.5315],[548359.2668,4801179.6145],[548358.9989,4801178.9023]]],[[[548359.9801,4801176.4821],[548360.7793,4801174.895],[548360.7728,4801175.6107],[548360.411,4801176.9924],[548359.9801,4801176.4821]]],[[[548358.8235,4801181.6801],[548359.5733,4801179.5315],[548359.7008,4801179.497],[548359.3567,4801181.4778],[548358.8235,4801181.6801]]],[[[548359.7008,4801179.497],[548359.8152,4801178.8383],[548359.8969,4801178.6044],[548360.7406,4801179.2155],[548359.7008,4801179.497]]],[[[548359.4085,4801178.2222],[548360.1304,4801177.0236],[548359.9003,4801178.3481],[548359.8004,4801178.4587],[548359.4085,4801178.2222]]],[[[548359.1744,4801178.081],[548359.8232,4801176.2963],[548359.9801,4801176.4821],[548359.1744,4801178.081]]],[[[548358.3713,4801179.9444],[548358.4982,4801179.4252],[548358.8974,4801178.6324],[548358.9989,4801178.9023],[548358.3713,4801179.9444]]],[[[548358.7728,4801178.3014],[548358.804,4801178.1738],[548358.9118,4801177.9227],[548359.1744,4801178.081],[548358.8974,4801178.6324],[548358.7728,4801178.3014]]],[[[548358.6889,4801178.0784],[548358.7738,4801177.8393],[548358.8713,4801177.8982],[548358.804,4801178.1738],[548358.7618,4801178.2721],[548358.6889,4801178.0784]]],[[[548359.8604,4801178.5781],[548359.9003,4801178.3481],[548360.0404,4801178.1932],[548359.8969,4801178.6044],[548359.8604,4801178.5781]]],[[[548360.0404,4801178.1932],[548360.2657,4801177.5477],[548360.1195,4801178.1056],[548360.0404,4801178.1932]]],[[[548360.2657,4801177.5477],[548360.411,4801176.9924],[548360.4453,4801177.0329],[548360.2657,4801177.5477]]],[[[548359.1744,4801178.081],[548359.4085,4801178.2222],[548359.3966,4801178.2421],[548359.1744,4801178.081]]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}}));		
+		
+	
+	colexios[indexColexios] = {
+	    Name: 'CEIP Plurilingüe Labaca' + '-' + 'Edificio Principal',        
+	    Codigo: '15020568',
+	    NomeCentro :'CEIP Plurilingüe Labaca',
+	    id : indexColexios,
+	    punto: {"type":"point","coordinates":[548075.9689,4801008.0552],"crs":{"type":"name","properties":{"name":"epsg:25829"}}}	   
+	};	
+	
+	indexColexios = indexColexios +1;
+
+	
+
+	let cacheAreas = [];
+	let cache = calculeColexiosGraphics([], colexios);
+	
+	let map = new Map({	
+		basemap: BASE_MAP
+  	});
+  	let view = new MapView({
+      map: map,
+	  center: cache[0].geometry,
+	  constraints: CONSTRAINTS_MAP,
+	  zoom: 11,
+      container: "map", // Div element,
+   	  spatialReference: { wkid: MAP_SITEMA_REF_ESPACIAL }
+  	});   
+  	var homeBtn = new Home({view: view});	
+    view.ui.add(homeBtn, "top-left");
+	
+    var layer = getFeatureColexiosLayer ([]);
+	view.map.add (layer);    
+	mostraMapa (layer, {mostrar:cache});
+	
+	$("#areaInfluencia").change(function() {
+		if(this.checked) {
+			cargarAreaInfluencia();
+		} else {
+			borrarAreaInfluencia();
+		}
+    });	
+	
+    function cargarAreaInfluencia () {
+    	cacheAreas = cargarAreaInfluenciaGraphics (cacheAreas, areasInfluencia);
+		view.graphics.addMany (cacheAreas);
+	}
+	
+	function borrarAreaInfluencia () {
+		view.graphics.removeMany (cacheAreas);
+	}
+
+});
+
+  </script>
+  
+
+
+	</div>
+	<div class="AnchoTotal">
+		  
+
+
+ 
+<a href="/centroseducativos/"  title="Botón que permite voltar á última pantalla" class="botazul" >Volver</a>
+
+	</div>	
+</div>
+
+
+
+				
+				
+				
+	
+			</div>
+		</main>
+		
+		<div id="logosExtra">
+			<!--  para pintar outros logos.. FEDER, XACOBEO...
+			  -->
+		</div>
+	</div>
+
+
+	<!-- PE -->		
+    
+
+
+ 
+
+
+
+
+<footer>
+	<div class="footerLogo">
+		<a class="linkImaxeCabeceira" href="https://www.edu.xunta.gal/" accesskey="x" 
+				title='Ir a Portal Educativo da Xunta de Galicia. Acceso teclado: ALT+x' >
+			
+			<img alt="Portal Educativo da Xunta de Galicia" src="https://recursosweb.edu.xunta.gal/recursosweb/imaxes/logos/cons_cultura_eou-cor-neg.png"/>
+		</a>
+	</div>
+	<div class="footerContact">
+		<ul>
+			<li style="border-right: 1px dotted rgba(238,238,238,.7);">
+				<i class="glyphicon glyphicon-bookmark" aria-hidden="true"></i>&nbsp;centroseducativos 2.24.0
+			</li>
+			<li>
+				 	
+				<a href="/centroseducativos/VerContacto.do" class="linkPe" accesskey="c" 
+						title='Como contactar coa consellería?. Atallo de teclado: c' >
+					<i class="glyphicon glyphicon-envelope" aria-hidden="true" 
+						aria-label='Contacto'></i>&nbsp;Contacto
+				</a>
+			</li>
+		</ul>
+	</div>	
+</footer>
+</body>
+</html>

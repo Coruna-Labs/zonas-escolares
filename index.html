@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-<title>MisEducativos · Coruña Labs</title>
+<title>Zonas Escolares · Coruña Labs</title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.min.js"></script>
 <style>
@@ -92,18 +92,14 @@
   .city-marker.active .dot{background:var(--ink)}
   .city-marker.active .tag{background:var(--ink);color:#fff}
 
-  /* ---------- Callout: native MapLibre popup — direct polygon click ----------
-     Sized down a step from the first draft -- at the original size it read as
-     noticeably heavier than a rail row for the same information, which felt
-     inconsistent given they're both just "here's a school and its tags." */
+  /* ---------- Callout: native MapLibre popup -- now only the honest
+     "this address isn't covered" note; a direct school click opens the
+     rail's detail slot instead (see .detail below). ---------- */
   .maplibregl-popup-content{font-family:inherit;border-radius:9px;padding:10px 12px;
     box-shadow:0 8px 28px rgba(0,0,0,.16);border:1px solid var(--hairline)}
   .pop-title{font-size:12px;font-weight:660;margin:0 0 2px}
-  .pop-sub{font-size:10.5px;color:var(--muted);margin:0 0 5px;line-height:1.4}
-  .pop-tags{display:flex;gap:4px;flex-wrap:wrap;margin:0 0 5px}
   .pop-tag{font-size:9.5px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;
     padding:2px 6px;border-radius:5px}
-  .pop-link{font-size:10.5px;color:var(--ink);text-decoration:underline;text-underline-offset:2px}
   .pop-warn{color:var(--error);font-weight:600}
 
   /* ---------- Ensinanza tint pairs -- one light bg + one readable text
@@ -173,6 +169,47 @@
   .rail__school-tags{display:flex;gap:3px;flex-wrap:wrap;margin:3px 0 0}
   .rail__empty{padding:20px 14px;font-size:12px;color:var(--faint);text-align:center}
 
+  /* ---------- Detail slot: replaces the old floating map popup ----------
+     A direct map click or a rail-row click used to open two different
+     surfaces (a MapLibre popup, or just a narrowed rail list) showing
+     mostly the same name+tags. Now both open this one slot instead, at
+     the bottom of the rail -- collapsed to 0 height at rest, expanding
+     when a school is selected. The rail list stays visible and intact
+     behind it (the selected row just gets a highlight), so there's no
+     more "back to the list I was just looking at" state to track. */
+  .detail{border-top:1px solid var(--hairline);background:var(--panel);
+    max-height:0;overflow:hidden;transition:max-height .28s ease;flex:0 0 auto}
+  .rail.has-detail .detail{max-height:360px;overflow-y:auto}
+  .rail.has-detail .rail__scroll{flex:1 1 auto}
+  .detail__inner{padding:14px 16px 16px;position:relative}
+  .detail__close{position:absolute;top:6px;right:8px;background:none;border:none;font-size:1.1rem;
+    line-height:1;color:var(--faint);cursor:pointer;padding:4px 7px}
+  .detail__close:hover{color:var(--ink)}
+  .detail__back{display:none;align-items:center;gap:6px;background:none;border:none;font-family:inherit;
+    font-size:11px;font-weight:600;letter-spacing:.03em;color:var(--muted);cursor:pointer;
+    padding:2px 0 12px;text-transform:uppercase}
+  .detail__back:hover{color:var(--ink)}
+  .detail__back svg{width:13px;height:13px}
+  @media (max-width:719px){
+    .detail{border-top:none;max-height:0;overflow:hidden}
+    .rail.has-detail .detail{max-height:none;overflow-y:auto;flex:1 1 auto}
+    .rail.has-detail .rail__scroll,
+    .rail.has-detail .rail__legend-wrap,
+    .rail.has-detail .rail__status{display:none}
+    .detail__close{display:none}
+    .detail__back{display:inline-flex}
+  }
+  .detail__title{margin:0 26px 2px 0;font-size:14.5px;font-weight:660;color:var(--ink)}
+  .detail__sub{margin:0 0 8px;font-size:11px;color:var(--muted)}
+  .detail__tags{display:flex;gap:4px;flex-wrap:wrap;margin:0 0 12px}
+  .detail__field{margin-bottom:10px}
+  .detail__field-label{font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;
+    color:var(--faint);margin:0 0 2px;font-weight:600}
+  .detail__field-value{font-size:12px;margin:0;color:var(--ink);line-height:1.4}
+  .detail__field-value a{color:var(--ink)}
+  .detail__link{display:inline-block;margin-top:2px;font-size:11px;color:var(--ink);
+    text-decoration:underline;text-underline-offset:2px}
+
   .rail__foot{padding:10px 14px;border-top:1px solid var(--hairline);font-size:10px;
     line-height:1.6;color:var(--faint)}
   .rail__foot a{color:var(--faint);text-decoration:underline;text-underline-offset:2px}
@@ -204,7 +241,7 @@
   <div class="top">
     <div>
       <p class="lab"><a href="https://corunalabs.org">Coruña Labs</a></p>
-      <h1 id="m-title">MisEducativos</h1>
+      <h1 id="m-title">Zonas Escolares</h1>
     </div>
     <div class="langs" id="langs">
       <button data-lang="gl">GL</button><button data-lang="es">ES</button><button data-lang="en">EN</button>
@@ -236,6 +273,9 @@
     <button class="reset" id="rail-reset"></button>
   </div>
   <div class="rail__scroll" id="rail-list"></div>
+  <div class="detail" id="detail" aria-live="polite">
+    <div class="detail__inner" id="detail-inner"></div>
+  </div>
   <div class="rail__foot" id="rail-foot"></div>
 </aside>
 
@@ -243,7 +283,7 @@
 
 <script>
 /* ==========================================================================
-   MisEducativos — Coruña Labs
+   Zonas Escolares — Coruña Labs
    Built from map-template. The rail is permanent -- not the optional,
    collapsible thing the template treats it as -- because it's the primary
    browse/filter surface here: city select, address search, and the
@@ -254,7 +294,7 @@
 
 /* ---------- TOOL-SPECIFIC: strings ---------- */
 const I18N = {
-  gl:{ title:"MisEducativos", sub:"Áreas de influencia dos centros educativos de Galicia.",
+  gl:{ title:"Zonas Escolares", sub:"Áreas de influencia dos centros educativos de Galicia.",
        loading:"Cargando…", error:"Non se puideron cargar os datos.",
        allCities:"Todas as zonas", searchPlaceholder:"Busca un enderezo…",
        notCovered:(loc)=>`${loc} aínda non está cuberto — por agora só nestes 11 concellos.`,
@@ -264,11 +304,14 @@ const I18N = {
        railCountCity:(n,city)=>`${n} centro${n===1?"":"s"} en ${city}`,
        railCountSearch:(n)=>`${n} resultado${n===1?"":"s"}`,
        railEmpty:"Ningún centro coincide coa selección.",
-       railReset:"Ver todos", railBack:"← Volver",
+       railReset:"Ver todos",
        legendHint:"Filtrar por tipo",
+       detailBack:"Volver á lista",
+       fieldAddress:"Enderezo", fieldPhone:"Teléfono", fieldEmail:"Correo electrónico",
+       fieldWebsite:"Web", fieldOwnership:"Titularidade", concertadoBadge:"Concertado",
        railFoot:'Datos: <a href="https://www.edu.xunta.gal/centroseducativos/" target="_blank" rel="noopener">Xunta de Galicia — Centros educativos</a> (fonte oficial). <a href="https://github.com/Coruna-Labs/mis-educativos" target="_blank" rel="noopener">Código fonte ↗</a>',
        ensinanzaNames:{"22":"Infantil","25":"Primaria","24":"ESO","29":"Bacharelato"} },
-  es:{ title:"MisEducativos", sub:"Áreas de influencia de los centros educativos de Galicia.",
+  es:{ title:"Zonas Escolares", sub:"Áreas de influencia de los centros educativos de Galicia.",
        loading:"Cargando…", error:"No se pudieron cargar los datos.",
        allCities:"Todas las zonas", searchPlaceholder:"Busca una dirección…",
        notCovered:(loc)=>`${loc} aún no está cubierto — por ahora solo en estos 11 concellos.`,
@@ -278,11 +321,14 @@ const I18N = {
        railCountCity:(n,city)=>`${n} centro${n===1?"":"s"} en ${city}`,
        railCountSearch:(n)=>`${n} resultado${n===1?"":"s"}`,
        railEmpty:"Ningún centro coincide con la selección.",
-       railReset:"Ver todos", railBack:"← Volver",
+       railReset:"Ver todos",
        legendHint:"Filtrar por tipo",
+       detailBack:"Volver a la lista",
+       fieldAddress:"Dirección", fieldPhone:"Teléfono", fieldEmail:"Correo electrónico",
+       fieldWebsite:"Web", fieldOwnership:"Titularidad", concertadoBadge:"Concertado",
        railFoot:'Datos: <a href="https://www.edu.xunta.gal/centroseducativos/" target="_blank" rel="noopener">Xunta de Galicia — Centros educativos</a> (fuente oficial). <a href="https://github.com/Coruna-Labs/mis-educativos" target="_blank" rel="noopener">Código fuente ↗</a>',
        ensinanzaNames:{"22":"Infantil","25":"Primaria","24":"ESO","29":"Bachillerato"} },
-  en:{ title:"MisEducativos", sub:"School catchment zones across Galicia.",
+  en:{ title:"School Zones", sub:"School catchment zones across Galicia.",
        loading:"Loading…", error:"Couldn't load the data.",
        allCities:"All zones", searchPlaceholder:"Search an address…",
        notCovered:(loc)=>`${loc} isn't covered yet — only these 11 concellos, for now.`,
@@ -292,8 +338,11 @@ const I18N = {
        railCountCity:(n,city)=>`${n} school${n===1?"":"s"} in ${city}`,
        railCountSearch:(n)=>`${n} result${n===1?"":"s"}`,
        railEmpty:"No school matches this selection.",
-       railReset:"See all", railBack:"← Back",
+       railReset:"See all",
        legendHint:"Filter by type",
+       detailBack:"Back to list",
+       fieldAddress:"Address", fieldPhone:"Phone", fieldEmail:"Email",
+       fieldWebsite:"Website", fieldOwnership:"Ownership", concertadoBadge:"Publicly subsidized",
        railFoot:'Data: <a href="https://www.edu.xunta.gal/centroseducativos/" target="_blank" rel="noopener">Xunta de Galicia — Centros educativos</a> (official source). <a href="https://github.com/Coruna-Labs/mis-educativos" target="_blank" rel="noopener">Source code ↗</a>',
        ensinanzaNames:{"22":"Infantil","25":"Primary","24":"ESO","29":"Bacharelato"} },
 };
@@ -362,7 +411,7 @@ document.getElementById("langs").addEventListener("click",(e)=>{
 const BASEMAP = "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json";
 
 // Galicia-wide, generously padded per project direction.
-const SERVICE_AREA = { north:44.4622, south:41.2952, east:-6.0111, west:-10.0983 };
+const SERVICE_AREA = { north:44.866, south:41.2952, east:-5.4116, west:-10.0983 };
 const MAX_BOUNDS = [[SERVICE_AREA.west,SERVICE_AREA.south],[SERVICE_AREA.east,SERVICE_AREA.north]];
 const GALICIA_CENTER = [
   (SERVICE_AREA.east + SERVICE_AREA.west) / 2,
@@ -393,8 +442,7 @@ const state = {
                             // across its 1-2 catchment features), for the rail
   activeEnsinanzas: new Set(["22","25","24","29"]), // all on by default; the legend toggles these
   searchMatchCodigos: null, // Set of school codigos from the last resolved search, or null
-  previousMatch: null,      // {codigos, city} snapshot to restore via "back" when a rail-row
-                            // click narrows further from a broader city/search context
+  selectedSchool: null,     // codigo of the school open in the detail slot, or null
 };
 
 /* ---------- catchment paint expressions: category color x zoom x selection ---------- */
@@ -430,10 +478,16 @@ const state = {
 // others so a multi-type school shows multiple distinct rings instead of
 // one color winning. See RING_OFFSETS below.
 //
-// Which condition decides "highlighted vs faint": a resolved search wins
-// over a plain city selection, matching the rail (narrowest filter shows).
-// A search match is per-school (codigo); a city selection is per-concello.
+// Which condition decides "highlighted vs faint": a school open in the
+// detail slot wins over everything else (it's the single thing being
+// looked at right now), then a resolved search, then a plain city
+// selection -- matching the rail (narrowest filter shows). A detail
+// selection and a search match are per-school (codigo); a city selection
+// is per-concello.
 function highlightCondition(){
+  if(state.selectedSchool){
+    return ["==", ["get","codigo"], state.selectedSchool];
+  }
   if(state.searchMatchCodigos && state.searchMatchCodigos.size){
     return ["in", ["get","codigo"], ["literal", [...state.searchMatchCodigos]]];
   }
@@ -447,6 +501,13 @@ function highlightCondition(){
 // this whole ring/neutral-fill redesign was built to avoid. So the
 // highlighted fill-opacity depends on which one is actually active.
 function highlightFillOpacity(){
+  // A detail-slot selection is always one school -- at most the 2
+  // features a multi-geometry school produces (see 04_dedupe_reproject.py),
+  // which don't overlap each other (different grade levels, different
+  // zones), so a flat strong value is safe here without the compounding
+  // math the search-match case below needs.
+  if(state.selectedSchool) return 0.4;
+
   // A whole-city selection can span 100+ overlapping shapes (Vigo); any
   // non-zero fill boost there compounds straight back to a black screen
   // (verified: 0.25 across 11 overlaps compounds to ~96%). So a plain
@@ -475,12 +536,11 @@ function highlightFillOpacity(){
 // to recede further, since the whole point of searching is "show me
 // what's relevant here" -- a search result that's only slightly more
 // prominent than everything else undersells the answer.
-function faintFillOpacity(){
-  return (state.searchMatchCodigos && state.searchMatchCodigos.size) ? 0.02 : 0.05;
+function isNarrowed(){
+  return !!state.selectedSchool || !!(state.searchMatchCodigos && state.searchMatchCodigos.size);
 }
-function faintLineOpacity(){
-  return (state.searchMatchCodigos && state.searchMatchCodigos.size) ? 0.2 : 0.65;
-}
+function faintFillOpacity(){ return isNarrowed() ? 0.02 : 0.05; }
+function faintLineOpacity(){ return isNarrowed() ? 0.2 : 0.65; }
 function fillOpacityExpr(){
   const byMatch = ["case", highlightCondition(), highlightFillOpacity(), faintFillOpacity()];
   return ["interpolate", ["linear"], ["zoom"], 9, 0, 10.5, byMatch];
@@ -606,8 +666,7 @@ whenStyleReady(async () => {
     });
 
     map.on("click","catchments-fill",(e)=>{
-      const f = e.features[0];
-      openSchoolPopup(e.lngLat, [f]);
+      openSchoolDetail(e.features[0].properties.codigo);
     });
     map.on("mouseenter","catchments-fill",()=>map.getCanvas().style.cursor="pointer");
     map.on("mouseleave","catchments-fill",()=>map.getCanvas().style.cursor="");
@@ -735,10 +794,7 @@ function renderRail(){
   }
 
   railCountEl.textContent = countText;
-  // "Back" when there's a broader context to return to (drilled into one
-  // school from a city list or a multi-result search); plain full reset
-  // otherwise -- see captureBackTarget/goBack.
-  railResetEl.textContent = state.previousMatch ? t.railBack : t.railReset;
+  railResetEl.textContent = t.railReset;
   railResetEl.classList.toggle("show", showReset);
 
   if(!schools.length){
@@ -776,61 +832,100 @@ function schoolRowHTML(s){
   // separate row of plain swatches alongside plain-grey text anymore.
   const codes = ENSINANZA_PRIORITY.filter(c => s.ensinanzaCodes.has(c));
   const tags = codes.map(c => `<span class="pop-tag ens-tag-${c}">${t.ensinanzaNames[c]}</span>`).join("");
-  return `<div class="rail__school" data-codigo="${s.codigo}">
+  const hi = s.codigo === state.selectedSchool ? " hi" : "";
+  return `<div class="rail__school${hi}" data-codigo="${s.codigo}">
     <p class="rail__school-name">${s.nome}</p>
     <div class="rail__school-tags">${tags}</div>
   </div>`;
 }
 
-// If the rail is currently showing something broader than one school (a
-// city's full list, or a multi-result search), remember it before a row
-// click narrows further -- otherwise "back" would have nowhere to return
-// to except the full 346-school reset, which is what this whole thing is
-// meant to avoid re-typing an address for.
-function captureBackTarget(){
-  if(state.searchMatchCodigos && state.searchMatchCodigos.size > 1){
-    return {codigos: new Set(state.searchMatchCodigos), city: state.selectedCity};
-  }
-  if(!state.searchMatchCodigos && state.selectedCity){
-    return {codigos: null, city: state.selectedCity}; // null codigos = "whole city," not a search subset
-  }
-  return null; // resting state, or already narrowed to one -- nothing to go back to
-}
-function goBack(){
-  if(!state.previousMatch){ closeEverything(); return; }
-  const prev = state.previousMatch;
-  state.previousMatch = null;
-  state.searchMatchCodigos = prev.codigos;
-  // No clearResult() here -- selectCity() below only clears the pin when
-  // fromSearch is false (a plain city view, prev.codigos null), which is
-  // exactly when the pin shouldn't have survived anyway. Going back to a
-  // multi-result search list (prev.codigos set) passes fromSearch:true and
-  // keeps the pin, since it's still the same search being restored.
-  selectCity(prev.city, {fromSearch: !!prev.codigos});
-}
-
 railListEl.addEventListener("click",(e)=>{
   const row = e.target.closest(".rail__school"); if(!row) return;
-  const school = state.allSchools.find(s=>s.codigo===row.dataset.codigo);
-  if(!school) return;
-  state.previousMatch = captureBackTarget();
-  // No clearResult() here -- this can run while drilling into one school
-  // *from* an active address search, and the pin marks that original
-  // searched point, which is still exactly relevant. clearResult() was
-  // wiping it out even though no new search happened. A genuinely new
-  // search already clears the old pin itself, in showSearchResult().
-  state.searchMatchCodigos = new Set([school.codigo]);
-  selectCity(school.concello_codigo, {fromSearch:true});
-  const feat = state.catchments.features.find(f=>f.properties.codigo===school.codigo);
-  if(feat){
+  openSchoolDetail(row.dataset.codigo, {flyTo:true});
+});
+
+railResetEl.addEventListener("click", closeEverything);
+
+/* ---------- Detail slot: one school's full record, in the rail ----------
+   Replaces the old floating map popup and the old "narrow the rail to
+   one row" drill-down. A rail-row click or a direct map click both land
+   here now; the rail list stays exactly as it was (whole city, search
+   results, or everything), with the selected row just highlighted,
+   since there's no longer a narrower view to build or back out of. */
+const detailEl = document.querySelector(".rail");
+const detailInnerEl = document.getElementById("detail-inner");
+
+function openSchoolDetail(codigo, {flyTo=false} = {}){
+  const feat = state.catchments.features.find(f=>f.properties.codigo===codigo);
+  if(!feat) return;
+  state.selectedSchool = codigo;
+  renderSchoolDetail(feat);
+  detailEl.classList.add("has-detail");
+  updateCatchmentHighlight();
+  renderRail();
+  if(flyTo){
     const ring = feat.geometry.type === "Polygon" ? feat.geometry.coordinates[0] : feat.geometry.coordinates[0][0];
     const lng = ring.reduce((s,c)=>s+c[0],0)/ring.length;
     const lat = ring.reduce((s,c)=>s+c[1],0)/ring.length;
     map.flyTo({center:[lng,lat], zoom:15.5, duration:900});
   }
-});
+}
+function closeSchoolDetail(){
+  if(!state.selectedSchool) return;
+  state.selectedSchool = null;
+  detailEl.classList.remove("has-detail");
+  updateCatchmentHighlight();
+  renderRail();
+}
+function renderSchoolDetail(feat){
+  const t = I18N[lang];
+  const p = feat.properties;
 
-railResetEl.addEventListener("click", goBack);
+  // A multi-geometry school (see 04_dedupe_reproject.py) has 2 features
+  // sharing this codigo, each covering only the ensinanzas that share
+  // that particular shape -- union across all of them so the detail
+  // shows every level the school offers, not just whichever feature the
+  // map/rail happened to hand back.
+  const codesSet = new Set();
+  for(const f of state.catchments.features){
+    if(f.properties.codigo !== p.codigo) continue;
+    for(const e of parseEnsinanzas(f.properties.ensinanzas)) codesSet.add(e.codigo);
+  }
+  const tags = ENSINANZA_PRIORITY.filter(c=>codesSet.has(c))
+    .map(c => `<span class="pop-tag ens-tag-${c}">${t.ensinanzaNames[c]}</span>`).join("");
+  const concertadoBadge = p.ensino_concertado
+    ? `<span class="pop-tag" style="background:var(--hairline);color:var(--muted)">${t.concertadoBadge}</span>` : "";
+
+  // Contact fields are genuinely optional (not every school has a fax, a
+  // website, or a listed number) -- only ever render a field that has a
+  // real value, rather than a row reading "Phone: " with nothing after it.
+  const fields = [];
+  if(p.enderezo){
+    const line2 = [p.codigo_postal, p.localidade].filter(Boolean).join(" ");
+    fields.push([t.fieldAddress, line2 ? `${p.enderezo}, ${line2}` : p.enderezo]);
+  }
+  if(p.telefono) fields.push([t.fieldPhone, `<a href="tel:${p.telefono}">${p.telefono}</a>`]);
+  if(p.correo) fields.push([t.fieldEmail, `<a href="mailto:${p.correo}">${p.correo}</a>`]);
+  if(p.www) fields.push([t.fieldWebsite, `<a href="${p.www}" target="_blank" rel="noopener">${p.www.replace(/^https?:\/\//,"")}</a>`]);
+  if(p.titular) fields.push([t.fieldOwnership, p.titular]);
+  const fieldsHTML = fields.map(([label,value]) => `
+    <div class="detail__field">
+      <p class="detail__field-label">${label}</p>
+      <p class="detail__field-value">${value}</p>
+    </div>`).join("");
+
+  detailInnerEl.innerHTML = `
+    <button class="detail__back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>${t.detailBack}</button>
+    <button class="detail__close" aria-label="×">&times;</button>
+    <h3 class="detail__title">${p.nome}</h3>
+    <p class="detail__sub">${p.concello_nome}</p>
+    <div class="detail__tags">${tags}${concertadoBadge}</div>
+    ${fieldsHTML}
+    <a class="detail__link" href="${p.detail_url}" target="_blank" rel="noopener">${t.officialLink} ↗</a>`;
+  detailInnerEl.querySelector(".detail__close").addEventListener("click", closeSchoolDetail);
+  detailInnerEl.querySelector(".detail__back").addEventListener("click", closeSchoolDetail);
+}
+document.addEventListener("keydown",(e)=>{ if(e.key==="Escape") closeSchoolDetail(); });
 
 /* ---------- city markers (DOM, always on the map, fade out on deep zoom) ---------- */
 function renderCityMarkers(){
@@ -871,15 +966,15 @@ function updateMarkerOpacity(){
 // so it clears any active search narrowing instead.
 function selectCity(codigo, {fromSearch=false} = {}){
   state.selectedCity = codigo;
-  // An explicit pick (marker/dropdown, not part of a search or a
-  // rail-row drill-down) starts fresh -- any stale "back" target from a
-  // previous drill-down no longer applies, and neither does any address
-  // pin still on the map: it belongs to a search that this city pick
-  // isn't part of. A rail-row drill-down or a resolved search itself
-  // passes fromSearch:true and skips this, so the pin they place/rely on
-  // survives (that's also how "volver" gets back to its own search
-  // results without losing the pin -- see goBack()).
-  if(!fromSearch){ state.searchMatchCodigos = null; state.previousMatch = null; clearResult(); }
+  // An explicit pick (marker/dropdown) starts fresh -- any address pin
+  // still on the map belongs to a search that this city pick isn't part
+  // of. A resolved search itself passes fromSearch:true and skips this,
+  // so the pin it just placed survives.
+  if(!fromSearch){ state.searchMatchCodigos = null; clearResult(); }
+  // Either way, the city/search context is changing broadly enough that
+  // whatever school was open in the detail slot may not even be in the
+  // new view -- close it rather than leave it showing something stale.
+  closeSchoolDetail();
   renderCityTrigger();
   updateCatchmentHighlight();
   for(const [c,{el}] of Object.entries(state.markerEls)){
@@ -1125,8 +1220,8 @@ function makeResultPinEl(){
 // for features that come back from queryRenderedFeatures/click events --
 // vector tiles have no native way to hold nested structures, so
 // "ensinanzas" arrives as a JSON string there, not the real array it is
-// on state.catchments.features (which the rail reads directly, no tiling
-// involved). Found this the hard way: openSchoolPopup throws without it.
+// on state.catchments.features (which the rail and detail slot read
+// directly, no tiling involved). Found this the hard way early on.
 function parseEnsinanzas(raw){
   return typeof raw === "string" ? JSON.parse(raw) : raw;
 }
@@ -1137,9 +1232,6 @@ function parseEnsinanzas(raw){
 // to a point on the map rather than a browsable result.
 function showSearchResult(lngLat, hits, resolvedAddress){
   clearResult();
-  // A brand-new search starts fresh -- any "back" target left over from
-  // an earlier drill-down no longer applies to this result.
-  state.previousMatch = null;
   state.resultMarker = new maplibregl.Marker({element:makeResultPinEl(), anchor:"bottom"})
     .setLngLat(lngLat).addTo(map);
 
@@ -1147,28 +1239,20 @@ function showSearchResult(lngLat, hits, resolvedAddress){
     const t = I18N[lang];
     const html = `<p class="pop-title pop-warn">${t.notCovered(extractLocality(resolvedAddress))}</p>`;
     state.resultPopup = new maplibregl.Popup({closeButton:true, offset:12}).setLngLat(lngLat).setHTML(html).addTo(map);
-    selectCity(null); // also resets searchMatchCodigos, since fromSearch defaults false
+    state.searchMatchCodigos = null;
+    // fromSearch:true so this only refreshes the rail/highlight/trigger --
+    // it must NOT run selectCity's own clearResult(), which would wipe the
+    // pin and popup this branch just placed to mark the searched (if
+    // uncovered) point.
+    selectCity(null, {fromSearch:true});
     return;
   }
   state.searchMatchCodigos = new Set(hits.map(f=>f.properties.codigo));
   selectCity(hits[0].properties.concello_codigo, {fromSearch:true});
-}
-
-// Direct click on a catchment shape on the map -- unlike search, this
-// stays a small native popup (1-3 quick facts), matching the template's
-// default callout convention for "clicked a thing that's already visible."
-function openSchoolPopup(lngLat, feats){
-  const t = I18N[lang];
-  if(!feats.length) return;
-  const html = feats.map(f=>{
-    const p = f.properties;
-    const tags = parseEnsinanzas(p.ensinanzas).map(e=>`<span class="pop-tag ens-tag-${e.codigo}">${e.nome}</span>`).join("");
-    return `<p class="pop-title">${p.nome}</p>
-      <p class="pop-sub">${p.concello_nome}</p>
-      <div class="pop-tags">${tags}</div>
-      <a class="pop-link" href="${p.detail_url}" target="_blank" rel="noopener">${t.officialLink} ↗</a>`;
-  }).join("<hr style='border:none;border-top:1px solid var(--hairline);margin:8px 0'>");
-  new maplibregl.Popup({closeButton:true, offset:12}).setLngLat(lngLat).setHTML(html).addTo(map);
+  // A search that resolves to exactly one school is the common case (a
+  // full street address) -- skip straight to its detail instead of
+  // making someone click the single row that's now sitting in the rail.
+  if(hits.length === 1) openSchoolDetail(hits[0].properties.codigo);
 }
 </script>
 </body>

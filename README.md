@@ -1,4 +1,4 @@
-# MisEducativos
+# Zonas Escolares
 
 An open map of school catchment zones (*áreas de influencia*) across Galicia.
 Enter an address or pick a school, see exactly which zone it falls in,
@@ -22,9 +22,12 @@ A permanent rail lists every school, grouped by city, with the same colored
 chips as the map. The legend chips double as filters; click one to isolate
 that education level everywhere at once. Search an address and the rail
 narrows to whatever matches, with the non-matching zones fading into the
-background; click any result to drill in, or back out to the full list
-without losing your place. Available in Galician (default), Spanish, and
-English.
+background. Click any school, on the map or in the rail, and its full
+record opens right in the rail: address, phone, email, website, and
+ownership (public, private, or *concertado*), alongside a link to its
+official Xunta page. The rest of the list stays exactly where it was
+behind it, so closing the record doesn't lose your place. Available in
+Galician (default), Spanish, and English.
 
 ---
 
@@ -70,9 +73,22 @@ scraping saga:
               data/city_markers.geojson
               one overview marker per concello
                            │
-                           ▼
+                           │      Xunta de Galicia (detail pages)
+                           │      ┌───────────────────────────────┐
+                           │      │  GET each school's own detail │
+                           │      │  page, 346 requests, cached   │
+                           │      └───────────────┬───────────────┘
+                           │                      │
+                           │             Python · requests + regex
+                           │                      │
+                           │                      ▼
+                           │      address, phone, email, website,
+                           │      ownership, ensino concertado --
+                           │      merged onto catchments_galicia.geojson
+                           │                      │
+                           ▼                      ▼
               index.html · MapLibre GL
-              rail + search + ring-outline styling
+              rail + search + ring-outline styling + per-school detail
 ```
 
 ### Two corrections the plan needed once it met live data
@@ -105,6 +121,8 @@ python3 scripts/02_sweep.py              # POST search for all 38 combos, cache 
 python3 scripts/03_parse.py              # extract per-school records from cached HTML
 python3 scripts/04_dedupe_reproject.py   # dedupe, reproject 25829->4326, write GeoJSON
 python3 scripts/05_city_markers.py       # per-concello centroid markers for the overview
+python3 scripts/06_scrape_school_details.py  # fetch + cache each school's own detail page
+python3 scripts/07_parse_school_details.py   # parse cached pages, merge onto the GeoJSON
 ```
 
 Each script reads the previous one's output from `data/`; nothing re-hits
@@ -132,7 +150,12 @@ python3 -m http.server 8000
     "concello_codigo": "15030",
     "concello_nome": "Coruña (A)",
     "ensinanzas": [{"codigo": "22", "nome": "Educación infantil"}, ...],
-    "detail_url": "https://www.edu.xunta.gal/centroseducativos/CargarDetalleCentro.do?codigo=15004976"
+    "detail_url": "https://www.edu.xunta.gal/centroseducativos/CargarDetalleCentro.do?codigo=15004976",
+    "titular": "Consellería de Educación, Ciencia, Universidades e Formación Profesional",
+    "ensino_concertado": false,
+    "enderezo": "Rúa Example 10", "codigo_postal": "15001", "localidade": "A Coruña",
+    "telefono": "981000000", "fax": "981000001",
+    "www": "https://www.edu.xunta.gal/centros/example", "correo": "example@edu.xunta.gal"
   }
 }
 ```
@@ -170,7 +193,7 @@ Coordinates are EPSG:4326 (lon, lat), ready for MapLibre.
 ## On the Xunta's own tool
 
 The Xunta already publishes this data through its own *Centros educativos*
-tool, and it remains the authoritative source. MisEducativos doesn't
+tool, and it remains the authoritative source. Zonas Escolares doesn't
 replace it, just removes the friction around it. The official tool requires
 three mandatory filters before anything displays, caps results at 10 even
 when more exist, and hides its address-search feature behind a checkbox
@@ -186,6 +209,7 @@ index.html             the whole frontend (masthead, rail, search, map)
 DISCOVERY.md           the original investigation this pipeline was built from
 scripts/               numbered pipeline steps, run in order
 raw/                   cached raw HTML responses + JSON enumeration (don't re-scrape to iterate the parser)
+raw/detail/            cached per-school detail pages (346 files) + fetch manifest
 data/                  parsed/deduped/final GeoJSON output, safe to regenerate from raw/
 venv/                  Python virtualenv (requests, pyproj, shapely)
 requirements.txt
@@ -201,9 +225,10 @@ requirements.txt
   that theory.
   Worth keeping in mind if the Xunta ever adds more concellos to the tool;
   nothing here should assume the list of 11 is permanent.
-- School markers show catchment zones, not the school building's own
-  location. The pipeline doesn't yet capture or geocode each school's real
-  address, only its zone geometry.
+- The pipeline now captures each school's real street address (from its
+  own detail page), but doesn't geocode it to a point yet. The address
+  shows as text in the school's detail record; there's still no marker
+  for where the building itself actually sits, only its catchment zone.
 
 ---
 
@@ -223,7 +248,7 @@ requirements.txt
 
 ## About
 
-MisEducativos is a project of [Coruña Labs](https://corunalabs.org), a
+Zonas Escolares is a project of [Coruña Labs](https://corunalabs.org), a
 small, independent, non-profit civic-tech lab for Galicia. It works in
 Galician (default), Spanish, and English.
 

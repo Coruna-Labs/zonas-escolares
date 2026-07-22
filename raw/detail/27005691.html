@@ -1,0 +1,995 @@
+
+
+
+
+  
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="gl">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Language" content="gl" />
+    <meta name="robots" content="index, nofollow" />
+    <meta name="title" content="centroseducativos" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/> 
+    <meta name="description" content="Consulta e mantemento de centros" />
+    <meta name="author" content='Consellería de Educación, Ciencia, Universidades e Formación Profesional' />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+	
+    <link rel="shortcut icon" href='https://recursosweb.edu.xunta.gal/recursosweb/imaxes//cabeceira/user-image-mini.png' type="image/x-icon">
+    
+    <!-- TITULO -->
+	<title>
+	    centroseducativos
+	</title>
+		
+	
+	<script type="text/javascript">
+		menuActivo = '';					
+	</script>
+	
+	<script type="text/javascript">
+		pageLoader = 'si';					
+	</script>
+  	<!-- HEADER -->
+	
+
+
+
+
+<link charset="UTF-8" href="https://recursosweb.edu.xunta.gal/recursosweb/estilos/principal/glyphicons/glyphicons.css" rel="stylesheet" type="text/css"/>
+<link charset="UTF-8" href="https://recursosweb.edu.xunta.gal/recursosweb/estilos/principal/font-awesome-4.6.3/font-awesome.css" rel="stylesheet" type="text/css"/>
+<link charset="UTF-8" href="https://recursosweb.edu.xunta.gal/recursosweb/estilos/principal/estilosMaquetaAmtega.css" rel="stylesheet" type="text/css"/>
+
+<script charset="UTF-8" src="https://recursosweb.edu.xunta.gal/recursosweb/scripts/jquery.min.js" type="text/javascript"></script>
+<script charset="UTF-8" src="https://recursosweb.edu.xunta.gal/recursosweb/scripts/animacions.js" type="text/javascript"></script>
+<script charset="UTF-8" src="https://recursosweb.edu.xunta.gal/recursosweb/scripts/menu-edu-2.0.0/menu-edu.js" type="text/javascript"></script>
+
+
+<script charset="UTF-8" src="https://recursosweb.edu.xunta.gal/recursosweb/scripts/bowser-1.8.1/bowser.js" type="text/javascript"></script>
+<script charset="UTF-8" src="https://recursosweb.edu.xunta.gal/recursosweb/scripts/support.js" type="text/javascript"></script>
+
+<!-- ********************************************** -->
+<!--            Funcionalidades comúns              -->
+<!-- ********************************************** -->
+
+<!--
+	/*****************************************************************************\
+	Nesta paxina se incluen as funcionalidades comuns para:
+		Estilos para a visualizacion correcta en IE 6 e 7
+		Visualizacion do evento onFocus no IE 7
+		Activa a visualizacion dos divs "js" no caso de haber javascript
+		Definición de bordes estandar para navegadores distintos de IE
+	/*****************************************************************************\
+-->
+<!-- Visualizacion correcta do div de mensaxes e botóns link en ie 8-->
+
+<!--[if IE 8]>
+	<style>
+		a.botazul, 
+		a.botdourado{
+			padding: 0.19em;
+		}			
+	</style>
+<![endif]-->
+
+<!-- Visualizacion correcta do div de mensaxes e botóns link en ie6 e 7-->
+
+<!--[if lte IE 7]>
+	<style>
+		a.botazul, 
+		a.botdourado{
+			display:inline-block;
+			padding: 0.32em;
+		}		
+	</style>
+<![endif]-->
+
+<!-- Visualizacion correcta de combos -->
+
+<!--[if IE 7]>
+	<style>
+		fieldset {
+			padding: 0.5em;
+		}
+		#corpo {
+			padding-top: 0;
+		}
+		.LayoutCamposHorizontal DIV.EtiquetaArriba{	
+			line-height: normal;
+		}
+		.informacionContexto ~ h1 {
+			margin-left:17%;
+		}
+	</style>
+<![endif]-->
+
+<!--  Forzar informacion de contexto a dereita e estilos basicos de controis -->
+<!--[if lt IE 7]>
+	<style>
+		.informacionContexto {
+			text-align: right;
+			padding: 0;
+		}
+		.AnchoMetade .LayoutCamposHorizontal div {
+			margin-right: 6% !important;
+		}		
+		.LayoutCamposHorizontal div {
+		 	margin-right: 3% !important;
+		}		
+		label {
+			float:left;
+		}
+		INPUT, 
+		SELECT,
+		SELECT.combo,
+		SELECT.formularioinactivo, 
+		INPUT.formulario,
+		INPUT.formularioinactivo,
+		TEXTAREA.formulario,
+		TEXTAREA.formularioinactivo,
+		TEXTAREA {
+				clear:left;		
+				color: #000;
+			 	background-color: #fff;	
+			 	border: 0.08em solid #000000;				
+			  	}	
+	</style>
+<![endif]-->
+
+<!-- 
+     Activa a visualizacion dos divs "js" no caso de haber javascript
+     Definicion de bordes estandar para navegadores distintos de IE 
+ -->
+
+<script type="text/javascript">
+
+	// Si javascript esta activo poñemos visible o estilo "js"
+	document.write("<style>.js{ display: block}<\/style>");
+	
+	// Borde negro en firefox, Opera, etc...
+	/*
+	var ie = document.all != undefined;
+	if (!(ie)) {
+	 document.write("<style> fieldset { border: 0.1em solid #BFB8BF; } </style>");
+   	}
+   	*/
+</script>
+
+
+<!--  Indicase o entorno no que nos movemos -->
+<script type="text/javascript">
+	var meuhostname = (document.location.hostname).toLowerCase();
+	
+		if (meuhostname.indexOf("www.edu.xunta.") == 0) {
+		// Se é producción, non visualizamos nada
+	}else {
+		//eliminamos todo o que non aporta info do entorno
+		meuhostname = meuhostname.replace("www","");
+		meuhostname = meuhostname.replace("auth-edu","");
+		meuhostname = meuhostname.replace(".edu","");
+		meuhostname = meuhostname.replace(".edu2","");
+		meuhostname = meuhostname.replace("edu","");
+		meuhostname = meuhostname.replace("edu2","");
+		meuhostname = meuhostname.replace(".extranet","");
+		meuhostname = meuhostname.replace(".xunta","");
+		meuhostname = meuhostname.replace(".es","");
+		meuhostname = meuhostname.replace(".gal","");
+		meuhostname = meuhostname.replace(".local","");
+		
+		//remprazamos cadeas que identifican entorno
+		meuhostname = meuhostname.replace(".des","desenvolvemento");
+		meuhostname = meuhostname.replace(".probas","contorna de probas");
+		meuhostname = meuhostname.replace(/\w*.dev/,"desenvolvemento");
+		meuhostname = meuhostname.replace(/\w*stg2/,"contorna de probas");
+		meuhostname = meuhostname.replace(/\w*.stg/,"contorna de probas");
+		meuhostname = meuhostname.replace(".formacion","formación");
+		
+		document.write("<div id='contorno'><i class='fa fa-cogs'></i>"+meuhostname.toUpperCase()+"</div>");
+	}
+</script>
+
+<!-- ********************************************** -->
+</head>
+
+<body>
+	
+		<!--[if (!IE)|(gt IE 9)]><!-->
+			<div id="page-loader">
+		        <div class="dot"></div>
+		        <div class="dot"></div>
+		    </div>
+		<!--<![endif]-->
+	
+	
+	<!-- CABECEIRA -->
+	
+
+
+
+
+
+
+
+
+
+
+<header>
+	<div id="app_nome">
+		 
+		<div id="nomeAplicacion">
+			<a href="/centroseducativos/" accesskey="i" 
+					title="centroseducativos-Consulta e mantemento de centros-Ir á páxina principal. Atallo de teclado: i" >
+				<h1><img alt="centroseducativos" src="https://recursosweb.edu.xunta.gal/recursosweb/imaxes/svg-apps-educacion/centroseducativos.svg"/><span class="sr-only">centroseducativos</span></h1>
+			</a>
+		</div>
+		<div id="iconoMenu">
+			<a id="linkIconoMenu" href="#" 
+				title='Amosar/Ocultar menú'><span class="glyphicon glyphicon-menu-hamburger" 
+				aria-label='Amosar/Ocultar menú'></span></a>
+		</div>
+	</div>
+	<div id="accesosDirectos">
+
+		 
+		<a href="/centroseducativos/VerAccesibilidade.do" accesskey="a" 
+			title='Pautas de accesibilidade empregadas. Atallo de teclado: a' ><i class="fa fa-universal-access" 
+				aria-label='Accesibilidade e usabilidade' aria-hidden="true"></i></a>
+		
+		 
+		<a href="/centroseducativos/VerAvisoLegal.do" accesskey="v" 
+			title='Avisos legais para usuarios do servizo web. Atallo de teclado: v' ><i class="fa fa-balance-scale" 
+				aria-label='Aviso legal' aria-hidden="true"></i></a>
+	
+			
+
+		
+		
+		<a href="https://www.edu.xunta.gal/buzoninformes/" accesskey="b" target="_buzonInformes"  
+			title='Buzón informes. Atallo teclado: b'><i class="glyphicon glyphicon-inbox" 
+				aria-label='Buzón de informes' aria-hidden="true" ></i></a>
+
+	</div>
+	
+	
+		<div id="botonLogin">
+			 			
+			<a href="/centroseducativos/AbrirSesion.do" accesskey="s" 
+				title='Entrar. Atallo de teclado: s'><i class="glyphicon glyphicon-off p-r-5" 
+				aria-label='Entrar' aria-hidden="true" 
+				style="color:green;"></i></a>
+		</div>
+	
+	
+</header>
+
+
+	<div id="contenedorPrincipal">
+		
+
+
+
+
+
+
+
+
+
+	
+
+		
+		
+		
+				
+			<div class="divEdu-menu" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:html="http://struts.apache.org/tags-html" xmlns:edu="http://www.edu.xunta.es"><ul id="nav" class="edu-menu"><li id="Inicio"><a href="/centroseducativos/PaxinaInicio.do" accesskey="i" id="Inicio"><abbr name="MenuPrincipal" title="Inicio. Atallo teclado: i">		  			
+				1.
+				Inicio</abbr></a></li><li id="BuscaCentros"><a href="/centroseducativos/BuscaCentros.do?DIALOG-EVENT-inic" accesskey="2" id="BuscaCentros"><abbr name="MenuPrincipal" title="Buscar centros">		  			
+				2.
+				Busca</abbr></a></li>
+				
+			
+			<li id="ListaCentro"><a href="/centroseducativos/ListaCentros.do" accesskey="b" id="ListaCentro"><abbr name="MenuPrincipal" title="Gu&iacute;a de centros">		  			
+				3.
+				Gu&iacute;a de centros</abbr></a></li><li id="AreaInfluenciaCentro"><a href="/centroseducativos/CargarAreaInfluenciaCentro.do?DIALOG-EVENT-inicializa" accesskey="a" id="AreaInfluenciaCentro"><abbr name="MenuPrincipal" title="Áreas de influencia dos centros">		  			
+				4.
+				Áreas de influencia</abbr></a></li>
+				
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			</ul></div>				 	
+				<script type="text/javascript">
+					$(document).ready(function(){ menuEdu().iniciarMenu('');});	
+				</script>
+		
+				
+		
+		
+			
+				
+				
+			
+		
+		
+		<main>
+			<!-- CORPO -->			
+			<div id="corpo" class="corpo">
+				
+				
+				
+				
+		
+				
+					
+						
+						
+							
+
+ 
+
+
+
+<div class="informacionContexto">  		
+	
+		<br/>
+    	<strong>Curso acad&eacute;mico</strong>:		
+	    2025/2026
+	    <br/>
+    	<strong>Centro</strong>:		
+	    27005691
+	     - 
+    	CEIP Plurilingüe Pedro Caselles Rollán
+  </div>
+  
+  
+  
+						 
+					
+					
+					
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					
+		
+					
+
+
+
+
+
+
+
+	
+
+<style>
+
+	#pestanasCabeceira #DetalleDatos a {		
+		border-bottom: 0.1em solid #ffffff; 
+		color: #285983;
+		background-color: #ffffff;
+		z-index:999;
+		position: relative;
+	}
+	
+	#pestanasCorpo {
+		/**
+		 * Propietarias: solución provisional ata adaptar a norma CSS3.
+		 */
+		/*-ms-box-sizing: border-box;*/
+		/*-moz-box-sizing: border-box;*/
+		/**
+		 * CSS3: Buscamos recoller o ancho dos elementos de bloque en base ós bordes, e non ó contido.
+		 */
+		/*box-sizing: border-box*/
+	}
+	
+</style>
+
+
+
+<div id="pestanasCabeceira">        
+	
+
+
+
+
+
+
+
+
+<br/>
+<br/>
+
+<ul class="pestanasListaCabeceira">
+
+
+
+	<li id="DetalleDatos" >		 	
+    	<!-- montaxe de url sen c:url por problemas jsessionid na parte pública -->
+    	<a  href='/centroseducativos/CargarDetalleCentro.do?codigo=27005691' title="Mostrar o detalle dos datos do centro"> Datos centro </a>       
+   	</li>	
+   	
+   	<li id="LugaresDocencia" >		 	 
+    	<!-- montaxe de url sen c:url por problemas jsessionid na parte pública -->
+  		
+    	<a  href='/centroseducativos/CargarLugaresDocencia.do?codigo=27005691' title="Mostrar os lugares de docencia do centro"> Lugares de docencia  </a>       
+   	</li>
+   		
+	<li id="CadroDirectivo" >	  
+		<!-- montaxe de url sen c:url por problemas jsessionid na parte pública -->
+  		
+    	<a href='/centroseducativos/CargarCadroDirectivoCentro.do?codigo=27005691' title="Mostrar equipo directivo do centro. Atallo de teclado: ALT+o">Equipo directivo</a>	    		
+	</li>	
+
+	<li id="OfertaEducativa" >	
+		<!-- montaxe de url sen c:url por problemas jsessionid na parte pública -->
+  		
+    	<a href='/centroseducativos/CargarOfertaCentro.do?codigo=27005691&amp;procedencia=detalleCentro'
+  		 title="Mostrar oferta educativa do centro. Atallo de teclado: ALT+t">  		  		
+    	Oferta educativa
+    	</a> 		
+   </li>   	  
+   
+   	<li id="AdscricionPub" >	  
+		<!-- montaxe de url sen c:url por problemas jsessionid na parte pública -->
+  		
+    	<a href='/centroseducativos/CargarAdscricionPub.do?codigo=27005691' title="Mostrar adscricions do centro.">Adscrición</a>	    		
+	</li>	
+   
+    <li id="Inspeccion">
+  		<!-- montaxe de url sen c:url por problemas jsessionid na parte pública -->
+  		
+  		<a href='/centroseducativos/CargarInspeccion.do?codigo=27005691' title="Mostrar os datos de inspección do centro">Inspección </a> 
+   </li>
+   
+   <li id="Servizos">
+  		<!-- montaxe de url sen c:url por problemas jsessionid na parte pública -->
+  		
+    	<a href='/centroseducativos/CargarServizosComplementarios.do?codigo=27005691' title="Mostrar os servizos complementarios do centro"> Outros datos </a> 
+   </li>    
+</ul>
+
+</div>
+
+
+<div id="pestanasCorpo">
+	<div class="AnchoTotal">
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script charset="UTF-8" src="https://recursosweb.edu.xunta.gal/recursosweb/scripts/text_utils.js" type="text/javascript"></script>
+<script charset="UTF-8" src="https://recursosweb.edu.xunta.gal/recursosweb/scripts/validar_tipodoc.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css"/>
+<script  data-dojo-config='has:{"dojo-inject-jquery": false}, async: true'
+    src="https://js.arcgis.com/4.25/" ></script>
+
+<style type="text/css">
+.no-seleccionable-custom {
+	-webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; 
+	background-color : #edeff5;
+	opacity :1;
+	cursor: not-allowed;
+}
+#map {
+	height: 600px;
+	width: 800px;
+    margin: 0;
+    padding: 0;
+}
+</style>
+ 
+
+
+<h1> Datos do centro</h1> 
+
+
+
+
+
+
+
+
+
+
+<form name="DetalleCentroForm" method="post" action="/centroseducativos/CargarDetalleCentro.do">
+	<input type="hidden" name="OWASP_CSRFTOKEN" value='W4H9-LQFY-CHNB-5VAA-VE6S-MAPU-U48C-VRF9'/>
+
+	<div class="AnchoTotal">
+		<fieldset id="enderezo">
+			<legend>
+				Centro
+			</legend>
+			<div class="LayoutCamposVertical">
+				<div class="LayoutCamposHorizontal">
+					<div>
+						<label for="codigo">Código centro <span class=obrigatorio></span></label>
+						<input type="text" name="codigo" value="27005691" readonly="readonly" id="codigo" style="width:6em">
+					</div>
+					<div>
+						<label for="nome">Nome <span class=obrigatorio></span></label>
+						<input type="text" name="nome" value="CEIP Plurilingüe Pedro Caselles Rollán" readonly="readonly" id="nome" style="width:30em">
+					</div>
+				</div>
+
+				<div class="LayoutCamposHorizontal">
+					<div>
+						<label for="titular">Titularidade   <span class=obrigatorio></span></label>
+						<input type="text" name="titular" value="Consellería de Educación, Ciencia, Universidades e Formación Profesional" readonly="readonly" style="width:30em">
+					</div>
+
+					
+						<div>
+							<input type="checkbox" name="ensinoConcertado" value="on" disabled="disabled">
+							<label>Ten algún ensino concertado</label>
+							
+						</div>
+					
+				</div>
+			</div>
+		</fieldset>
+	</div>
+
+	<div id="fieldset1" class="AnchoMetade">
+		<div class="LayoutCamposVertical">
+			<fieldset id="enderezo">
+				<legend>  Enderezo </legend>
+				<div class="LayoutCamposVertical">
+					<div>
+						<label for="enderezo">Enderezo <span class=obrigatorio></span></label>
+						<input type="text" name="enderezo.enderezo" value="Rúa Agramonte 23 " readonly="readonly" style="width:30em">
+					</div>
+					<div>
+						<label for="localidade">Localidade <span class=obrigatorio></span></label>
+						<input type="text" name="enderezo.localidade.nome" value="Xove (San Bartolo)" readonly="readonly" style="width:30em">
+					</div>
+					<div>
+						<label for="concello">Concello <span class=obrigatorio></span></label>
+						<input type="text" name="enderezo.concello.nome" value="Xove" readonly="readonly" style="width:30em">
+					</div>
+					<div class="LayoutCamposHorizontal">
+						<div>
+							<label for="CP">Cód. postal <span class=obrigatorio></span></label>
+							<input type="text" name="enderezo.CP" value="27870" readonly="readonly" style="width:4em">
+						</div>
+						<div>
+							<label for="provincia">Provincia <span class=obrigatorio></span></label>
+							<input type="text" name="enderezo.provincia.nome" value="Lugo" readonly="readonly" style="width:8em">
+						</div>
+					</div>
+				</div>
+			</fieldset>
+
+			<fieldset id="contactos">
+				<legend>
+					Contacto
+				</legend>
+				<div class="LayoutCamposVertical">
+					<div class="LayoutCamposHorizontal">
+						<div>
+							<label for="telefono">Teléfono <span class=obrigatorio></span></label>
+							<input type="text" name="contacto.telefono" value="982870985" readonly="readonly" style="width:6em">
+						</div>
+						<div>
+							<label for="fax">Fax <span class=obrigatorio></span></label>
+							<input type="text" name="contacto.fax" value="982870989" readonly="readonly" style="width:6em">
+						</div>
+					</div>
+					<div>
+						<label for="correo">Enderezo electrónico <span class=obrigatorio></span></label>
+						
+							
+							
+								<label> <span id="correo" class="no-seleccionable-custom">ceip.pedro.caselles.rollan@edu.xunta.gal </span></label>								
+						    
+						
+					</div>
+					<div>
+						<label for="www">Enderezo web <span class=obrigatorio></span></label>
+						<input type="text" name="contacto.www" value="http://www.edu.xunta.gal/centros/ceippedrocasellesrollan/" readonly="readonly" style="width:30em">
+						
+							<a href='http://www.edu.xunta.gal/centros/ceippedrocasellesrollan/' class="enlaceExterno"
+								target="_blank" title="URL do centro"> Ver web</a>
+						
+					</div>
+				</div>
+			</fieldset>			
+			<fieldset id="areasInfluencia">
+				<legend> Área de influencia </legend>
+				<div id="axuda_centroseducativos_detallecentro_areainfluencia" > <div class="mensaxeAxuda"><p>Nesta pantalla pode  consultar as áreas de influencia dos centros educativos sostidos con fondos públicos, con efectos exclusivamente  informativos.</p><p>A integración dos datos estase a realizar de forma progresiva, polo que no caso de dúbida ou para completar a información debe dirixirse ao centro educativo/xefatura territorial correspondente.</p></div></div><br>
+				<!-- Area de influencia -->
+				<div class="LayoutCamposHorizontal">
+					<input type="checkbox" name="areaInfluencia" value="on" id="areaInfluencia">
+					<label>Ver área de influencia</label>
+					
+				</div>
+				<a href="CargarAreaInfluenciaCentro.do?DIALOG-EVENT-inicializa" title="Áreas de influencia">
+					Ver outras áreas de influencia
+				</a>
+			</fieldset>
+		</div>
+	</div>
+	
+	<div id="fieldset2" class="AnchoMetade">
+		<fieldset>
+			<legend>
+				Localización
+			</legend>
+			<div id="map"></div>
+		</fieldset>
+	</div>
+</form>
+
+
+
+<script type="text/javascript">
+require([
+	"esri/Map",
+	"esri/views/MapView",
+    "esri/Basemap",
+	"esri/geometry/Point",
+	"esri/geometry/SpatialReference",
+    "esri/layers/FeatureLayer",
+    "esri/Graphic",
+    "esri/layers/GraphicsLayer",
+    "esri/widgets/Home",
+	"esri/layers/TileLayer"
+], (
+    Map,
+    MapView,
+    Basemap,
+    Point, SpatialReference,
+    FeatureLayer,
+    Graphic,
+	GraphicsLayer,
+    Home,
+    TileLayer
+)  => {	
+	
+/*
+ * Funcions utils para a xeolocalizacion (esri)
+ *  
+ */	
+coordenadasGalicia = [];
+coordenadasGalicia[0]  = [-8.547505, 42.871740];
+coordenadasGalicia['15030'] = [-8.411540100000025, 43.3623436];
+coordenadasGalicia['15078'] = [-8.544844499999954, 42.8782132];
+coordenadasGalicia['15036'] = [-8.219345100000055, 43.48964600000001];
+coordenadasGalicia['27028'] = [-7.55675819999999, 43.0097384];
+coordenadasGalicia['32054'] = [-7.863880999999992, 42.33578929999999];
+coordenadasGalicia['36038'] = [-8.644620199999963, 42.4298846];
+coordenadasGalicia['36057'] = [-8.720726799999966, 42.24059889999999];
+coordenadasGalicia['36026'] = [-8.702244, 42.392400];
+coordenadasGalicia['27013'] = [-7.44769, 43.6821];
+coordenadasGalicia['27027'] = [-7.29789, 43.4711];
+coordenadasGalicia['27025'] = [-7.51242, 43.6856];
+
+
+ 	const URL_BASE_MAP= 'https://ideg.xunta.gal/servizos/rest/services/MapasBase/MapaBase_2020/MapServer';
+ 	const URL_GEOCODER= 'https://ideg2.xunta.gal/arcgis/rest/services/Geocoder/GeocodeServer/findAddressCandidates';
+ 	const MAP_SITEMA_REF_ESPACIAL =25829;
+ 	const spatialReference = new SpatialReference ({ wkid:MAP_SITEMA_REF_ESPACIAL}); 
+
+	// create a LAYER 
+	const LAYER_BASE_MAP =  new TileLayer(URL_BASE_MAP,null);  ;
+
+	// create a basemap 
+	const BASE_MAP = new Basemap({ baseLayers: [LAYER_BASE_MAP], title: "Amtega Galicia", id: "baseAmtegaMap" });
+ 	
+ 	const CONSTRAINTS_MAP = {
+		maxZoom: 13
+	};
+	
+ 	const symbol_colexio2 = {
+		type: "web-style",
+		name: "university",        
+        styleName: "Esri2DPointSymbolsStyle"
+    };
+    const symbol_marca = {
+		type: "web-style",
+		name: "tear-pin-1",        
+        styleName: "Esri2DPointSymbolsStyle"
+    };
+
+ 	const symbol_colexio = {
+		type : "simple-marker",
+        color: [226, 119, 40], 
+	    outline: {
+    	    color: [255,255,255],
+        	width: 2
+    	}
+    };
+		
+	function getFeatureColexiosLayer ( source , actions) {	 
+		
+		var accions = actions? actions:[];
+		return new FeatureLayer({
+      // create an instance of esri/layers/support/Field for each field object
+      title: "Colexios de Galicia",
+      fields: [
+        { name: "ObjectID", type: "oid" },
+        { name: "Name", type: "string" },
+		{ name: "NomeCentro", type: "string" },
+        { name: "Codigo", type: "string" },
+        { name: "id", type: "string" }
+      ],
+	  outFields: ['*'],
+      objectIdField: "ObjectID",
+      geometryType: "point",
+      spatialReference: { wkid: MAP_SITEMA_REF_ESPACIAL },
+      source: source, // adding an empty feature collection
+      renderer:  {
+        type: "simple",
+        symbol: symbol_colexio2
+		},
+      popupTemplate: {
+		title :"{NomeCentro}",
+		content: "{Codigo} - {Name}",
+		actions: accions 
+		}				
+    });
+	}
+	
+ 	const arrayAreaInfluenciaAreas = []; 	
+ 	arrayAreaInfluenciaAreas.push ({type: "simple-fill", color: [000, 000, 255, 0.3],  outline: {color: [000, 000, 255], width: 1.5 }});//azul
+ 	arrayAreaInfluenciaAreas.push ({type: "simple-fill", color: [000, 255, 000, 0.3],  outline: {color: [000, 255, 000], width: 1.5 }});// lima
+ 	arrayAreaInfluenciaAreas.push ({type: "simple-fill", color: [255, 000, 000, 0.3],  outline: {color: [255, 000, 000], width: 1.5 }});// roxo
+ 	arrayAreaInfluenciaAreas.push ({type: "simple-fill", color: [000, 255, 255, 0.3],  outline: {color: [000, 255, 255], width: 1.5 }}); // cyan
+ 	arrayAreaInfluenciaAreas.push ({type: "simple-fill", color: [255, 255, 000, 0.3],  outline: {color: [255, 255, 000], width: 1.5 }});// amarillo
+ 	arrayAreaInfluenciaAreas.push ({type: "simple-fill", color: [255, 000, 255, 0.3],  outline: {color: [255, 000, 255], width: 1.5 }}); // magenta 	
+ 	arrayAreaInfluenciaAreas.push ({type: "simple-fill", color: [128, 000, 128, 0.3],  outline: {color: [128, 000, 128], width: 1.5 }}); // 
+ 	arrayAreaInfluenciaAreas.push ({type: "simple-fill", color: [128, 128, 000, 0.3],  outline: {color: [128, 128, 000], width: 1.5 }}); // oliva
+ 	arrayAreaInfluenciaAreas.push ({type: "simple-fill", color: [000, 128, 128, 0.3],  outline: {color: [000, 128, 128], width: 1.5 }}); // tila
+ 	arrayAreaInfluenciaAreas.push ({type: "simple-fill", color: [227, 139, 079, 0.3],  outline: {color: [227, 139, 079], width: 1.5}}); //naranja
+ 	
+ 
+   // mostra os cambios no mapa usando por defecto o layer colexiosLayer 
+    function mostraMapa (layer, edits) {			
+		layer.applyEdits ({addFeatures:edits.mostrar , deleteFeatures: edits.quitar });
+	}
+	
+	// carga a cache dos graficos dos colexios pasados como parametro
+	function calculeColexiosGraphics (cache, colexios) {
+		if ( cache.length ===0 && colexios != null && colexios.length > 0 ) {			
+			let graphics = [];
+			for (let i=0; i<colexios.length; i++){
+				const point = new Point(colexios[i].punto.coordinates, spatialReference );
+				let graphic = new Graphic({ geometry: point , attributes: colexios[i]});
+				graphics.push(graphic);
+			}        	    
+			cache = graphics;
+		}
+		return cache;
+	}
+	// carga a cache de obxetos de areas de influencia
+	function cargarAreaInfluenciaGraphics (cache, areasInfluencia ) {
+		if (!cache || cache.length <= 0) {
+			for (let i=0; i< areasInfluencia.length ; i++) {
+				$.each (areasInfluencia[i], function (key, value ) {
+					cache.push ( new Graphic( { symbol: arrayAreaInfluenciaAreas [i %10], geometry: value}));
+				});					
+			}
+		}
+		return cache;		
+	}
+
+	function getCenterMap (cidade) {
+		let centroCidade = coordenadasGalicia[cidade];		
+		if (!centroCidade ) {
+			centroCidade  = coordenadasGalicia[0];
+		}
+		return centroCidade;
+	}
+	
+	function manageLinkDetallePopup (show) {
+		// Watch for when features are selected
+	    view.popup.watch("selectedFeature", (graphic) => {
+			if (graphic) {
+				const graphicTemplate = graphic.getEffectivePopupTemplate();
+	            graphicTemplate.actions.items[0].visible = show? true : false;
+	        }
+	    });			  
+	}
+	
+	function getAreasInfluenciaPolygon (areaJSON) {
+		let areas = [];
+		let area = {
+			spatialReference: spatialReference,
+			type: areaJSON.type,
+			rings: areaJSON.coordinates			
+		};
+		areas.push (area);
+		if (areaJSON.type === "multipolygon") {
+			areas = [];
+			$.each (areaJSON.coordinates, function (key, value ) {
+				areas.push ( {type:"polygon", spatialReference: spatialReference , rings: value});
+			});
+		} 		
+		return areas;
+	}
+
+	/*
+ * Lectura do array de colexion. precisase unha listaColexios
+ *  
+ */
+ 	let colexios = [];
+	let areasInfluencia = [];
+ 	let indexColexios = 0;
+
+	
+		
+		
+		areasInfluencia.push (getAreasInfluenciaPolygon ({"type":"multipolygon","coordinates":[[[[619018.1162,4843493.1732],[619012.0528,4843507.7513],[619005.6838,4843540.3277],[619001.122,4843548.0055],[618988.5203,4843556.1021],[618973.6382,4843568.0366],[618945.5923,4843582.0196],[618938.1876,4843587.4892],[618931.9948,4843590.043],[618927.1437,4843601.7053],[618921.8753,4843605.3277],[618915.7551,4843606.8862],[618910.6558,4843649.5654],[618908.0852,4843657.3887],[618875.1163,4843684.0296],[618860.1614,4843696.9607],[618831.9872,4843698.9197],[618810.2215,4843695.338],[618766.9801,4843684.1903],[618734.1877,4843680.8092],[618706.6636,4843673.8046],[618689.0259,4843668.5203],[618662.9318,4843655.613],[618636.5484,4843646.6903],[618623.1112,4843638.7067],[618582.6169,4843589.7142],[618568.4009,4843578.6705],[618562.2246,4843567.2097],[618561.0998,4843555.1132],[618562.4574,4843550.2068],[618577.7574,4843546.3113],[618585.2343,4843539.846],[618588.8322,4843504.0648],[618594.8237,4843490.4838],[618611.409,4843482.6762],[618611.5532,4843480.6845],[618599.4577,4843481.8094],[618588.3582,4843483.0064],[618569.2915,4843483.6241],[618549.9519,4843474.2115],[618535.3749,4843468.1476],[618515.3999,4843453.6831],[618509.2958,4843441.226],[618509.4479,4843370.1541],[618510.5236,4843300.1506],[618510.741,4843297.1626],[618504.6931,4843297.7251],[618494.5169,4843299.9897],[618466.905,4843307.9974],[618431.2372,4843330.4374],[618419.632,4843338.6061],[618392.5658,4843366.6761],[618374.4074,4843382.3778],[618361.5165,4843394.4579],[618340.2977,4843410.9386],[618333.2539,4843411.4292],[618313.424,4843394.9715],[618308.2439,4843383.5831],[618309.2153,4843342.6058],[618317.5038,4843311.1706],[618323.2941,4843286.5615],[618323.5831,4843282.5782],[618338.0472,4843262.6035],[618344.6896,4843240.0581],[618349.7572,4843225.4096],[618363.0089,4843208.3498],[618365.0727,4843207.4987],[618363.2979,4843204.3665],[618347.4359,4843202.2143],[618343.5242,4843200.9283],[618334.6495,4843185.2671],[618332.3125,4843176.0866],[618336.673,4843157.3815],[618335.8218,4843155.3178],[618310.7795,4843155.5026],[618307.937,4843153.2935],[618301.1258,4843136.7812],[618296.4353,4843132.4352],[618283.8502,4843126.5161],[618276.3163,4843119.9632],[618274.4846,4843103.8114],[618269.0877,4843095.41],[618255.5065,4843089.4188],[618243.7001,4843086.5599],[618198.1378,4843052.2164],[618183.9941,4843040.1772],[618181.3679,4843034.9813],[618174.4124,4843020.4597],[618172.2915,4843008.2923],[618172.87,4843000.3245],[618182.5719,4842977.0011],[618193.5426,4842963.7813],[618201.5251,4842950.3441],[618208.3683,4842938.8266],[618222.9044,4842917.8564],[618229.8193,4842905.3436],[618230.9757,4842889.4091],[618229.6345,4842880.3008],[618219.4025,4842869.5463],[618209.443,4842868.8244],[618186.3049,4842884.164],[618181.1812,4842885.7953],[618193.7983,4842863.6834],[618195.0109,4842860.7685],[618182.8428,4842862.8883],[618150.3077,4842883.5544],[618140.984,4842887.8833],[618134.0121,4842887.3777],[618131.6747,4842878.1973],[618133.3217,4842869.3063],[618137.8105,4842862.6243],[618144.7977,4842849.115],[618146.3723,4842841.2204],[618138.9988,4842818.659],[618134.3803,4842813.3179],[618120.6552,4842809.3187],[618092.6249,4842809.2871],[618083.4451,4842811.6244],[618066.4269,4842825.4062],[618048.6857,4842849.1475],[618045.8987,4842859.9581],[618047.6021,4842864.0867],[618065.9456,4842873.4269],[618071.5594,4842878.84],[618070.9094,4842887.8031],[618046.7032,4842904.0675],[618014.1679,4842924.7331],[618007.0521,4842926.2194],[618006.1284,4842925.1509],[618005.0041,4842913.0557],[618007.5739,4842905.232],[618021.6766,4842890.2375],[618026.1661,4842883.5554],[618025.8208,4842874.5192],[618024.1182,4842870.3917],[617978.3063,4842867.0665],[617961.3766,4842865.8384],[617943.7394,4842860.554],[617937.6197,4842862.1112],[617926.7933,4842873.3397],[617922.938,4842885.0736],[617916.7303,4842901.6432],[617907.8238,4842914.0123],[617877.7139,4842928.8465],[617874.5817,4842930.621],[617859.354,4842933.5206],[617847.0423,4842937.6327],[617820.8438,4842953.7527],[617809.5998,4842956.9405],[617757.5965,4842956.1705],[617747.2038,4842961.4232],[617725.0456,4842990.8501],[617723.6162,4842996.7542],[617732.9243,4843006.4396],[617735.6232,4843010.6401],[617739.1734,4843016.9042],[617741.2934,4843029.0725],[617736.4425,4843040.7345],[617727.3195,4843056.0907],[617692.2866,4843083.583],[617678.7622,4843090.6104],[617661.2535,4843097.3487],[617642.042,4843099.9597],[617635.7779,4843103.5088],[617626.237,4843110.8265],[617611.2984,4843109.7422],[617598.5681,4843105.8149],[617597.5729,4843105.7418],[617593.517,4843106.4492],[617592.9384,4843114.4159],[617591.9266,4843128.3587],[617588.3606,4843136.1094],[617574.4747,4843148.1167],[617564.717,4843158.4214],[617557.6007,4843159.907],[617517.7655,4843157.0157],[617514.8496,4843155.8033],[617489.7515,4843142.9684],[617486.3303,4843148.7275],[617481.2629,4843163.3766],[617476.4841,4843174.0424],[617469.7862,4843183.5678],[617461.3855,4843188.9649],[617452.5664,4843186.3233],[617449.0168,4843180.0582],[617448.8162,4843169.0315],[617447.3936,4843105.8557],[617454.8869,4843085.3744],[617460.661,4843074.7817],[617480.482,4843036.1738],[617479.559,4843035.1055],[617473.6557,4843033.6761],[617446.694,4843032.7205],[617428.4794,4843035.403],[617422.4314,4843035.9654],[617402.9315,4843042.5593],[617387.4151,4843049.4423],[617375.0308,4843054.5505],[617365.7786,4843057.884],[617344.9936,4843068.3884],[617337.7327,4843071.867],[617319.0122,4843081.5201],[617301.793,4843084.2748],[617245.3006,4843090.1869],[617231.1412,4843092.1623],[617213.633,4843098.9007],[617192.8475,4843109.4066],[617186.4391,4843114.9479],[617182.5114,4843127.6774],[617180.9372,4843135.5733],[617176.737,4843138.2715],[617169.5493,4843140.7528],[617145.4877,4843155.0254],[617111.9006,4843162.5994],[617098.6644,4843165.6434],[617062.3629,4843183.0311],[617030.7683,4843190.7493],[617019.8855,4843188.9587],[617017.0426,4843186.7502],[617011.2999,4843169.3137],[616994.2571,4843142.0469],[616985.583,4843137.4131],[616978.6844,4843135.9112],[616946.527,4843137.5818],[616934.9218,4843145.7497],[616914.5544,4843164.294],[616906.3701,4843166.7037],[616895.2714,4843167.9002],[616880.1162,4843169.8045],[616875.1367,4843169.4429],[616868.0928,4843169.9328],[616865.3221,4843166.728],[616854.0218,4843156.8979],[616847.3398,4843152.408],[616843.7905,4843146.1433],[616846.2159,4843140.3131],[616853.0581,4843128.7954],[616856.6241,4843121.0454],[616863.8838,4843117.5674],[616864.9521,4843116.6439],[616856.5677,4843108.0259],[616856.8566,4843104.0425],[616866.2529,4843098.7177],[616874.8707,4843090.3329],[616879.1431,4843086.6382],[616883.4321,4843068.9287],[616894.1135,4843059.6924],[616904.3616,4843056.4323],[616914.2477,4843058.1509],[616926.0538,4843061.0097],[616939.0726,4843060.9534],[616944.5586,4843054.3436],[616949.2644,4843044.6738],[616947.0313,4843006.468],[616942.4859,4843000.1313],[616934.8078,4842995.5695],[616921.1539,4842990.5742],[616875.199,4842989.2415],[616832.1594,4842989.1212],[616799.857,4842992.783],[616796.0909,4842989.5064],[616793.5367,4842983.3146],[616796.3954,4842971.5082],[616805.4465,4842957.1483],[616807.5831,4842955.3004],[616817.2685,4842945.9921],[616819.9106,4842937.1739],[616819.0032,4842922.0908],[616812.6099,4842913.6177],[616800.6756,4842898.735],[616800.0405,4842893.6833],[616799.7673,4842883.6519],[616805.5422,4842873.0587],[616812.1679,4842864.529],[616807.4213,4842847.1657],[616802.5138,4842845.8089],[616799.4541,4842846.5874],[616778.7974,4842869.1155],[616771.4652,4842873.5889],[616764.2775,4842876.0706],[616751.5316,4842886.1587],[616749.3227,4842889.0019],[616732.3045,4842902.7837],[616726.1129,4842905.3373],[616709.3113,4842916.1322],[616692.9437,4842920.9509],[616682.9852,4842920.228],[616662.4329,4842913.7305],[616645.5746,4842911.5061],[616638.4591,4842912.9927],[616582.0961,4842930.9268],[616527.5956,4842936.983],[616448.487,4842937.2487],[616434.1833,4842941.2164],[616413.6882,4842947.7381],[616399.4566,4842950.7095],[616374.4869,4842949.8985],[616351.5824,4842948.236],[616336.9327,4842943.1678],[616299.5235,4842934.4468],[616267.3095,4842923.0979],[616249.1827,4842910.7702],[616238.6616,4842904],[616234.6059,4842904.7059],[616224.7194,4842902.9873],[616209.5086,4842891.8726],[616211.1546,4842882.9812],[616217.9246,4842872.4603],[616230.3812,4842866.3569],[616253.9368,4842859.0559],[616259.1329,4842856.4301],[616262.554,4842850.6715],[616261.9923,4842844.6235],[616256.8836,4842832.2393],[616259.7431,4842820.4328],[616266.5132,4842809.912],[616278.2631,4842799.7523],[616291.2249,4842786.6764],[616293.4335,4842783.8341],[616304.9663,4842776.6615],[616321.3339,4842771.8429],[616331.5099,4842769.5773],[616374.6213,4842768.7024],[616391.9129,4842764.951],[616405.4373,4842757.9233],[616423.5235,4842743.2183],[616428.0131,4842736.5363],[616428.8398,4842697.551],[616435.3209,4842691.0137],[616435.8268,4842684.0422],[616436.71,4842658.0774],[616441.4161,4842648.4073],[616457.1653,4842624.5216],[616464.8749,4842601.0534],[616471.6447,4842590.5328],[616482.4706,4842579.3042],[616516.5069,4842551.7405],[616522.6265,4842550.1819],[616542.4718,4842552.6237],[616550.4394,4842553.2017],[616554.7841,4842548.5114],[616567.1997,4842515.3733],[616573.7533,4842507.8398],[616591.6224,4842496.1222],[616674.875,4842480.139],[616718.983,4842479.3348],[616740.5466,4842471.8894],[616757.8376,4842468.139],[616776.9922,4842452.5093],[616781.6981,4842442.8394],[616786.9826,4842425.2029],[616786.4205,4842419.1549],[616767.571,4842416.7853],[616743.6856,4842401.036],[616746.1834,4842394.2094],[616760.0692,4842382.2026],[616776.1632,4842367.3526],[616782.2831,4842365.7943],[616803.9194,4842357.3528],[616819.3636,4842351.466],[616834.9523,4842343.5864],[616843.7146,4842333.2099],[616846.1395,4842327.3786],[616843.5128,4842322.1821],[616822.688,4842305.654],[616812.7285,4842304.932],[616784.844,4842302.9076],[616730.0704,4842298.9332],[616717.9911,4842286.0435],[616714.2968,4842281.7705],[616714.1678,4842269.7474],[616715.5972,4842263.8442],[616720.0866,4842257.1624],[616750.3565,4842226.321],[616765.8157,4842206.4182],[616769.0923,4842202.6516],[616770.4496,4842197.7448],[616767.607,4842195.5364],[616762.6998,4842194.1785],[616753.7363,4842193.5285],[616717.8127,4842191.9226],[616697.1162,4842187.4179],[616676.7084,4842178.9288],[616665.7533,4842178.1341],[616658.6379,4842179.6195],[616648.679,4842178.8967],[616643.8439,4842176.5436],[616633.6115,4842165.7894],[616625.9338,4842161.228],[616606.94,4842160.8506],[616575.0717,4842158.5387],[616572.2282,4842156.3293],[616568.5345,4842152.0575],[616558.8238,4842120.3173],[616547.1778,4842101.4517],[616536.6001,4842081.6627],[616527.4366,4842069.9852],[616517.1316,4842060.2265],[616506.3937,4842056.444],[616468.4063,4842055.69],[616461.6516,4842052.197],[616460.0938,4842046.0761],[616458.3342,4842028.9297],[616459.6191,4842025.0181],[616474.3562,4842015.0754],[616497.7111,4841996.7473],[616522.4224,4841973.5114],[616536.2364,4841962.5006],[616554.1052,4841950.7828],[616606.6292,4841930.5659],[616624.499,4841918.8484],[616675.1354,4841869.4624],[616680.7656,4841860.8608],[616689.3109,4841853.471],[616702.4893,4841837.4088],[616711.3964,4841825.0405],[616721.2982,4841812.744],[616735.0561,4841788.714],[616735.2005,4841786.7212],[616735.8503,4841777.7592],[616734.5977,4841753.6402],[616732.911,4841735.4973],[616723.8348,4841708.8095],[616719.6663,4841683.4786],[616713.9237,4841666.0424],[616692.6963,4841627.4604],[616681.251,4841619.6224],[616660.8438,4841611.1334],[616646.1224,4841607.0611],[616635.6733,4841599.295],[616629.3681,4841575.8121],[616628.3164,4841562.7209],[616628.6774,4841557.7411],[616636.2266,4841550.2794],[616649.6951,4841530.2338],[616653.4051,4841520.4909],[616654.8408,4841445.5105],[616650.8732,4841431.2062],[616641.0751,4841414.4771],[616623.8872,4841389.2032],[616609.8166,4841376.1678],[616598.2993,4841369.3264],[616566.0853,4841357.9786],[616546.1841,4841342.5186],[616491.3697,4841311.5112],[616476.0858,4841301.3913],[616456.6016,4841293.9712],[616438.0416,4841287.6183],[616435.1263,4841286.4065],[616420.4049,4841282.3347],[616406.4625,4841281.3229],[616374.4496,4841281.0026],[616323.3708,4841281.3013],[616314.9704,4841286.6988],[616312.9064,4841287.5494],[616302.0804,4841298.7783],[616275.738,4841316.8895],[616253.3953,4841321.2743],[616239.453,4841320.2628],[616235.7586,4841315.9901],[616232.7863,4841301.759],[616232.8743,4841286.749],[616233.0915,4841283.761],[616235.6613,4841275.9389],[616236.3842,4841265.9793],[616232.127,4841255.6598],[616226.4406,4841251.2425],[616210.4342,4841251.0817],[616207.5189,4841249.8688],[616203.4066,4841237.5577],[616202.8447,4841231.5097],[616204.4188,4841223.6148],[616211.1166,4841214.0892],[616212.9793,4841202.2108],[616212.6654,4841165.1466],[616207.9904,4841146.7874],[616202.5932,4841138.3868],[616166.4997,4841097.7248],[616162.733,4841094.4486],[616149.9316,4841091.5173],[616141.0412,4841089.8707],[616137.9964,4841076.6349],[616137.1608,4841060.5568],[616138.477,4841028.6158],[616146.1148,4841006.1437],[616158.0244,4840979.9774],[616165.3565,4840975.5044],[616176.0376,4840966.268],[616176.9204,4840940.3021],[616175.4349,4840933.1861],[616178.4698,4840891.3596],[616176.3799,4840851.1626],[616169.1355,4840840.6256],[616159.8999,4840829.9441],[616146.8244,4840816.9827],[616106.0251,4840785.9903],[616082.2836,4840768.2497],[616069.2087,4840755.2874],[616054.9209,4840745.2414],[616031.7422,4840733.5479],[615977.2898,4840697.562],[615953.8945,4840688.8568],[615929.0695,4840686.0539],[615918.7495,4840690.3108],[615890.8495,4840702.3029],[615876.6904,4840704.2791],[615874.6992,4840704.1346],[615826.5358,4840705.6455],[615820.4163,4840707.2047],[615801.912,4840713.8707],[615784.3321,4840721.606],[615768.9605,4840726.4967],[615738.5785,4840731.3005],[615730.3229,4840734.7059],[615718.3001,4840734.8353],[615687.3557,4840733.5915],[615670.7871,4840727.3842],[615668.0884,4840723.1835],[615664.4661,4840717.9148],[615657.7121,4840714.4216],[615649.7447,4840713.8437],[615643.1347,4840708.3588],[615639.5132,4840703.09],[615636.9019,4840683.8795],[615634.276,4840678.6836],[615623.8268,4840670.9169],[615564.9011,4840627.598],[615554.0907,4840624.8124],[615538.0844,4840624.6521],[615498.5799,4840644.8117],[615482.7746,4840655.6781],[615468.1099,4840664.6256],[615407.3153,4840702.2621],[615382.5473,4840712.4783],[615374.5078,4840712.8971],[615367.3928,4840714.3829],[615349.2499,4840716.0693],[615341.99,4840719.5479],[615325.4056,4840727.3549],[615296.5097,4840739.2732],[615278.4397,4840739.9645],[615228.7911,4840734.3605],[615223.6675,4840735.9908],[615208.8577,4840746.9305],[615201.526,4840751.4035],[615185.5193,4840751.244],[615138.497,4840750.8354],[615103.4255,4840751.294],[615097.5948,4840748.8694],[615044.8139,4840745.0403],[615028.3019,4840751.8505],[615023.4668,4840749.4976],[615019.9896,4840742.2375],[615016.094,4840726.9379],[615015.3869,4840722.8829],[615008.215,4840711.3498],[615004.4483,4840708.0731],[614997.4045,4840708.564],[614991.2133,4840711.1182],[614986.6512,4840718.7953],[614981.8576,4840743.4762],[614963.9003,4840770.2046],[614963.3951,4840777.175],[614965.7321,4840786.3552],[614969.9891,4840796.6749],[614967.9502,4840838.5744],[614965.8143,4840840.4207],[614957.6304,4840842.8306],[614938.982,4840851.4885],[614932.0111,4840850.983],[614913.0178,4840850.6061],[614905.1952,4840848.0363],[614898.4409,4840844.5427],[615017.748,4840598.1865],[615177.5784,4840281.1433],[615308.9213,4839878.2107],[615317.0279,4839752.658],[615272.9978,4839490.1744],[615322.6618,4839288.5479],[615339.8026,4839162.6491],[615312.4903,4839028.5208],[615358.0822,4838841.6156],[615248.9566,4838579.417],[615633.8824,4838130.801],[615734.2075,4838114.0498],[615819.6285,4837999.109],[615872.7027,4837929.8757],[615903.4339,4837865.0292],[615917.4068,4837838.0106],[616178.113,4837528.5469],[616186.821,4837436.0735],[616234.0973,4837267.3083],[616041.6367,4837160.2486],[616035.6915,4837131.7869],[615915.2281,4836556.4182],[615909.5797,4836316.7408],[616178.1088,4836272.1367],[616246.5405,4836142.9472],[616358.9506,4836000.9274],[616424.8252,4835934.6236],[616472.702,4835868.0148],[616613.258,4835682.9848],[616618.0623,4835312.9154],[616629.5543,4835209.6304],[616662.6815,4835097.9026],[616684.2763,4834993.3484],[616713.52,4834921.3845],[616743.9318,4834888.5495],[616942.049,4834627.5979],[616949.1945,4834598.0821],[616943.4366,4834525.5831],[616947.0891,4834502.8221],[616958.0582,4834489.6011],[617119.7708,4834413.222],[617234.6608,4834347.4647],[617335.8974,4834276.7127],[617647.2714,4834083.0335],[617928.4075,4833961.2451],[617981.6423,4833668.7645],[618015.3163,4833577.0975],[618078.6528,4833352.4261],[618124.3064,4833233.5943],[618178.6928,4833132.4147],[618337.3318,4832932.669],[618410.4666,4832862.882],[618463.0488,4832786.5996],[618531.723,4832626.3861],[618598.493,4832520.0963],[618681.3987,4832425.9882],[618819.1091,4832307.8185],[618858.2822,4832264.6036],[618993.2931,4832073.154],[619003.0649,4832048.8328],[619002.0255,4832021.7266],[618818.4263,4831654.0183],[618798.9539,4831563.5064],[618779.4526,4831431.9435],[618729.97,4831189.0854],[618646.5388,4830889.7058],[618600.8252,4830788.2824],[618538.3398,4830669.6271],[618441.8012,4830385.3181],[618434.7992,4830343.7641],[618458.5556,4830278.4081],[618477.2315,4830241.7175],[618495.7487,4830221.0332],[618501.0891,4830216.4138],[618527.2135,4830201.2867],[618555.9206,4830164.3216],[618510.4674,4830086.9452],[618488.0803,4830064.2999],[618439.2082,4830061.7606],[618374.8037,4830011.0445],[618366.7783,4829997.4478],[618371.9888,4829980.8065],[618386.0174,4829966.805],[618464.2624,4829978.4787],[618489.5208,4829975.3024],[618547.7451,4829945.4795],[618583.0904,4829885.9692],[618592.645,4829864.6355],[618576.2591,4829745.3142],[618614.8671,4829696.0505],[618613.9683,4829597.8739],[618625.5818,4829437.5301],[618633.5052,4829411.0727],[618735.95,4829268.3187],[618791.9859,4829006.071],[618785.8909,4828910.5208],[618736.4538,4828542.5225],[618737.3335,4828516.557],[618749.5284,4828486.4047],[619068.1285,4828026.9175],[619371.832,4828395.3057],[619544.1344,4828545.9406],[619778.4454,4828725.0944],[619895.9689,4828802.6837],[619959.5363,4828837.3213],[620059.333,4828855.5603],[620404.0497,4829044.7133],[620456.4747,4829053.5154],[620932.6611,4828961.8489],[620973.4587,4828785.5924],[621025.8635,4828670.2474],[621019.9404,4828544.6719],[621320.5776,4828347.1823],[621423.7205,4828291.575],[621523.1304,4828052.4826],[621579.6942,4827976.4835],[621630.0376,4827931.0707],[621787.3513,4827846.346],[621827.8892,4827715.1229],[621857.4758,4827652.1877],[621993.2345,4827491.8144],[622056.6115,4827432.3266],[622130.5113,4827379.607],[622177.953,4827318.9658],[622442.9436,4827198.9833],[622583.7269,4827066.0033],[622752.8804,4827025.185],[622729.7026,4827082.5779],[622611.3071,4827238.2029],[622611.0228,4827311.2696],[622596.2185,4827391.2935],[622605.0279,4827477.0329],[622640.3997,4827610.7495],[622631.4671,4827651.1517],[622588.1705,4827765.1575],[622573.3419,4827942.2959],[622589.1636,4827986.4926],[622655.4063,4828053.3624],[622664.0124,4828128.074],[622641.2568,4828262.5887],[622707.5431,4828356.4937],[622822.2718,4828458.9126],[622965.6503,4828511.3444],[623080.4236,4828640.7992],[623140.4427,4828669.1741],[623251.7208,4828736.3023],[623280.7927,4828763.4374],[623356.301,4828812.9581],[623421.3146,4828827.6767],[623435.4608,4828839.7148],[623445.8978,4828861.4959],[623417.203,4828884.4485],[623405.5702,4828920.6506],[623416.6147,4828975.5149],[623448.8633,4829027.9101],[623522.2657,4829120.3308],[623580.2791,4829162.5771],[623768.3662,4829330.3832],[623786.4826,4829356.7251],[623768.6136,4829368.4462],[623690.4659,4829396.8283],[623677.7066,4829420.9349],[623713.911,4829501.6506],[623672.9479,4829555.7535],[623631.3636,4829590.7883],[623599.4366,4829644.5439],[623573.0516,4829704.7079],[623545.5715,4829793.8267],[623512.9949,4829856.5465],[623469.1325,4829964.5028],[623464.0686,4830048.2378],[623472.8012,4830065.8903],[623573.2668,4830130.2348],[623620.6711,4830180.7243],[623674.2698,4830297.7429],[623690.844,4830442.1157],[623682.0843,4830521.5773],[623640.676,4830733.8376],[623642.439,4830820.0694],[623655.4025,4830876.0743],[623699.8757,4830939.3681],[623720.5329,4830985.9195],[623717.7903,4831023.7663],[623687.5812,4831136.7174],[623623.4075,4831276.2424],[623629.2832,4831305.7035],[623648.6686,4831342.15],[623680.7147,4831452.601],[623675.5477,4831496.2802],[623592.7671,4831533.3351],[623545.5665,4831562.9558],[623514.7207,4831601.7708],[623493.7481,4831656.3187],[623483.8027,4831710.6645],[623519.3853,4831841.3969],[623554.1722,4831914.0015],[623633.3748,4832036.8804],[623656.4708,4832132.6677],[623639.2072,4832177.4723],[623577.3122,4832244.0744],[623596.7419,4832376.6403],[623576.995,4832414.2567],[623486.4194,4832489.7927],[623433.5604,4832556.0483],[623406.4954,4832653.2066],[623390.6751,4832747.1748],[623402.3233,4832973.29],[623418.6765,4833051.5684],[623445.1343,4833128.5756],[623486.6908,4833190.6584],[623578.2764,4833239.3451],[623646.4939,4833251.297],[623782.5238,4833253.1443],[623778.106,4833327.9146],[623752.9601,4833426.2138],[623723.21,4833505.1564],[623683.717,4833511.3059],[623625.0271,4833506.051],[623546.4745,4833512.3733],[623483.3233,4833554.8539],[623454.2499,4833734.9672],[623416.4458,4833759.2599],[623332.4666,4833785.2127],[623221.5957,4833809.217],[623140.95,4833844.4215],[622978.1442,4833935.7468],[622911.6443,4833982.9905],[622864.2698,4834042.6325],[622824.7186,4834104.8449],[622744.417,4834287.2503],[622711.7212,4834393.0103],[622668.3152,4834466.9572],[622631.5927,4834545.3919],[622665.0193,4834691.9882],[622769.0506,4835079.9855],[622813.6197,4835183.3359],[622878.6572,4835308.195],[622985.1104,4835289.8797],[623063.5707,4835436.7378],[623065.097,4835539.9728],[623080.6113,4835602.1703],[623221.5105,4835840.6602],[623266.6301,4835894.9933],[623310.7099,4835991.3004],[623313.336,4835996.4972],[623338.1166,4836110.4293],[623300.854,4836292.9511],[623208.7808,4836568.6167],[623158.5613,4836957.4495],[623101.3452,4837235.6416],[623082.7456,4837395.4869],[623091.5767,4837453.1965],[623127.8722,4837573.9708],[623198.5216,4837704.2453],[623222.189,4837792.0659],[623251.1711,4837834.2165],[623301.3566,4837873.8997],[623391.9593,4837908.5042],[623459.9849,4837964.4988],[623467.8352,4838008.12],[623441.1632,4838196.4165],[623338.0959,4838954.87],[623295.5793,4839057.9153],[623218.1631,4839131.3952],[623196.293,4839156.8419],[623142.4336,4839223.02],[623122.5557,4839248.6103],[623113.396,4839361.0828],[623135.3846,4839485.8272],[623155.6591,4839744.6097],[623159.3078,4839790.9297],[623122.678,4839959.9577],[623093.8483,4840085.5278],[623133.3642,4840376.2591],[623118.2357,4840384.6728],[623090.9116,4840388.6977],[623079.2901,4840410.8828],[623074.0208,4840414.5054],[623062.7768,4840417.6946],[623041.8617,4840416.1771],[623025.2194,4840410.9643],[623015.3319,4840409.2457],[623009.9912,4840413.8647],[623004.361,4840422.4669],[623002.2655,4840451.3503],[622998.6267,4840460.097],[622976.1788,4840493.5107],[622963.9792,4840523.6635],[622953.9318,4840537.9528],[622944.607,4840542.2819],[622922.4789,4840543.68],[622913.9489,4840537.0536],[622898.5917,4840527.9295],[622887.0017,4840522.0834],[622875.05,4840521.2158],[622847.1633,4840519.193],[622813.7183,4840524.7752],[622778.0651,4840533.2022],[622735.4968,4840554.1424],[622717.0637,4840559.8143],[622666.2695,4840556.1281],[622661.0737,4840558.7546],[622648.1823,4840570.8357],[622638.6977,4840591.1731],[622624.7385,4840604.1767],[622598.5233,4840634.3128],[622588.0424,4840654.5786],[622566.8478,4840712.1112],[622554.0544,4840764.2474],[622552.4644,4840786.1585],[622548.6348,4840838.9447],[622533.6483,4840879.9083],[622529.6735,4840934.6861],[622532.558,4840963.9298],[622534.1163,4840970.0501],[622550.9752,4840972.2749],[622561.9305,4840973.0703],[622567.6172,4840977.4876],[622584.8056,4841002.7632],[622587.288,4841009.9526],[622586.5652,4841019.9118],[622581.714,4841031.5739],[622566.3258,4841050.482],[622557.9968,4841054.8832],[622551.4428,4841062.4178],[622548.5114,4841075.2207],[622550.4878,4841089.3813],[622580.2469,4841134.5925],[622613.4274,4841174.0449],[622617.0498,4841179.3132],[622616.8896,4841195.3211],[622616.4559,4841201.2971],[622620.006,4841207.5617],[622628.6807,4841212.1962],[622648.0055,4841235.6246],[622647.3079,4841286.6363],[622648.1588,4841288.6995],[622643.1639,4841302.3544],[622640.4492,4841312.1692],[622642.0074,4841318.2895],[622648.4732,4841325.7677],[622662.9064,4841333.8232],[622682.8256,4841335.2691],[622710.2791,4841343.2685],[622723.0818,4841346.1991],[622741.4985,4841354.5447],[622759.0643,4841360.8249],[622787.3694,4841370.8889],[622839.7932,4841379.6991],[622860.7085,4841381.2172],[622874.5074,4841384.2209],[622899.1171,4841390.0111],[622922.6589,4841396.725],[622947.7585,4841409.5605],[622982.369,4841443.1096],[622998.2886,4841458.2816],[623009.8785,4841464.1291],[623027.6608,4841467.422],[623044.3752,4841471.6385],[623055.9659,4841477.485],[623092.4234,4841513.1707],[623102.9295,4841533.9572],[623105.1224,4841545.13],[623104.3997,4841555.0892],[623099.9821,4841560.7761],[623082.5452,4841566.5197],[623071.2999,4841569.7088],[623069.0195,4841573.5476],[623067.847,4841603.499],[623061.1482,4841613.0248],[623042.9889,4841628.7276],[623023.2703,4841638.3101],[623003.7688,4841644.9047],[622993.3761,4841650.1583],[622981.0632,4841654.27],[622937.8031,4841657.1386],[622912.3258,4841663.299],[622900.8646,4841669.4763],[622880.0786,4841679.9828],[622898.0619,4841694.3026],[622913.491,4841702.4316],[622943.3701,4841704.5993],[622968.124,4841708.3983],[622984.694,4841714.6074],[622985.4255,4841759.7149],[622986.1892,4841776.7909],[622988.5261,4841785.9709],[622990.1569,4841791.0961],[622994.414,4841801.417],[623008.4865,4841814.4519],[623014.3892,4841815.8816],[623027.6258,4841812.838],[623038.8707,4841809.6489],[623044.429,4841802.0431],[623049.0627,4841793.3681],[623053.5526,4841786.6847],[623057.8977,4841781.9941],[623064.8698,4841782.5004],[623068.8532,4841782.7893],[623074.6121,4841786.2108],[623079.3755,4841789.5605],[623086.1148,4841807.07],[623089.5925,4841814.3313],[623109.2383,4841805.7443],[623127.0372,4841795.0212],[623135.6552,4841786.6364],[623150.7548,4841771.7128],[623161.5817,4841760.4835],[623170.979,4841755.1584],[623194.0304,4841754.8282],[623198.9385,4841756.1865],[623204.4078,4841763.5912],[623211.1468,4841781.1008],[623212.7774,4841786.226],[623213.5566,4841789.2857],[623221.1631,4841794.8434],[623226.2151,4841794.209],[623233.7647,4841786.7478],[623259.6192,4841761.5905],[623268.0927,4841755.1975],[623282.5421,4841749.2371],[623300.8871,4841758.5784],[623319.9395,4841771.9759],[623330.3168,4841780.738],[623346.252,4841781.8945],[623369.0303,4841771.533],[623375.151,4841769.9751],[623396.4994,4841765.5167],[623384.3066,4841726.5856],[623383.2142,4841686.4576],[623379.1015,4841674.1448],[623375.8404,4841663.8953],[623377.2694,4841657.9922],[623380.4746,4841655.2206],[623406.5136,4841655.1085],[623417.253,4841658.8912],[623425.5662,4841668.5052],[623438.8992,4841705.5165],[623450.6589,4841750.4236],[623453.9923,4841759.6768],[623454.9161,4841760.7449],[623472.9155,4841761.0499],[623495.1879,4841757.66],[623621.2329,4841717.7471],[623746.2824,4841677.7626],[623768.9884,4841668.3964],[623787.7835,4841657.7458],[623806.7227,4841645.1035],[623874.8264,4841631.0213],[623899.1638,4841626.781],[623931.6856,4841620.1296],[623976.8828,4841604.3855],[623988.4886,4841596.2172],[624007.9342,4841576.6021],[624039.6529,4841525.8387],[624051.6923,4841511.6946],[624072.5517,4841500.192],[624084.7207,4841498.0716],[624094.4637,4841501.7824],[624115.2189,4841519.308],[624126.5771,4841542.1585],[624127.8462,4841552.2635],[624123.9188,4841564.9939],[624110.8106,4841580.0624],[624105.3966,4841585.6769],[624094.7869,4841593.9179],[624066.9961,4841631.9507],[624043.6386,4841650.2808],[624016.5138,4841665.3324],[623997.9358,4841672.9956],[623968.9071,4841672.8921],[623955.8147,4841673.9444],[623932.9635,4841685.3015],[623923.0605,4841697.599],[623906.7468,4841715.4381],[623899.3414,4841720.908],[623875.0043,4841725.1494],[623854.5783,4841730.6766],[623811.5347,4841730.556],[623785.2061,4841734.653],[623772.9652,4841737.7691],[623735.304,4841760.067],[623719.6413,4841768.9427],[623668.5579,4841769.2406],[623629.9888,4841776.4534],[623602.2305,4841786.4542],[623509.7027,4841819.7879],[623478.2495,4841825.5156],[623396.7656,4841844.633],[623382.4611,4841848.6005],[623375.2726,4841851.083],[623352.4938,4841861.4445],[623275.4114,4841888.8906],[623243.3082,4841903.5811],[623230.706,4841911.6778],[623216.6743,4841925.6776],[623192.2501,4841944.9308],[623184.5553,4841954.3847],[623182.9086,4841963.2758],[623193.3428,4841985.0588],[623196.4593,4841997.2998],[623194.6679,4842008.1825],[623182.7004,4842021.3317],[623164.2515,4842041.0174],[623161.8981,4842045.8536],[623161.3924,4842052.8248],[623166.9347,4842059.2343],[623181.2241,4842069.2827],[623243.8969,4842074.8324],[623269.4308,4842081.6911],[623282.0172,4842087.6109],[623285.5677,4842093.8759],[623284.138,4842099.779],[623263.1347,4842113.2734],[623244.5573,4842120.9364],[623239.2884,4842124.5588],[623226.3249,4842137.6351],[623226.0362,4842141.6183],[623226.5266,4842148.6624],[623235.4022,4842164.325],[623253.1687,4842181.6338],[623259.9241,4842185.1283],[623311.7864,4842187.8904],[623333.2799,4842181.4402],[623346.5883,4842177.4009],[623374.62,4842177.4323],[623375.6154,4842177.5051],[623381.5194,4842178.9341],[623389.6156,4842191.5361],[623390.596,4842205.6253],[623394.1464,4842211.8893],[623404.7409,4842217.6647],[623411.279,4842224.1462],[623423.994,4842242.0898],[623450.2186,4842267.0217],[623458.8938,4842271.6562],[623464.7244,4842274.0816],[623464.5804,4842276.0733],[623452.8301,4842286.234],[623449.6251,4842289.0056],[623416.4948,4842331.6551],[623401.1777,4842349.5671],[623381.1553,4842377.1492],[623375.8141,4842381.7679],[623374.818,4842381.695],[623371.7579,4842382.4751],[623366.7055,4842383.1094],[623326.5372,4842357.1659],[623316.0876,4842349.399],[623288.2006,4842347.3751],[623259.2303,4842360.2901],[623221.1353,4842388.5633],[623208.5333,4842396.66],[623174.7996,4842406.2266],[623153.6672,4842407.6966],[623134.5272,4842409.3111],[623104.9223,4842417.1743],[623074.6823,4842419.9853],[623043.0844,4842427.7043],[623009.0776,4842427.2387],[622994.4994,4842421.175],[622992.7241,4842418.0425],[623006.9006,4842402.0506],[623019.9922,4842400.9975],[623019.2854,4842396.9415],[623009.7028,4842377.2232],[622984.4174,4842339.3448],[622967.5014,4842324.1],[622961.526,4842323.6666],[622952.2012,4842327.9956],[622936.6677,4842348.8944],[622880.6869,4842402.9024],[622874.5669,4842404.4607],[622864.2461,4842408.717],[622810.8825,4842412.8546],[622758.6026,4842402.0515],[622706.4512,4842403.2724],[622683.1106,4842407.5852],[622671.6492,4842413.7618],[622648.0045,4842436.0754],[622641.8838,4842437.6339],[622630.2938,4842431.7859],[622606.262,4842418.0278],[622602.5673,4842413.7548],[622600.5192,4842400.5905],[622601.5869,4842399.6668],[622661.5613,4842401.0153],[622678.998,4842395.2729],[622671.4641,4842388.7183],[622634.6141,4842386.0436],[622619.8194,4842382.9676],[622573.861,4842381.6347],[622571.5796,4842385.4736],[622571.7084,4842397.4983],[622576.8896,4842408.8869],[622577.8693,4842422.9748],[622574.3034,4842430.7264],[622571.2435,4842431.5057],[622562.4965,4842427.8665],[622546.7222,4842410.7028],[622532.5771,4842398.663],[622526.674,4842397.2325],[622508.1527,4842417.9152],[622500.6754,4842424.3808],[622494.3387,4842428.9274],[622488.3626,4842428.4933],[622476.9892,4842419.6587],[622464.7649,4842408.7587],[622457.8242,4842380.2216],[622447.8081,4842366.479],[622426.2585,4842359.9087],[622407.1347,4842347.5079],[622395.761,4842338.6723],[622389.0784,4842334.1824],[622379.4803,4842328.4802],[622376.7093,4842325.2752],[622374.5733,4842327.1226],[622264.6918,4842420.2697],[622250.0258,4842429.217],[622244.9736,4842429.8521],[622218.1551,4842426.9046],[622191.9152,4842415.9884],[622179.112,4842413.0577],[622171.9961,4842414.5428],[622138.4638,4842435.1373],[622131.91,4842442.6712],[622123.0029,4842455.0405],[622099.4868,4842489.3772],[622087.5759,4842515.5448],[622077.6006,4842528.8379],[622067.0633,4842536.0823],[622055.1841,4842534.2196],[622047.2166,4842533.6406],[622020.7034,4842512.6944],[622005.1293,4842506.558],[621997.2339,4842504.9838],[621985.9891,4842508.1724],[621966.7207,4842497.7623],[621965.7975,4842496.6944],[621944.6088,4842485.145],[621918.6424,4842484.2607],[621912.5219,4842485.8198],[621903.053,4842492.1408],[621894.6516,4842497.538],[621887.8087,4842509.0553],[621883.3189,4842515.7383],[621881.0379,4842519.5774],[621874.7732,4842523.1271],[621869.4324,4842527.7458],[621849.6421,4842538.3236],[621837.4022,4842541.441],[621813.3545,4842541.6975],[621802.1099,4842544.8865],[621791.645,4842551.135],[621777.5415,4842566.1307],[621777.3251,4842569.1187],[621775.0278,4842586.973],[621771.4622,4842594.7239],[621756.7964,4842603.6722],[621752.6676,4842605.3745],[621742.2749,4842610.6278],[621733.2958,4842623.9928],[621714.5014,4842634.6424],[621690.7272,4842644.9313],[621676.6395,4842645.9121],[621659.6365,4842645.6789],[621657.5721,4842646.53],[621654.5691,4842660.3285],[621654.1355,4842666.3045],[621650.9307,4842669.0758],[621643.5251,4842674.5448],[621620.5462,4842673.8783],[621616.4903,4842674.5854],[621611.9288,4842682.2639],[621605.2148,4842705.8049],[621601.5765,4842714.5523],[621595.0228,4842722.0867],[621585.4086,4842730.3997],[621568.8233,4842738.2057],[621539.1459,4842747.0655],[621519.9338,4842749.6754],[621496.9551,4842749.0093],[621480.9476,4842748.8479],[621444.8048,4842750.23],[621435.6972,4842751.5708],[621422.4602,4842754.6152],[621411.5053,4842753.8204],[621399.0638,4842745.9082],[621390.3896,4842741.2741],[621375.683,4842723.1861],[621374.6868,4842723.1146],[621317.4442,4842697.9339],[621309.766,4842693.3725],[621307.2117,4842687.18],[621301.8862,4842677.7819],[621292.7218,4842666.1041],[621248.9326,4842634.8924],[621226.3868,4842628.2502],[621191.4574,4842626.7159],[621170.6868,4842623.2058],[621159.1696,4842616.3629],[621146.9445,4842605.4631],[621143.6837,4842595.2148],[621141.9805,4842591.0865],[621112.7529,4842579.9549],[621111.9738,4842576.8944],[621121.8361,4842537.5626],[621123.4824,4842528.671],[621121.2169,4842518.4942],[621114.7515,4842511.0176],[621099.2503,4842503.8847],[621089.7963,4842496.1906],[621084.8892,4842494.8328],[621081.9736,4842493.62],[621069.9502,4842493.7486],[621050.3045,4842502.3347],[621016.7003,4842523.9244],[621007.1587,4842531.2419],[620990.3568,4842542.0363],[620975.5464,4842552.9756],[620971.2016,4842557.6665],[620965.0815,4842559.2243],[620942.9543,4842560.622],[620904.1129,4842557.803],[620903.4938,4842538.7347],[620902.6425,4842536.6706],[620882.9405,4842532.2374],[620882.5383,4842510.1822],[620885.8876,4842505.4189],[620874.4267,4842511.5952],[620851.3599,4842525.9406],[620833.4893,4842537.6592],[620818.824,4842546.6062],[620806.439,4842551.7149],[620786.4481,4842551.2653],[620766.0396,4842542.7757],[620764.4089,4842537.6511],[620765.8387,4842531.7476],[620771.3962,4842524.1411],[620804.077,4842501.4836],[620809.3458,4842497.8615],[620808.0039,4842488.7536],[620808.4376,4842482.7776],[620810.7187,4842478.9381],[620825.3842,4842469.9911],[620828.5167,4842468.2158],[620833.7287,4842451.5739],[620809.6257,4842438.811],[620786.1003,4842418.0817],[620783.3294,4842414.8763],[620783.7941,4842380.8701],[620783.1595,4842375.818],[620778.7579,4842367.4892],[620762.5495,4842356.3003],[620734.6639,4842354.2771],[620714.7453,4842352.8314],[620700.3122,4842344.7756],[620687.0193,4842334.7995],[620681.4774,4842328.3911],[620678.1438,4842319.1383],[620675.3166,4842302.9132],[620673.4847,4842286.7617],[620672.2154,4842276.6575],[620673.444,4842259.7268],[620673.8776,4842253.7508],[620647.5089,4842230.8119],[620644.9546,4842224.6197],[620646.1268,4842194.6693],[620643.6445,4842187.4807],[620632.7771,4842171.6747],[620608.2154,4842123.8365],[620603.5247,4842119.4922],[620586.9555,4842113.2835],[620575.9276,4842113.4842],[620523.0396,4842138.68],[620512.864,4842140.9449],[620494.9371,4842139.6447],[620486.7532,4842142.0534],[620476.0708,4842151.2908],[620432.3315,4842202.1799],[620406.262,4842230.3235],[620374.9231,4842262.0896],[620358.7556,4842277.9365],[620349.1417,4842286.249],[620317.1684,4842312.9633],[620292.8169,4842331.2193],[620268.8994,4842343.4993],[620238.7165,4842359.3306],[620216.0112,4842368.6951],[620174.6001,4842373.6989],[620162.7211,4842371.8363],[620123.8801,4842369.0174],[620116.692,4842371.4989],[620111.4235,4842375.1215],[620111.2789,4842377.1132],[620110.6285,4842386.0762],[620121.4232,4842402.8788],[620129.0137,4842422.4523],[620129.3594,4842431.4877],[620125.866,4842438.243],[620118.3887,4842444.7078],[620097.8192,4842452.2258],[620087.3543,4842458.4746],[620077.8129,4842465.7922],[620073.1068,4842475.4622],[620071.6616,4842495.3809],[620073.276,4842514.5202],[620072.7703,4842521.4916],[620067.0682,4842531.0903],[620063.3575,4842540.8325],[620059.9201,4842560.6065],[620053.4391,4842567.1449],[620047.102,4842571.6904],[620002.1415,4842570.4298],[619976.3193,4842567.5536],[619961.7422,4842561.4899],[619934.2895,4842553.4907],[619920.7085,4842547.4983],[619918.0091,4842543.298],[619917.5351,4842522.2394],[619918.0406,4842515.267],[619923.47,4842495.6376],[619922.7629,4842491.5819],[619914.1609,4842485.9513],[619902.4994,4842481.1],[619890.1299,4842472.1932],[619881.5287,4842466.5626],[619880.749,4842463.5033],[619882.2506,4842456.6032],[619884.9657,4842446.7885],[619880.781,4842435.4722],[619875.2385,4842429.0633],[619873.3915,4842426.9259],[619871.4719,4842425.786],[619875.1823,4842416.0436],[619874.6197,4842409.9952],[619870.0741,4842403.6587],[619859.4078,4842398.8798],[619850.0266,4842390.1889],[619846.4045,4842384.9211],[619843.6651,4842353.685],[619845.2394,4842345.7896],[619850.8687,4842337.1882],[619855.0698,4842334.4895],[619864.3939,4842330.1607],[619874.4978,4842328.8912],[619879.4771,4842329.2528],[619885.4526,4842329.6868],[619886.5933,4842327.7663],[619879.9264,4842309.2618],[619875.5252,4842300.9324],[619874.5291,4842300.8601],[619867.9191,4842295.3753],[619859.5341,4842286.7567],[619850.37,4842275.0789],[619835.1577,4842263.9624],[619821.215,4842262.9511],[619798.4528,4842259.2962],[619791.8428,4842253.8115],[619771.1772,4842221.275],[619756.4143,4842190.1677],[619754.5664,4842188.0314],[619750.5106,4842188.7386],[619739.9011,4842196.9785],[619731.5005,4842202.3762],[619720.3283,4842204.5689],[619712.3612,4842203.9905],[619696.8037,4842183.8391],[619688.1605,4842151.1741],[619688.9773,4842057.1228],[619688.912,4841989.0374],[619692.5497,4841980.2913],[619721.2618,4841943.3289],[619725.5349,4841939.6348],[619727.9601,4841933.8033],[619724.4829,4841926.5428],[619714.7561,4841908.8168],[619712.2743,4841901.6286],[619709.6387,4841841.3675],[619712.008,4841822.5174],[619713.6135,4841786.591],[619715.1471,4841751.6621],[619713.5889,4841745.5414],[619704.2082,4841736.8508],[619678.8202,4841728.0009],[619657.834,4841727.4792],[619653.7052,4841729.1817],[619648.8549,4841740.8436],[619647.1922,4841763.7503],[619638.5589,4841786.15],[619623.645,4841826.1164],[619608.8907,4841850.074],[619598.1933,4841873.3266],[619591.278,4841885.8392],[619548.7519,4841933.8126],[619529.1068,4841942.3988],[619512.7385,4841947.2185],[619505.4057,4841951.6924],[619491.7358,4841960.7112],[619487.4628,4841964.4065],[619486.0903,4841983.3289],[619485.7288,4841988.3086],[619490.058,4841997.6329],[619504.13,4842010.669],[619509.5991,4842018.0739],[619511.0856,4842025.1898],[619511.8648,4842028.2501],[619530.2815,4842036.5946],[619582.6468,4842032.3862],[619611.6729,4842032.4896],[619622.3392,4842037.2692],[619636.8443,4842044.3284],[619639.3261,4842051.5166],[619639.3919,4842119.6019],[619636.6053,4842130.412],[619634.1802,4842136.2435],[619614.4629,4842145.8258],[619608.9775,4842152.4357],[619606.3756,4842188.2888],[619603.3001,4842203.0833],[619600.8435,4842236.9447],[619596.9881,4842248.6788],[619593.3507,4842257.4261],[619583.5925,4842267.7302],[619560.2367,4842286.0588],[619557.0318,4842288.83],[619554.6788,4842293.6652],[619559.3377,4842326.0409],[619561.2259,4842355.2117],[619559.925,4842373.1388],[619553.3561,4842394.6878],[619543.0922,4842411.9645],[619533.4061,4842421.2722],[619526.8521,4842428.8063],[619512.6045,4842445.7939],[619510.4529,4842461.656],[619513.2235,4842464.8608],[619533.921,4842469.3666],[619555.8877,4842483.9763],[619576.0633,4842509.4685],[619581.8791,4842525.9099],[619582.0077,4842537.9332],[619572.5222,4842558.269],[619561.4794,4842572.4852],[619565.2461,4842575.7624],[619584.2255,4842590.1554],[619586.9235,4842594.3556],[619588.2653,4842603.4642],[619538.6229,4842652.9232],[619531.9973,4842661.4525],[619518.8173,4842677.516],[619505.1479,4842686.5358],[619489.7033,4842692.4231],[619457.5449,4842694.0939],[619453.3442,4842696.7918],[619451.843,4842703.6909],[619464.6138,4842734.653],[619473.1432,4842741.2794],[619478.468,4842750.6772],[619486.4197,4842765.2703],[619490.6765,4842775.591],[619495.0777,4842783.92],[619495.9294,4842785.984],[619498.9013,4842800.2157],[619500.0261,4842812.3124],[619493.3843,4842834.8568],[619492.1711,4842837.7725],[619484.9112,4842841.25],[619450.9775,4842839.7882],[619427.9267,4842840.1178],[619408.4264,4842846.7115],[619416.0322,4842852.2693],[619431.8784,4842868.4368],[619436.0635,4842879.7538],[619435.0354,4842907.7126],[619433.1003,4842920.5867],[619412.8048,4842938.1361],[619403.4084,4842943.4608],[619375.3775,4842943.4293],[619361.3629,4842943.413],[619333.4773,4842941.389],[619313.487,4842940.9393],[619303.2381,4842944.2002],[619288.5009,4842954.1435],[619262.9925,4842988.3341],[619248.0943,4843014.2852],[619240.8187,4843031.7778],[619230.3372,4843052.0418],[619227.5507,4843062.8531],[619231.0844,4843083.133],[619237.229,4843122.6243],[619239.2051,4843136.7838],[619239.5504,4843145.8201],[619236.8366,4843155.6339],[619230.5715,4843159.185],[619224.2347,4843163.7302],[619222.4436,4843174.6137],[619218.5886,4843186.3481],[619211.7144,4843225.8957],[619209.4735,4843256.7691],[619207.538,4843269.6443],[619195.4995,4843283.7878],[619192.2945,4843286.5592],[619173.1394,4843302.1888],[619152.2819,4843313.6895],[619139.1182,4843315.7376],[619131.0064,4843317.1515],[619111.2885,4843326.733],[619109.2246,4843327.5849],[619058.5301,4843363.952],[619035.4476,4843392.3116],[619033.5843,4843404.1905],[619030.0027,4843425.9566],[619029.3039,4843476.9655],[619018.1162,4843493.1732]]],[[[619763.3251,4842370.8812],[619764.8839,4842377.0019],[619762.5872,4842394.8556],[619761.9365,4842403.8196],[619769.3254,4842412.3647],[619776.0805,4842415.8589],[619789.0275,4842416.7989],[619791.7261,4842420.9992],[619793.1396,4842429.1115],[619772.8603,4842432.645],[619749.8977,4842417.9633],[619742.4361,4842410.4135],[619735.408,4842396.8877],[619738.1947,4842386.0777],[619742.0494,4842374.3436],[619747.174,4842372.7124],[619759.4138,4842369.5967],[619763.3251,4842370.8812]]],[[[621530.2798,4842786.4694],[621536.0385,4842789.8917],[621537.8135,4842793.0237],[621537.8697,4842806.0436],[621535.2998,4842813.8661],[621528.9626,4842818.4125],[621518.4255,4842825.6577],[621522.0477,4842830.9266],[621529.7985,4842834.4918],[621566.07,4842845.1348],[621580.5755,4842852.1951],[621583.2024,4842857.3914],[621583.3306,4842869.4149],[621581.6124,4842879.3027],[621559.6856,4842891.7277],[621547.8792,4842888.8684],[621500.7239,4842876.4342],[621461.1037,4842870.5557],[621453.5692,4842864.0014],[621452.0112,4842857.8814],[621452.5896,4842849.9137],[621457.0067,4842844.2269],[621472.8855,4842832.3636],[621488.4023,4842825.48],[621488.7636,4842820.5004],[621489.6313,4842808.5495],[621504.0958,4842788.5735],[621512.2802,4842786.165],[621515.3406,4842785.3852],[621530.2798,4842786.4694]]],[[[619426.7719,4842980.1984],[619442.5624,4842983.3463],[619470.3761,4842986.3672],[619474.9942,4842991.7082],[619476.1183,4843003.8038],[619473.5484,4843011.627],[619468.3931,4843041.2873],[619463.7586,4843049.9612],[619459.4137,4843054.6518],[619447.3906,4843054.781],[619444.3306,4843055.5595],[619440.9091,4843061.3188],[619445.8005,4843076.6914],[619452.1781,4843099.18],[619453.3747,4843110.2792],[619451.8002,4843118.1746],[619440.7007,4843119.3714],[619434.9422,4843115.9498],[619425.7778,4843104.2714],[619403.8839,4843088.6656],[619390.5916,4843078.691],[619388.0374,4843072.4982],[619386.511,4843038.3477],[619391.3616,4843026.6856],[619392.5184,4843010.7502],[619394.1647,4843001.8594],[619398.9427,4842991.1938],[619413.9697,4842977.2663],[619421.0859,4842975.7805],[619426.7719,4842980.1984]]],[[[621710.2304,4843204.0161],[621707.8768,4843208.8516],[621683.252,4843217.0763],[621615.1662,4843217.1395],[621605.9133,4843220.4727],[621600.7175,4843223.0989],[621599.1428,4843230.9951],[621603.4562,4843254.335],[621603.4247,4843282.3663],[621602.1394,4843286.2781],[621599.7867,4843291.1137],[621596.5093,4843294.8803],[621589.1044,4843300.3504],[621580.9198,4843302.76],[621471.9288,4843300.8551],[621447.4638,4843293.0727],[621439.9298,4843286.5184],[621437.1588,4843283.3138],[621432.83,4843273.9881],[621431.1992,4843268.8644],[621430.436,4843251.7887],[621434.1468,4843242.046],[621449.2457,4843227.1222],[621466.9882,4843203.3806],[621469.7022,4843193.5653],[621469.9193,4843190.5773],[621461.0278,4843188.9312],[621436.6917,4843193.1712],[621409.3683,4843197.1959],[621391.224,4843198.8823],[621375.3618,4843196.7295],[621353.5233,4843194.1425],[621348.616,4843192.7856],[621339.5237,4843180.1114],[621338.6719,4843178.0472],[621352.3422,4843169.0278],[621357.5387,4843166.4014],[621362.8794,4843161.7823],[621365.1606,4843157.943],[621274.3134,4843154.3527],[621271.8314,4843147.1638],[621272.5545,4843137.2046],[621276.9712,4843131.5176],[621303.8057,4843120.4508],[621308.9293,4843118.8196],[621310.2866,4843113.9125],[621308.5115,4843110.7805],[621305.8133,4843106.5796],[621293.2273,4843100.6603],[621287.5409,4843096.2418],[621287.9021,4843091.2621],[621293.3878,4843084.6524],[621297.5882,4843081.9535],[621312.1819,4843074.0017],[621325.0004,4843062.918],[621333.6185,4843054.5332],[621334.6867,4843053.6094],[621332.1891,4843060.4367],[621345.7139,4843053.4088],[621363.0067,4843049.6581],[621375.0299,4843049.529],[621398.1534,4843048.2042],[621414.3772,4843045.3774],[621428.6819,4843041.4091],[621445.4842,4843030.6148],[621453.9575,4843024.2207],[621454.3917,4843018.2458],[621451.8369,4843012.0532],[621441.5322,4843002.2943],[621441.0425,4842995.2504],[621445.8207,4842984.5839],[621456.2862,4842978.335],[621488.4609,4842962.6487],[621525.5433,4842948.3196],[621577.6216,4842948.0949],[621593.4123,4842951.2434],[621610.9058,4842958.5204],[621640.5507,4842977.6935],[621661.9563,4842986.2551],[621678.7421,4842989.4765],[621690.6212,4842991.3396],[621702.4282,4842994.1991],[621716.789,4843003.2513],[621728.018,4843014.0774],[621732.4196,4843022.4069],[621733.7453,4843045.5313],[621734.4519,4843049.5872],[621745.3193,4843065.394],[621748.6526,4843074.6462],[621749.5846,4843130.7816],[621742.7417,4843142.2991],[621733.4739,4843159.6485],[621719.8604,4843181.6882],[621710.2304,4843204.0161]]],[[[617021.7091,4843274.1887],[617026.8177,4843286.5724],[617031.9976,4843297.962],[617031.1145,4843323.9268],[617028.7612,4843328.7617],[617011.0363,4843338.4886],[617001.9283,4843339.8298],[616992.6205,4843330.1433],[616991.1341,4843323.028],[616988.0907,4843309.7917],[616990.6607,4843301.9688],[616994.0814,4843296.2106],[616994.8046,4843286.2522],[616994.8769,4843285.2558],[617002.4263,4843277.7946],[617002.4986,4843276.7982],[617020.7853,4843273.1204],[617021.7091,4843274.1887]]],[[[616961.5636,4843427.0032],[616967.0332,4843434.4083],[616963.5395,4843441.1618],[616953.8538,4843450.471],[616937.6302,4843453.2974],[616932.6509,4843452.9368],[616929.8804,4843449.732],[616932.2496,4843430.8823],[616933.39,4843428.9625],[616945.6296,4843425.8463],[616953.7415,4843424.4331],[616961.5636,4843427.0032]]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}}));		
+		
+		
+		areasInfluencia.push (getAreasInfluenciaPolygon ({"type":"multipolygon","coordinates":[[[[619018.1162,4843493.1732],[619012.0528,4843507.7513],[619005.6838,4843540.3277],[619001.122,4843548.0055],[618988.5203,4843556.1021],[618973.6382,4843568.0366],[618945.5923,4843582.0196],[618938.1876,4843587.4892],[618931.9948,4843590.043],[618927.1437,4843601.7053],[618921.8753,4843605.3277],[618915.7551,4843606.8862],[618910.6558,4843649.5654],[618908.0852,4843657.3887],[618875.1163,4843684.0296],[618860.1614,4843696.9607],[618831.9872,4843698.9197],[618810.2215,4843695.338],[618766.9801,4843684.1903],[618734.1877,4843680.8092],[618706.6636,4843673.8046],[618689.0259,4843668.5203],[618662.9318,4843655.613],[618636.5484,4843646.6903],[618623.1112,4843638.7067],[618582.6169,4843589.7142],[618568.4009,4843578.6705],[618562.2246,4843567.2097],[618561.0998,4843555.1132],[618562.4574,4843550.2068],[618577.7574,4843546.3113],[618585.2343,4843539.846],[618588.8322,4843504.0648],[618594.8237,4843490.4838],[618611.409,4843482.6762],[618611.5532,4843480.6845],[618599.4577,4843481.8094],[618588.3582,4843483.0064],[618569.2915,4843483.6241],[618549.9519,4843474.2115],[618535.3749,4843468.1476],[618515.3999,4843453.6831],[618509.2958,4843441.226],[618509.4479,4843370.1541],[618510.5236,4843300.1506],[618510.741,4843297.1626],[618504.6931,4843297.7251],[618494.5169,4843299.9897],[618466.905,4843307.9974],[618431.2372,4843330.4374],[618419.632,4843338.6061],[618392.5658,4843366.6761],[618374.4074,4843382.3778],[618361.5165,4843394.4579],[618340.2977,4843410.9386],[618333.2539,4843411.4292],[618313.424,4843394.9715],[618308.2439,4843383.5831],[618309.2153,4843342.6058],[618317.5038,4843311.1706],[618323.2941,4843286.5615],[618323.5831,4843282.5782],[618338.0472,4843262.6035],[618344.6896,4843240.0581],[618349.7572,4843225.4096],[618363.0089,4843208.3498],[618365.0727,4843207.4987],[618363.2979,4843204.3665],[618347.4359,4843202.2143],[618343.5242,4843200.9283],[618334.6495,4843185.2671],[618332.3125,4843176.0866],[618336.673,4843157.3815],[618335.8218,4843155.3178],[618310.7795,4843155.5026],[618307.937,4843153.2935],[618301.1258,4843136.7812],[618296.4353,4843132.4352],[618283.8502,4843126.5161],[618276.3163,4843119.9632],[618274.4846,4843103.8114],[618269.0877,4843095.41],[618255.5065,4843089.4188],[618243.7001,4843086.5599],[618198.1378,4843052.2164],[618183.9941,4843040.1772],[618181.3679,4843034.9813],[618174.4124,4843020.4597],[618172.2915,4843008.2923],[618172.87,4843000.3245],[618182.5719,4842977.0011],[618193.5426,4842963.7813],[618201.5251,4842950.3441],[618208.3683,4842938.8266],[618222.9044,4842917.8564],[618229.8193,4842905.3436],[618230.9757,4842889.4091],[618229.6345,4842880.3008],[618219.4025,4842869.5463],[618209.443,4842868.8244],[618186.3049,4842884.164],[618181.1812,4842885.7953],[618193.7983,4842863.6834],[618195.0109,4842860.7685],[618182.8428,4842862.8883],[618150.3077,4842883.5544],[618140.984,4842887.8833],[618134.0121,4842887.3777],[618131.6747,4842878.1973],[618133.3217,4842869.3063],[618137.8105,4842862.6243],[618144.7977,4842849.115],[618146.3723,4842841.2204],[618138.9988,4842818.659],[618134.3803,4842813.3179],[618120.6552,4842809.3187],[618092.6249,4842809.2871],[618083.4451,4842811.6244],[618066.4269,4842825.4062],[618048.6857,4842849.1475],[618045.8987,4842859.9581],[618047.6021,4842864.0867],[618065.9456,4842873.4269],[618071.5594,4842878.84],[618070.9094,4842887.8031],[618046.7032,4842904.0675],[618014.1679,4842924.7331],[618007.0521,4842926.2194],[618006.1284,4842925.1509],[618005.0041,4842913.0557],[618007.5739,4842905.232],[618021.6766,4842890.2375],[618026.1661,4842883.5554],[618025.8208,4842874.5192],[618024.1182,4842870.3917],[617978.3063,4842867.0665],[617961.3766,4842865.8384],[617943.7394,4842860.554],[617937.6197,4842862.1112],[617926.7933,4842873.3397],[617922.938,4842885.0736],[617916.7303,4842901.6432],[617907.8238,4842914.0123],[617877.7139,4842928.8465],[617874.5817,4842930.621],[617859.354,4842933.5206],[617847.0423,4842937.6327],[617820.8438,4842953.7527],[617809.5998,4842956.9405],[617757.5965,4842956.1705],[617747.2038,4842961.4232],[617725.0456,4842990.8501],[617723.6162,4842996.7542],[617732.9243,4843006.4396],[617735.6232,4843010.6401],[617739.1734,4843016.9042],[617741.2934,4843029.0725],[617736.4425,4843040.7345],[617727.3195,4843056.0907],[617692.2866,4843083.583],[617678.7622,4843090.6104],[617661.2535,4843097.3487],[617642.042,4843099.9597],[617635.7779,4843103.5088],[617626.237,4843110.8265],[617611.2984,4843109.7422],[617598.5681,4843105.8149],[617597.5729,4843105.7418],[617593.517,4843106.4492],[617592.9384,4843114.4159],[617591.9266,4843128.3587],[617588.3606,4843136.1094],[617574.4747,4843148.1167],[617564.717,4843158.4214],[617557.6007,4843159.907],[617517.7655,4843157.0157],[617514.8496,4843155.8033],[617489.7515,4843142.9684],[617486.3303,4843148.7275],[617481.2629,4843163.3766],[617476.4841,4843174.0424],[617469.7862,4843183.5678],[617461.3855,4843188.9649],[617452.5664,4843186.3233],[617449.0168,4843180.0582],[617448.8162,4843169.0315],[617447.3936,4843105.8557],[617454.8869,4843085.3744],[617460.661,4843074.7817],[617480.482,4843036.1738],[617479.559,4843035.1055],[617473.6557,4843033.6761],[617446.694,4843032.7205],[617428.4794,4843035.403],[617422.4314,4843035.9654],[617402.9315,4843042.5593],[617387.4151,4843049.4423],[617375.0308,4843054.5505],[617365.7786,4843057.884],[617344.9936,4843068.3884],[617337.7327,4843071.867],[617319.0122,4843081.5201],[617301.793,4843084.2748],[617245.3006,4843090.1869],[617231.1412,4843092.1623],[617213.633,4843098.9007],[617192.8475,4843109.4066],[617186.4391,4843114.9479],[617182.5114,4843127.6774],[617180.9372,4843135.5733],[617176.737,4843138.2715],[617169.5493,4843140.7528],[617145.4877,4843155.0254],[617111.9006,4843162.5994],[617098.6644,4843165.6434],[617062.3629,4843183.0311],[617030.7683,4843190.7493],[617019.8855,4843188.9587],[617017.0426,4843186.7502],[617011.2999,4843169.3137],[616994.2571,4843142.0469],[616985.583,4843137.4131],[616978.6844,4843135.9112],[616946.527,4843137.5818],[616934.9218,4843145.7497],[616914.5544,4843164.294],[616906.3701,4843166.7037],[616895.2714,4843167.9002],[616880.1162,4843169.8045],[616875.1367,4843169.4429],[616868.0928,4843169.9328],[616865.3221,4843166.728],[616854.0218,4843156.8979],[616847.3398,4843152.408],[616843.7905,4843146.1433],[616846.2159,4843140.3131],[616853.0581,4843128.7954],[616856.6241,4843121.0454],[616863.8838,4843117.5674],[616864.9521,4843116.6439],[616856.5677,4843108.0259],[616856.8566,4843104.0425],[616866.2529,4843098.7177],[616874.8707,4843090.3329],[616879.1431,4843086.6382],[616883.4321,4843068.9287],[616894.1135,4843059.6924],[616904.3616,4843056.4323],[616914.2477,4843058.1509],[616926.0538,4843061.0097],[616939.0726,4843060.9534],[616944.5586,4843054.3436],[616949.2644,4843044.6738],[616947.0313,4843006.468],[616942.4859,4843000.1313],[616934.8078,4842995.5695],[616921.1539,4842990.5742],[616875.199,4842989.2415],[616832.1594,4842989.1212],[616799.857,4842992.783],[616796.0909,4842989.5064],[616793.5367,4842983.3146],[616796.3954,4842971.5082],[616805.4465,4842957.1483],[616807.5831,4842955.3004],[616817.2685,4842945.9921],[616819.9106,4842937.1739],[616819.0032,4842922.0908],[616812.6099,4842913.6177],[616800.6756,4842898.735],[616800.0405,4842893.6833],[616799.7673,4842883.6519],[616805.5422,4842873.0587],[616812.1679,4842864.529],[616807.4213,4842847.1657],[616802.5138,4842845.8089],[616799.4541,4842846.5874],[616778.7974,4842869.1155],[616771.4652,4842873.5889],[616764.2775,4842876.0706],[616751.5316,4842886.1587],[616749.3227,4842889.0019],[616732.3045,4842902.7837],[616726.1129,4842905.3373],[616709.3113,4842916.1322],[616692.9437,4842920.9509],[616682.9852,4842920.228],[616662.4329,4842913.7305],[616645.5746,4842911.5061],[616638.4591,4842912.9927],[616582.0961,4842930.9268],[616527.5956,4842936.983],[616448.487,4842937.2487],[616434.1833,4842941.2164],[616413.6882,4842947.7381],[616399.4566,4842950.7095],[616374.4869,4842949.8985],[616351.5824,4842948.236],[616336.9327,4842943.1678],[616299.5235,4842934.4468],[616267.3095,4842923.0979],[616249.1827,4842910.7702],[616238.6616,4842904],[616234.6059,4842904.7059],[616224.7194,4842902.9873],[616209.5086,4842891.8726],[616211.1546,4842882.9812],[616217.9246,4842872.4603],[616230.3812,4842866.3569],[616253.9368,4842859.0559],[616259.1329,4842856.4301],[616262.554,4842850.6715],[616261.9923,4842844.6235],[616256.8836,4842832.2393],[616259.7431,4842820.4328],[616266.5132,4842809.912],[616278.2631,4842799.7523],[616291.2249,4842786.6764],[616293.4335,4842783.8341],[616304.9663,4842776.6615],[616321.3339,4842771.8429],[616331.5099,4842769.5773],[616374.6213,4842768.7024],[616391.9129,4842764.951],[616405.4373,4842757.9233],[616423.5235,4842743.2183],[616428.0131,4842736.5363],[616428.8398,4842697.551],[616435.3209,4842691.0137],[616435.8268,4842684.0422],[616436.71,4842658.0774],[616441.4161,4842648.4073],[616457.1653,4842624.5216],[616464.8749,4842601.0534],[616471.6447,4842590.5328],[616482.4706,4842579.3042],[616516.5069,4842551.7405],[616522.6265,4842550.1819],[616542.4718,4842552.6237],[616550.4394,4842553.2017],[616554.7841,4842548.5114],[616567.1997,4842515.3733],[616573.7533,4842507.8398],[616591.6224,4842496.1222],[616674.875,4842480.139],[616718.983,4842479.3348],[616740.5466,4842471.8894],[616757.8376,4842468.139],[616776.9922,4842452.5093],[616781.6981,4842442.8394],[616786.9826,4842425.2029],[616786.4205,4842419.1549],[616767.571,4842416.7853],[616743.6856,4842401.036],[616746.1834,4842394.2094],[616760.0692,4842382.2026],[616776.1632,4842367.3526],[616782.2831,4842365.7943],[616803.9194,4842357.3528],[616819.3636,4842351.466],[616834.9523,4842343.5864],[616843.7146,4842333.2099],[616846.1395,4842327.3786],[616843.5128,4842322.1821],[616822.688,4842305.654],[616812.7285,4842304.932],[616784.844,4842302.9076],[616730.0704,4842298.9332],[616717.9911,4842286.0435],[616714.2968,4842281.7705],[616714.1678,4842269.7474],[616715.5972,4842263.8442],[616720.0866,4842257.1624],[616750.3565,4842226.321],[616765.8157,4842206.4182],[616769.0923,4842202.6516],[616770.4496,4842197.7448],[616767.607,4842195.5364],[616762.6998,4842194.1785],[616753.7363,4842193.5285],[616717.8127,4842191.9226],[616697.1162,4842187.4179],[616676.7084,4842178.9288],[616665.7533,4842178.1341],[616658.6379,4842179.6195],[616648.679,4842178.8967],[616643.8439,4842176.5436],[616633.6115,4842165.7894],[616625.9338,4842161.228],[616606.94,4842160.8506],[616575.0717,4842158.5387],[616572.2282,4842156.3293],[616568.5345,4842152.0575],[616558.8238,4842120.3173],[616547.1778,4842101.4517],[616536.6001,4842081.6627],[616527.4366,4842069.9852],[616517.1316,4842060.2265],[616506.3937,4842056.444],[616468.4063,4842055.69],[616461.6516,4842052.197],[616460.0938,4842046.0761],[616458.3342,4842028.9297],[616459.6191,4842025.0181],[616474.3562,4842015.0754],[616497.7111,4841996.7473],[616522.4224,4841973.5114],[616536.2364,4841962.5006],[616554.1052,4841950.7828],[616606.6292,4841930.5659],[616624.499,4841918.8484],[616675.1354,4841869.4624],[616680.7656,4841860.8608],[616689.3109,4841853.471],[616702.4893,4841837.4088],[616711.3964,4841825.0405],[616721.2982,4841812.744],[616735.0561,4841788.714],[616735.2005,4841786.7212],[616735.8503,4841777.7592],[616734.5977,4841753.6402],[616732.911,4841735.4973],[616723.8348,4841708.8095],[616719.6663,4841683.4786],[616713.9237,4841666.0424],[616692.6963,4841627.4604],[616681.251,4841619.6224],[616660.8438,4841611.1334],[616646.1224,4841607.0611],[616635.6733,4841599.295],[616629.3681,4841575.8121],[616628.3164,4841562.7209],[616628.6774,4841557.7411],[616636.2266,4841550.2794],[616649.6951,4841530.2338],[616653.4051,4841520.4909],[616654.8408,4841445.5105],[616650.8732,4841431.2062],[616641.0751,4841414.4771],[616623.8872,4841389.2032],[616609.8166,4841376.1678],[616598.2993,4841369.3264],[616566.0853,4841357.9786],[616546.1841,4841342.5186],[616491.3697,4841311.5112],[616476.0858,4841301.3913],[616456.6016,4841293.9712],[616438.0416,4841287.6183],[616435.1263,4841286.4065],[616420.4049,4841282.3347],[616406.4625,4841281.3229],[616374.4496,4841281.0026],[616323.3708,4841281.3013],[616314.9704,4841286.6988],[616312.9064,4841287.5494],[616302.0804,4841298.7783],[616275.738,4841316.8895],[616253.3953,4841321.2743],[616239.453,4841320.2628],[616235.7586,4841315.9901],[616232.7863,4841301.759],[616232.8743,4841286.749],[616233.0915,4841283.761],[616235.6613,4841275.9389],[616236.3842,4841265.9793],[616232.127,4841255.6598],[616226.4406,4841251.2425],[616210.4342,4841251.0817],[616207.5189,4841249.8688],[616203.4066,4841237.5577],[616202.8447,4841231.5097],[616204.4188,4841223.6148],[616211.1166,4841214.0892],[616212.9793,4841202.2108],[616212.6654,4841165.1466],[616207.9904,4841146.7874],[616202.5932,4841138.3868],[616166.4997,4841097.7248],[616162.733,4841094.4486],[616149.9316,4841091.5173],[616141.0412,4841089.8707],[616137.9964,4841076.6349],[616137.1608,4841060.5568],[616138.477,4841028.6158],[616146.1148,4841006.1437],[616158.0244,4840979.9774],[616165.3565,4840975.5044],[616176.0376,4840966.268],[616176.9204,4840940.3021],[616175.4349,4840933.1861],[616178.4698,4840891.3596],[616176.3799,4840851.1626],[616169.1355,4840840.6256],[616159.8999,4840829.9441],[616146.8244,4840816.9827],[616106.0251,4840785.9903],[616082.2836,4840768.2497],[616069.2087,4840755.2874],[616054.9209,4840745.2414],[616031.7422,4840733.5479],[615977.2898,4840697.562],[615953.8945,4840688.8568],[615929.0695,4840686.0539],[615918.7495,4840690.3108],[615890.8495,4840702.3029],[615876.6904,4840704.2791],[615874.6992,4840704.1346],[615826.5358,4840705.6455],[615820.4163,4840707.2047],[615801.912,4840713.8707],[615784.3321,4840721.606],[615768.9605,4840726.4967],[615738.5785,4840731.3005],[615730.3229,4840734.7059],[615718.3001,4840734.8353],[615687.3557,4840733.5915],[615670.7871,4840727.3842],[615668.0884,4840723.1835],[615664.4661,4840717.9148],[615657.7121,4840714.4216],[615649.7447,4840713.8437],[615643.1347,4840708.3588],[615639.5132,4840703.09],[615636.9019,4840683.8795],[615634.276,4840678.6836],[615623.8268,4840670.9169],[615564.9011,4840627.598],[615554.0907,4840624.8124],[615538.0844,4840624.6521],[615498.5799,4840644.8117],[615482.7746,4840655.6781],[615468.1099,4840664.6256],[615407.3153,4840702.2621],[615382.5473,4840712.4783],[615374.5078,4840712.8971],[615367.3928,4840714.3829],[615349.2499,4840716.0693],[615341.99,4840719.5479],[615325.4056,4840727.3549],[615296.5097,4840739.2732],[615278.4397,4840739.9645],[615228.7911,4840734.3605],[615223.6675,4840735.9908],[615208.8577,4840746.9305],[615201.526,4840751.4035],[615185.5193,4840751.244],[615138.497,4840750.8354],[615103.4255,4840751.294],[615097.5948,4840748.8694],[615044.8139,4840745.0403],[615028.3019,4840751.8505],[615023.4668,4840749.4976],[615019.9896,4840742.2375],[615016.094,4840726.9379],[615015.3869,4840722.8829],[615008.215,4840711.3498],[615004.4483,4840708.0731],[614997.4045,4840708.564],[614991.2133,4840711.1182],[614986.6512,4840718.7953],[614981.8576,4840743.4762],[614963.9003,4840770.2046],[614963.3951,4840777.175],[614965.7321,4840786.3552],[614969.9891,4840796.6749],[614967.9502,4840838.5744],[614965.8143,4840840.4207],[614957.6304,4840842.8306],[614938.982,4840851.4885],[614932.0111,4840850.983],[614913.0178,4840850.6061],[614905.1952,4840848.0363],[614898.4409,4840844.5427],[615017.748,4840598.1865],[615177.5784,4840281.1433],[615308.9213,4839878.2107],[615317.0279,4839752.658],[615272.9978,4839490.1744],[615322.6618,4839288.5479],[615339.8026,4839162.6491],[615312.4903,4839028.5208],[615358.0822,4838841.6156],[615248.9566,4838579.417],[615633.8824,4838130.801],[615734.2075,4838114.0498],[615819.6285,4837999.109],[615872.7027,4837929.8757],[615903.4339,4837865.0292],[615917.4068,4837838.0106],[616178.113,4837528.5469],[616186.821,4837436.0735],[616234.0973,4837267.3083],[616041.6367,4837160.2486],[616035.6915,4837131.7869],[615915.2281,4836556.4182],[615909.5797,4836316.7408],[616178.1088,4836272.1367],[616246.5405,4836142.9472],[616358.9506,4836000.9274],[616424.8252,4835934.6236],[616472.702,4835868.0148],[616613.258,4835682.9848],[616618.0623,4835312.9154],[616629.5543,4835209.6304],[616662.6815,4835097.9026],[616684.2763,4834993.3484],[616713.52,4834921.3845],[616743.9318,4834888.5495],[616942.049,4834627.5979],[616949.1945,4834598.0821],[616943.4366,4834525.5831],[616947.0891,4834502.8221],[616958.0582,4834489.6011],[617119.7708,4834413.222],[617234.6608,4834347.4647],[617335.8974,4834276.7127],[617647.2714,4834083.0335],[617928.4075,4833961.2451],[617981.6423,4833668.7645],[618015.3163,4833577.0975],[618078.6528,4833352.4261],[618124.3064,4833233.5943],[618178.6928,4833132.4147],[618337.3318,4832932.669],[618410.4666,4832862.882],[618463.0488,4832786.5996],[618531.723,4832626.3861],[618598.493,4832520.0963],[618681.3987,4832425.9882],[618819.1091,4832307.8185],[618858.2822,4832264.6036],[618993.2931,4832073.154],[619003.0649,4832048.8328],[619002.0255,4832021.7266],[618818.4263,4831654.0183],[618798.9539,4831563.5064],[618779.4526,4831431.9435],[618729.97,4831189.0854],[618646.5388,4830889.7058],[618600.8252,4830788.2824],[618538.3398,4830669.6271],[618441.8012,4830385.3181],[618434.7992,4830343.7641],[618458.5556,4830278.4081],[618477.2315,4830241.7175],[618495.7487,4830221.0332],[618501.0891,4830216.4138],[618527.2135,4830201.2867],[618555.9206,4830164.3216],[618510.4674,4830086.9452],[618488.0803,4830064.2999],[618439.2082,4830061.7606],[618374.8037,4830011.0445],[618366.7783,4829997.4478],[618371.9888,4829980.8065],[618386.0174,4829966.805],[618464.2624,4829978.4787],[618489.5208,4829975.3024],[618547.7451,4829945.4795],[618583.0904,4829885.9692],[618592.645,4829864.6355],[618576.2591,4829745.3142],[618614.8671,4829696.0505],[618613.9683,4829597.8739],[618625.5818,4829437.5301],[618633.5052,4829411.0727],[618735.95,4829268.3187],[618791.9859,4829006.071],[618785.8909,4828910.5208],[618736.4538,4828542.5225],[618737.3335,4828516.557],[618749.5284,4828486.4047],[619068.1285,4828026.9175],[619371.832,4828395.3057],[619544.1344,4828545.9406],[619778.4454,4828725.0944],[619895.9689,4828802.6837],[619959.5363,4828837.3213],[620059.333,4828855.5603],[620404.0497,4829044.7133],[620456.4747,4829053.5154],[620932.6611,4828961.8489],[620973.4587,4828785.5924],[621025.8635,4828670.2474],[621019.9404,4828544.6719],[621320.5776,4828347.1823],[621423.7205,4828291.575],[621523.1304,4828052.4826],[621579.6942,4827976.4835],[621630.0376,4827931.0707],[621787.3513,4827846.346],[621827.8892,4827715.1229],[621857.4758,4827652.1877],[621993.2345,4827491.8144],[622056.6115,4827432.3266],[622130.5113,4827379.607],[622177.953,4827318.9658],[622442.9436,4827198.9833],[622583.7269,4827066.0033],[622752.8804,4827025.185],[622729.7026,4827082.5779],[622611.3071,4827238.2029],[622611.0228,4827311.2696],[622596.2185,4827391.2935],[622605.0279,4827477.0329],[622640.3997,4827610.7495],[622631.4671,4827651.1517],[622588.1705,4827765.1575],[622573.3419,4827942.2959],[622589.1636,4827986.4926],[622655.4063,4828053.3624],[622664.0124,4828128.074],[622641.2568,4828262.5887],[622707.5431,4828356.4937],[622822.2718,4828458.9126],[622965.6503,4828511.3444],[623080.4236,4828640.7992],[623140.4427,4828669.1741],[623251.7208,4828736.3023],[623280.7927,4828763.4374],[623356.301,4828812.9581],[623421.3146,4828827.6767],[623435.4608,4828839.7148],[623445.8978,4828861.4959],[623417.203,4828884.4485],[623405.5702,4828920.6506],[623416.6147,4828975.5149],[623448.8633,4829027.9101],[623522.2657,4829120.3308],[623580.2791,4829162.5771],[623768.3662,4829330.3832],[623786.4826,4829356.7251],[623768.6136,4829368.4462],[623690.4659,4829396.8283],[623677.7066,4829420.9349],[623713.911,4829501.6506],[623672.9479,4829555.7535],[623631.3636,4829590.7883],[623599.4366,4829644.5439],[623573.0516,4829704.7079],[623545.5715,4829793.8267],[623512.9949,4829856.5465],[623469.1325,4829964.5028],[623464.0686,4830048.2378],[623472.8012,4830065.8903],[623573.2668,4830130.2348],[623620.6711,4830180.7243],[623674.2698,4830297.7429],[623690.844,4830442.1157],[623682.0843,4830521.5773],[623640.676,4830733.8376],[623642.439,4830820.0694],[623655.4025,4830876.0743],[623699.8757,4830939.3681],[623720.5329,4830985.9195],[623717.7903,4831023.7663],[623687.5812,4831136.7174],[623623.4075,4831276.2424],[623629.2832,4831305.7035],[623648.6686,4831342.15],[623680.7147,4831452.601],[623675.5477,4831496.2802],[623592.7671,4831533.3351],[623545.5665,4831562.9558],[623514.7207,4831601.7708],[623493.7481,4831656.3187],[623483.8027,4831710.6645],[623519.3853,4831841.3969],[623554.1722,4831914.0015],[623633.3748,4832036.8804],[623656.4708,4832132.6677],[623639.2072,4832177.4723],[623577.3122,4832244.0744],[623596.7419,4832376.6403],[623576.995,4832414.2567],[623486.4194,4832489.7927],[623433.5604,4832556.0483],[623406.4954,4832653.2066],[623390.6751,4832747.1748],[623402.3233,4832973.29],[623418.6765,4833051.5684],[623445.1343,4833128.5756],[623486.6908,4833190.6584],[623578.2764,4833239.3451],[623646.4939,4833251.297],[623782.5238,4833253.1443],[623778.106,4833327.9146],[623752.9601,4833426.2138],[623723.21,4833505.1564],[623683.717,4833511.3059],[623625.0271,4833506.051],[623546.4745,4833512.3733],[623483.3233,4833554.8539],[623454.2499,4833734.9672],[623416.4458,4833759.2599],[623332.4666,4833785.2127],[623221.5957,4833809.217],[623140.95,4833844.4215],[622978.1442,4833935.7468],[622911.6443,4833982.9905],[622864.2698,4834042.6325],[622824.7186,4834104.8449],[622744.417,4834287.2503],[622711.7212,4834393.0103],[622668.3152,4834466.9572],[622631.5927,4834545.3919],[622665.0193,4834691.9882],[622769.0506,4835079.9855],[622813.6197,4835183.3359],[622878.6572,4835308.195],[622985.1104,4835289.8797],[623063.5707,4835436.7378],[623065.097,4835539.9728],[623080.6113,4835602.1703],[623221.5105,4835840.6602],[623266.6301,4835894.9933],[623310.7099,4835991.3004],[623313.336,4835996.4972],[623338.1166,4836110.4293],[623300.854,4836292.9511],[623208.7808,4836568.6167],[623158.5613,4836957.4495],[623101.3452,4837235.6416],[623082.7456,4837395.4869],[623091.5767,4837453.1965],[623127.8722,4837573.9708],[623198.5216,4837704.2453],[623222.189,4837792.0659],[623251.1711,4837834.2165],[623301.3566,4837873.8997],[623391.9593,4837908.5042],[623459.9849,4837964.4988],[623467.8352,4838008.12],[623441.1632,4838196.4165],[623338.0959,4838954.87],[623295.5793,4839057.9153],[623218.1631,4839131.3952],[623196.293,4839156.8419],[623142.4336,4839223.02],[623122.5557,4839248.6103],[623113.396,4839361.0828],[623135.3846,4839485.8272],[623155.6591,4839744.6097],[623159.3078,4839790.9297],[623122.678,4839959.9577],[623093.8483,4840085.5278],[623133.3642,4840376.2591],[623118.2357,4840384.6728],[623090.9116,4840388.6977],[623079.2901,4840410.8828],[623074.0208,4840414.5054],[623062.7768,4840417.6946],[623041.8617,4840416.1771],[623025.2194,4840410.9643],[623015.3319,4840409.2457],[623009.9912,4840413.8647],[623004.361,4840422.4669],[623002.2655,4840451.3503],[622998.6267,4840460.097],[622976.1788,4840493.5107],[622963.9792,4840523.6635],[622953.9318,4840537.9528],[622944.607,4840542.2819],[622922.4789,4840543.68],[622913.9489,4840537.0536],[622898.5917,4840527.9295],[622887.0017,4840522.0834],[622875.05,4840521.2158],[622847.1633,4840519.193],[622813.7183,4840524.7752],[622778.0651,4840533.2022],[622735.4968,4840554.1424],[622717.0637,4840559.8143],[622666.2695,4840556.1281],[622661.0737,4840558.7546],[622648.1823,4840570.8357],[622638.6977,4840591.1731],[622624.7385,4840604.1767],[622598.5233,4840634.3128],[622588.0424,4840654.5786],[622566.8478,4840712.1112],[622554.0544,4840764.2474],[622552.4644,4840786.1585],[622548.6348,4840838.9447],[622533.6483,4840879.9083],[622529.6735,4840934.6861],[622532.558,4840963.9298],[622534.1163,4840970.0501],[622550.9752,4840972.2749],[622561.9305,4840973.0703],[622567.6172,4840977.4876],[622584.8056,4841002.7632],[622587.288,4841009.9526],[622586.5652,4841019.9118],[622581.714,4841031.5739],[622566.3258,4841050.482],[622557.9968,4841054.8832],[622551.4428,4841062.4178],[622548.5114,4841075.2207],[622550.4878,4841089.3813],[622580.2469,4841134.5925],[622613.4274,4841174.0449],[622617.0498,4841179.3132],[622616.8896,4841195.3211],[622616.4559,4841201.2971],[622620.006,4841207.5617],[622628.6807,4841212.1962],[622648.0055,4841235.6246],[622647.3079,4841286.6363],[622648.1588,4841288.6995],[622643.1639,4841302.3544],[622640.4492,4841312.1692],[622642.0074,4841318.2895],[622648.4732,4841325.7677],[622662.9064,4841333.8232],[622682.8256,4841335.2691],[622710.2791,4841343.2685],[622723.0818,4841346.1991],[622741.4985,4841354.5447],[622759.0643,4841360.8249],[622787.3694,4841370.8889],[622839.7932,4841379.6991],[622860.7085,4841381.2172],[622874.5074,4841384.2209],[622899.1171,4841390.0111],[622922.6589,4841396.725],[622947.7585,4841409.5605],[622982.369,4841443.1096],[622998.2886,4841458.2816],[623009.8785,4841464.1291],[623027.6608,4841467.422],[623044.3752,4841471.6385],[623055.9659,4841477.485],[623092.4234,4841513.1707],[623102.9295,4841533.9572],[623105.1224,4841545.13],[623104.3997,4841555.0892],[623099.9821,4841560.7761],[623082.5452,4841566.5197],[623071.2999,4841569.7088],[623069.0195,4841573.5476],[623067.847,4841603.499],[623061.1482,4841613.0248],[623042.9889,4841628.7276],[623023.2703,4841638.3101],[623003.7688,4841644.9047],[622993.3761,4841650.1583],[622981.0632,4841654.27],[622937.8031,4841657.1386],[622912.3258,4841663.299],[622900.8646,4841669.4763],[622880.0786,4841679.9828],[622898.0619,4841694.3026],[622913.491,4841702.4316],[622943.3701,4841704.5993],[622968.124,4841708.3983],[622984.694,4841714.6074],[622985.4255,4841759.7149],[622986.1892,4841776.7909],[622988.5261,4841785.9709],[622990.1569,4841791.0961],[622994.414,4841801.417],[623008.4865,4841814.4519],[623014.3892,4841815.8816],[623027.6258,4841812.838],[623038.8707,4841809.6489],[623044.429,4841802.0431],[623049.0627,4841793.3681],[623053.5526,4841786.6847],[623057.8977,4841781.9941],[623064.8698,4841782.5004],[623068.8532,4841782.7893],[623074.6121,4841786.2108],[623079.3755,4841789.5605],[623086.1148,4841807.07],[623089.5925,4841814.3313],[623109.2383,4841805.7443],[623127.0372,4841795.0212],[623135.6552,4841786.6364],[623150.7548,4841771.7128],[623161.5817,4841760.4835],[623170.979,4841755.1584],[623194.0304,4841754.8282],[623198.9385,4841756.1865],[623204.4078,4841763.5912],[623211.1468,4841781.1008],[623212.7774,4841786.226],[623213.5566,4841789.2857],[623221.1631,4841794.8434],[623226.2151,4841794.209],[623233.7647,4841786.7478],[623259.6192,4841761.5905],[623268.0927,4841755.1975],[623282.5421,4841749.2371],[623300.8871,4841758.5784],[623319.9395,4841771.9759],[623330.3168,4841780.738],[623346.252,4841781.8945],[623369.0303,4841771.533],[623375.151,4841769.9751],[623396.4994,4841765.5167],[623384.3066,4841726.5856],[623383.2142,4841686.4576],[623379.1015,4841674.1448],[623375.8404,4841663.8953],[623377.2694,4841657.9922],[623380.4746,4841655.2206],[623406.5136,4841655.1085],[623417.253,4841658.8912],[623425.5662,4841668.5052],[623438.8992,4841705.5165],[623450.6589,4841750.4236],[623453.9923,4841759.6768],[623454.9161,4841760.7449],[623472.9155,4841761.0499],[623495.1879,4841757.66],[623621.2329,4841717.7471],[623746.2824,4841677.7626],[623768.9884,4841668.3964],[623787.7835,4841657.7458],[623806.7227,4841645.1035],[623874.8264,4841631.0213],[623899.1638,4841626.781],[623931.6856,4841620.1296],[623976.8828,4841604.3855],[623988.4886,4841596.2172],[624007.9342,4841576.6021],[624039.6529,4841525.8387],[624051.6923,4841511.6946],[624072.5517,4841500.192],[624084.7207,4841498.0716],[624094.4637,4841501.7824],[624115.2189,4841519.308],[624126.5771,4841542.1585],[624127.8462,4841552.2635],[624123.9188,4841564.9939],[624110.8106,4841580.0624],[624105.3966,4841585.6769],[624094.7869,4841593.9179],[624066.9961,4841631.9507],[624043.6386,4841650.2808],[624016.5138,4841665.3324],[623997.9358,4841672.9956],[623968.9071,4841672.8921],[623955.8147,4841673.9444],[623932.9635,4841685.3015],[623923.0605,4841697.599],[623906.7468,4841715.4381],[623899.3414,4841720.908],[623875.0043,4841725.1494],[623854.5783,4841730.6766],[623811.5347,4841730.556],[623785.2061,4841734.653],[623772.9652,4841737.7691],[623735.304,4841760.067],[623719.6413,4841768.9427],[623668.5579,4841769.2406],[623629.9888,4841776.4534],[623602.2305,4841786.4542],[623509.7027,4841819.7879],[623478.2495,4841825.5156],[623396.7656,4841844.633],[623382.4611,4841848.6005],[623375.2726,4841851.083],[623352.4938,4841861.4445],[623275.4114,4841888.8906],[623243.3082,4841903.5811],[623230.706,4841911.6778],[623216.6743,4841925.6776],[623192.2501,4841944.9308],[623184.5553,4841954.3847],[623182.9086,4841963.2758],[623193.3428,4841985.0588],[623196.4593,4841997.2998],[623194.6679,4842008.1825],[623182.7004,4842021.3317],[623164.2515,4842041.0174],[623161.8981,4842045.8536],[623161.3924,4842052.8248],[623166.9347,4842059.2343],[623181.2241,4842069.2827],[623243.8969,4842074.8324],[623269.4308,4842081.6911],[623282.0172,4842087.6109],[623285.5677,4842093.8759],[623284.138,4842099.779],[623263.1347,4842113.2734],[623244.5573,4842120.9364],[623239.2884,4842124.5588],[623226.3249,4842137.6351],[623226.0362,4842141.6183],[623226.5266,4842148.6624],[623235.4022,4842164.325],[623253.1687,4842181.6338],[623259.9241,4842185.1283],[623311.7864,4842187.8904],[623333.2799,4842181.4402],[623346.5883,4842177.4009],[623374.62,4842177.4323],[623375.6154,4842177.5051],[623381.5194,4842178.9341],[623389.6156,4842191.5361],[623390.596,4842205.6253],[623394.1464,4842211.8893],[623404.7409,4842217.6647],[623411.279,4842224.1462],[623423.994,4842242.0898],[623450.2186,4842267.0217],[623458.8938,4842271.6562],[623464.7244,4842274.0816],[623464.5804,4842276.0733],[623452.8301,4842286.234],[623449.6251,4842289.0056],[623416.4948,4842331.6551],[623401.1777,4842349.5671],[623381.1553,4842377.1492],[623375.8141,4842381.7679],[623374.818,4842381.695],[623371.7579,4842382.4751],[623366.7055,4842383.1094],[623326.5372,4842357.1659],[623316.0876,4842349.399],[623288.2006,4842347.3751],[623259.2303,4842360.2901],[623221.1353,4842388.5633],[623208.5333,4842396.66],[623174.7996,4842406.2266],[623153.6672,4842407.6966],[623134.5272,4842409.3111],[623104.9223,4842417.1743],[623074.6823,4842419.9853],[623043.0844,4842427.7043],[623009.0776,4842427.2387],[622994.4994,4842421.175],[622992.7241,4842418.0425],[623006.9006,4842402.0506],[623019.9922,4842400.9975],[623019.2854,4842396.9415],[623009.7028,4842377.2232],[622984.4174,4842339.3448],[622967.5014,4842324.1],[622961.526,4842323.6666],[622952.2012,4842327.9956],[622936.6677,4842348.8944],[622880.6869,4842402.9024],[622874.5669,4842404.4607],[622864.2461,4842408.717],[622810.8825,4842412.8546],[622758.6026,4842402.0515],[622706.4512,4842403.2724],[622683.1106,4842407.5852],[622671.6492,4842413.7618],[622648.0045,4842436.0754],[622641.8838,4842437.6339],[622630.2938,4842431.7859],[622606.262,4842418.0278],[622602.5673,4842413.7548],[622600.5192,4842400.5905],[622601.5869,4842399.6668],[622661.5613,4842401.0153],[622678.998,4842395.2729],[622671.4641,4842388.7183],[622634.6141,4842386.0436],[622619.8194,4842382.9676],[622573.861,4842381.6347],[622571.5796,4842385.4736],[622571.7084,4842397.4983],[622576.8896,4842408.8869],[622577.8693,4842422.9748],[622574.3034,4842430.7264],[622571.2435,4842431.5057],[622562.4965,4842427.8665],[622546.7222,4842410.7028],[622532.5771,4842398.663],[622526.674,4842397.2325],[622508.1527,4842417.9152],[622500.6754,4842424.3808],[622494.3387,4842428.9274],[622488.3626,4842428.4933],[622476.9892,4842419.6587],[622464.7649,4842408.7587],[622457.8242,4842380.2216],[622447.8081,4842366.479],[622426.2585,4842359.9087],[622407.1347,4842347.5079],[622395.761,4842338.6723],[622389.0784,4842334.1824],[622379.4803,4842328.4802],[622376.7093,4842325.2752],[622374.5733,4842327.1226],[622264.6918,4842420.2697],[622250.0258,4842429.217],[622244.9736,4842429.8521],[622218.1551,4842426.9046],[622191.9152,4842415.9884],[622179.112,4842413.0577],[622171.9961,4842414.5428],[622138.4638,4842435.1373],[622131.91,4842442.6712],[622123.0029,4842455.0405],[622099.4868,4842489.3772],[622087.5759,4842515.5448],[622077.6006,4842528.8379],[622067.0633,4842536.0823],[622055.1841,4842534.2196],[622047.2166,4842533.6406],[622020.7034,4842512.6944],[622005.1293,4842506.558],[621997.2339,4842504.9838],[621985.9891,4842508.1724],[621966.7207,4842497.7623],[621965.7975,4842496.6944],[621944.6088,4842485.145],[621918.6424,4842484.2607],[621912.5219,4842485.8198],[621903.053,4842492.1408],[621894.6516,4842497.538],[621887.8087,4842509.0553],[621883.3189,4842515.7383],[621881.0379,4842519.5774],[621874.7732,4842523.1271],[621869.4324,4842527.7458],[621849.6421,4842538.3236],[621837.4022,4842541.441],[621813.3545,4842541.6975],[621802.1099,4842544.8865],[621791.645,4842551.135],[621777.5415,4842566.1307],[621777.3251,4842569.1187],[621775.0278,4842586.973],[621771.4622,4842594.7239],[621756.7964,4842603.6722],[621752.6676,4842605.3745],[621742.2749,4842610.6278],[621733.2958,4842623.9928],[621714.5014,4842634.6424],[621690.7272,4842644.9313],[621676.6395,4842645.9121],[621659.6365,4842645.6789],[621657.5721,4842646.53],[621654.5691,4842660.3285],[621654.1355,4842666.3045],[621650.9307,4842669.0758],[621643.5251,4842674.5448],[621620.5462,4842673.8783],[621616.4903,4842674.5854],[621611.9288,4842682.2639],[621605.2148,4842705.8049],[621601.5765,4842714.5523],[621595.0228,4842722.0867],[621585.4086,4842730.3997],[621568.8233,4842738.2057],[621539.1459,4842747.0655],[621519.9338,4842749.6754],[621496.9551,4842749.0093],[621480.9476,4842748.8479],[621444.8048,4842750.23],[621435.6972,4842751.5708],[621422.4602,4842754.6152],[621411.5053,4842753.8204],[621399.0638,4842745.9082],[621390.3896,4842741.2741],[621375.683,4842723.1861],[621374.6868,4842723.1146],[621317.4442,4842697.9339],[621309.766,4842693.3725],[621307.2117,4842687.18],[621301.8862,4842677.7819],[621292.7218,4842666.1041],[621248.9326,4842634.8924],[621226.3868,4842628.2502],[621191.4574,4842626.7159],[621170.6868,4842623.2058],[621159.1696,4842616.3629],[621146.9445,4842605.4631],[621143.6837,4842595.2148],[621141.9805,4842591.0865],[621112.7529,4842579.9549],[621111.9738,4842576.8944],[621121.8361,4842537.5626],[621123.4824,4842528.671],[621121.2169,4842518.4942],[621114.7515,4842511.0176],[621099.2503,4842503.8847],[621089.7963,4842496.1906],[621084.8892,4842494.8328],[621081.9736,4842493.62],[621069.9502,4842493.7486],[621050.3045,4842502.3347],[621016.7003,4842523.9244],[621007.1587,4842531.2419],[620990.3568,4842542.0363],[620975.5464,4842552.9756],[620971.2016,4842557.6665],[620965.0815,4842559.2243],[620942.9543,4842560.622],[620904.1129,4842557.803],[620903.4938,4842538.7347],[620902.6425,4842536.6706],[620882.9405,4842532.2374],[620882.5383,4842510.1822],[620885.8876,4842505.4189],[620874.4267,4842511.5952],[620851.3599,4842525.9406],[620833.4893,4842537.6592],[620818.824,4842546.6062],[620806.439,4842551.7149],[620786.4481,4842551.2653],[620766.0396,4842542.7757],[620764.4089,4842537.6511],[620765.8387,4842531.7476],[620771.3962,4842524.1411],[620804.077,4842501.4836],[620809.3458,4842497.8615],[620808.0039,4842488.7536],[620808.4376,4842482.7776],[620810.7187,4842478.9381],[620825.3842,4842469.9911],[620828.5167,4842468.2158],[620833.7287,4842451.5739],[620809.6257,4842438.811],[620786.1003,4842418.0817],[620783.3294,4842414.8763],[620783.7941,4842380.8701],[620783.1595,4842375.818],[620778.7579,4842367.4892],[620762.5495,4842356.3003],[620734.6639,4842354.2771],[620714.7453,4842352.8314],[620700.3122,4842344.7756],[620687.0193,4842334.7995],[620681.4774,4842328.3911],[620678.1438,4842319.1383],[620675.3166,4842302.9132],[620673.4847,4842286.7617],[620672.2154,4842276.6575],[620673.444,4842259.7268],[620673.8776,4842253.7508],[620647.5089,4842230.8119],[620644.9546,4842224.6197],[620646.1268,4842194.6693],[620643.6445,4842187.4807],[620632.7771,4842171.6747],[620608.2154,4842123.8365],[620603.5247,4842119.4922],[620586.9555,4842113.2835],[620575.9276,4842113.4842],[620523.0396,4842138.68],[620512.864,4842140.9449],[620494.9371,4842139.6447],[620486.7532,4842142.0534],[620476.0708,4842151.2908],[620432.3315,4842202.1799],[620406.262,4842230.3235],[620374.9231,4842262.0896],[620358.7556,4842277.9365],[620349.1417,4842286.249],[620317.1684,4842312.9633],[620292.8169,4842331.2193],[620268.8994,4842343.4993],[620238.7165,4842359.3306],[620216.0112,4842368.6951],[620174.6001,4842373.6989],[620162.7211,4842371.8363],[620123.8801,4842369.0174],[620116.692,4842371.4989],[620111.4235,4842375.1215],[620111.2789,4842377.1132],[620110.6285,4842386.0762],[620121.4232,4842402.8788],[620129.0137,4842422.4523],[620129.3594,4842431.4877],[620125.866,4842438.243],[620118.3887,4842444.7078],[620097.8192,4842452.2258],[620087.3543,4842458.4746],[620077.8129,4842465.7922],[620073.1068,4842475.4622],[620071.6616,4842495.3809],[620073.276,4842514.5202],[620072.7703,4842521.4916],[620067.0682,4842531.0903],[620063.3575,4842540.8325],[620059.9201,4842560.6065],[620053.4391,4842567.1449],[620047.102,4842571.6904],[620002.1415,4842570.4298],[619976.3193,4842567.5536],[619961.7422,4842561.4899],[619934.2895,4842553.4907],[619920.7085,4842547.4983],[619918.0091,4842543.298],[619917.5351,4842522.2394],[619918.0406,4842515.267],[619923.47,4842495.6376],[619922.7629,4842491.5819],[619914.1609,4842485.9513],[619902.4994,4842481.1],[619890.1299,4842472.1932],[619881.5287,4842466.5626],[619880.749,4842463.5033],[619882.2506,4842456.6032],[619884.9657,4842446.7885],[619880.781,4842435.4722],[619875.2385,4842429.0633],[619873.3915,4842426.9259],[619871.4719,4842425.786],[619875.1823,4842416.0436],[619874.6197,4842409.9952],[619870.0741,4842403.6587],[619859.4078,4842398.8798],[619850.0266,4842390.1889],[619846.4045,4842384.9211],[619843.6651,4842353.685],[619845.2394,4842345.7896],[619850.8687,4842337.1882],[619855.0698,4842334.4895],[619864.3939,4842330.1607],[619874.4978,4842328.8912],[619879.4771,4842329.2528],[619885.4526,4842329.6868],[619886.5933,4842327.7663],[619879.9264,4842309.2618],[619875.5252,4842300.9324],[619874.5291,4842300.8601],[619867.9191,4842295.3753],[619859.5341,4842286.7567],[619850.37,4842275.0789],[619835.1577,4842263.9624],[619821.215,4842262.9511],[619798.4528,4842259.2962],[619791.8428,4842253.8115],[619771.1772,4842221.275],[619756.4143,4842190.1677],[619754.5664,4842188.0314],[619750.5106,4842188.7386],[619739.9011,4842196.9785],[619731.5005,4842202.3762],[619720.3283,4842204.5689],[619712.3612,4842203.9905],[619696.8037,4842183.8391],[619688.1605,4842151.1741],[619688.9773,4842057.1228],[619688.912,4841989.0374],[619692.5497,4841980.2913],[619721.2618,4841943.3289],[619725.5349,4841939.6348],[619727.9601,4841933.8033],[619724.4829,4841926.5428],[619714.7561,4841908.8168],[619712.2743,4841901.6286],[619709.6387,4841841.3675],[619712.008,4841822.5174],[619713.6135,4841786.591],[619715.1471,4841751.6621],[619713.5889,4841745.5414],[619704.2082,4841736.8508],[619678.8202,4841728.0009],[619657.834,4841727.4792],[619653.7052,4841729.1817],[619648.8549,4841740.8436],[619647.1922,4841763.7503],[619638.5589,4841786.15],[619623.645,4841826.1164],[619608.8907,4841850.074],[619598.1933,4841873.3266],[619591.278,4841885.8392],[619548.7519,4841933.8126],[619529.1068,4841942.3988],[619512.7385,4841947.2185],[619505.4057,4841951.6924],[619491.7358,4841960.7112],[619487.4628,4841964.4065],[619486.0903,4841983.3289],[619485.7288,4841988.3086],[619490.058,4841997.6329],[619504.13,4842010.669],[619509.5991,4842018.0739],[619511.0856,4842025.1898],[619511.8648,4842028.2501],[619530.2815,4842036.5946],[619582.6468,4842032.3862],[619611.6729,4842032.4896],[619622.3392,4842037.2692],[619636.8443,4842044.3284],[619639.3261,4842051.5166],[619639.3919,4842119.6019],[619636.6053,4842130.412],[619634.1802,4842136.2435],[619614.4629,4842145.8258],[619608.9775,4842152.4357],[619606.3756,4842188.2888],[619603.3001,4842203.0833],[619600.8435,4842236.9447],[619596.9881,4842248.6788],[619593.3507,4842257.4261],[619583.5925,4842267.7302],[619560.2367,4842286.0588],[619557.0318,4842288.83],[619554.6788,4842293.6652],[619559.3377,4842326.0409],[619561.2259,4842355.2117],[619559.925,4842373.1388],[619553.3561,4842394.6878],[619543.0922,4842411.9645],[619533.4061,4842421.2722],[619526.8521,4842428.8063],[619512.6045,4842445.7939],[619510.4529,4842461.656],[619513.2235,4842464.8608],[619533.921,4842469.3666],[619555.8877,4842483.9763],[619576.0633,4842509.4685],[619581.8791,4842525.9099],[619582.0077,4842537.9332],[619572.5222,4842558.269],[619561.4794,4842572.4852],[619565.2461,4842575.7624],[619584.2255,4842590.1554],[619586.9235,4842594.3556],[619588.2653,4842603.4642],[619538.6229,4842652.9232],[619531.9973,4842661.4525],[619518.8173,4842677.516],[619505.1479,4842686.5358],[619489.7033,4842692.4231],[619457.5449,4842694.0939],[619453.3442,4842696.7918],[619451.843,4842703.6909],[619464.6138,4842734.653],[619473.1432,4842741.2794],[619478.468,4842750.6772],[619486.4197,4842765.2703],[619490.6765,4842775.591],[619495.0777,4842783.92],[619495.9294,4842785.984],[619498.9013,4842800.2157],[619500.0261,4842812.3124],[619493.3843,4842834.8568],[619492.1711,4842837.7725],[619484.9112,4842841.25],[619450.9775,4842839.7882],[619427.9267,4842840.1178],[619408.4264,4842846.7115],[619416.0322,4842852.2693],[619431.8784,4842868.4368],[619436.0635,4842879.7538],[619435.0354,4842907.7126],[619433.1003,4842920.5867],[619412.8048,4842938.1361],[619403.4084,4842943.4608],[619375.3775,4842943.4293],[619361.3629,4842943.413],[619333.4773,4842941.389],[619313.487,4842940.9393],[619303.2381,4842944.2002],[619288.5009,4842954.1435],[619262.9925,4842988.3341],[619248.0943,4843014.2852],[619240.8187,4843031.7778],[619230.3372,4843052.0418],[619227.5507,4843062.8531],[619231.0844,4843083.133],[619237.229,4843122.6243],[619239.2051,4843136.7838],[619239.5504,4843145.8201],[619236.8366,4843155.6339],[619230.5715,4843159.185],[619224.2347,4843163.7302],[619222.4436,4843174.6137],[619218.5886,4843186.3481],[619211.7144,4843225.8957],[619209.4735,4843256.7691],[619207.538,4843269.6443],[619195.4995,4843283.7878],[619192.2945,4843286.5592],[619173.1394,4843302.1888],[619152.2819,4843313.6895],[619139.1182,4843315.7376],[619131.0064,4843317.1515],[619111.2885,4843326.733],[619109.2246,4843327.5849],[619058.5301,4843363.952],[619035.4476,4843392.3116],[619033.5843,4843404.1905],[619030.0027,4843425.9566],[619029.3039,4843476.9655],[619018.1162,4843493.1732]]],[[[619763.3251,4842370.8812],[619764.8839,4842377.0019],[619762.5872,4842394.8556],[619761.9365,4842403.8196],[619769.3254,4842412.3647],[619776.0805,4842415.8589],[619789.0275,4842416.7989],[619791.7261,4842420.9992],[619793.1396,4842429.1115],[619772.8603,4842432.645],[619749.8977,4842417.9633],[619742.4361,4842410.4135],[619735.408,4842396.8877],[619738.1947,4842386.0777],[619742.0494,4842374.3436],[619747.174,4842372.7124],[619759.4138,4842369.5967],[619763.3251,4842370.8812]]],[[[621530.2798,4842786.4694],[621536.0385,4842789.8917],[621537.8135,4842793.0237],[621537.8697,4842806.0436],[621535.2998,4842813.8661],[621528.9626,4842818.4125],[621518.4255,4842825.6577],[621522.0477,4842830.9266],[621529.7985,4842834.4918],[621566.07,4842845.1348],[621580.5755,4842852.1951],[621583.2024,4842857.3914],[621583.3306,4842869.4149],[621581.6124,4842879.3027],[621559.6856,4842891.7277],[621547.8792,4842888.8684],[621500.7239,4842876.4342],[621461.1037,4842870.5557],[621453.5692,4842864.0014],[621452.0112,4842857.8814],[621452.5896,4842849.9137],[621457.0067,4842844.2269],[621472.8855,4842832.3636],[621488.4023,4842825.48],[621488.7636,4842820.5004],[621489.6313,4842808.5495],[621504.0958,4842788.5735],[621512.2802,4842786.165],[621515.3406,4842785.3852],[621530.2798,4842786.4694]]],[[[619426.7719,4842980.1984],[619442.5624,4842983.3463],[619470.3761,4842986.3672],[619474.9942,4842991.7082],[619476.1183,4843003.8038],[619473.5484,4843011.627],[619468.3931,4843041.2873],[619463.7586,4843049.9612],[619459.4137,4843054.6518],[619447.3906,4843054.781],[619444.3306,4843055.5595],[619440.9091,4843061.3188],[619445.8005,4843076.6914],[619452.1781,4843099.18],[619453.3747,4843110.2792],[619451.8002,4843118.1746],[619440.7007,4843119.3714],[619434.9422,4843115.9498],[619425.7778,4843104.2714],[619403.8839,4843088.6656],[619390.5916,4843078.691],[619388.0374,4843072.4982],[619386.511,4843038.3477],[619391.3616,4843026.6856],[619392.5184,4843010.7502],[619394.1647,4843001.8594],[619398.9427,4842991.1938],[619413.9697,4842977.2663],[619421.0859,4842975.7805],[619426.7719,4842980.1984]]],[[[621710.2304,4843204.0161],[621707.8768,4843208.8516],[621683.252,4843217.0763],[621615.1662,4843217.1395],[621605.9133,4843220.4727],[621600.7175,4843223.0989],[621599.1428,4843230.9951],[621603.4562,4843254.335],[621603.4247,4843282.3663],[621602.1394,4843286.2781],[621599.7867,4843291.1137],[621596.5093,4843294.8803],[621589.1044,4843300.3504],[621580.9198,4843302.76],[621471.9288,4843300.8551],[621447.4638,4843293.0727],[621439.9298,4843286.5184],[621437.1588,4843283.3138],[621432.83,4843273.9881],[621431.1992,4843268.8644],[621430.436,4843251.7887],[621434.1468,4843242.046],[621449.2457,4843227.1222],[621466.9882,4843203.3806],[621469.7022,4843193.5653],[621469.9193,4843190.5773],[621461.0278,4843188.9312],[621436.6917,4843193.1712],[621409.3683,4843197.1959],[621391.224,4843198.8823],[621375.3618,4843196.7295],[621353.5233,4843194.1425],[621348.616,4843192.7856],[621339.5237,4843180.1114],[621338.6719,4843178.0472],[621352.3422,4843169.0278],[621357.5387,4843166.4014],[621362.8794,4843161.7823],[621365.1606,4843157.943],[621274.3134,4843154.3527],[621271.8314,4843147.1638],[621272.5545,4843137.2046],[621276.9712,4843131.5176],[621303.8057,4843120.4508],[621308.9293,4843118.8196],[621310.2866,4843113.9125],[621308.5115,4843110.7805],[621305.8133,4843106.5796],[621293.2273,4843100.6603],[621287.5409,4843096.2418],[621287.9021,4843091.2621],[621293.3878,4843084.6524],[621297.5882,4843081.9535],[621312.1819,4843074.0017],[621325.0004,4843062.918],[621333.6185,4843054.5332],[621334.6867,4843053.6094],[621332.1891,4843060.4367],[621345.7139,4843053.4088],[621363.0067,4843049.6581],[621375.0299,4843049.529],[621398.1534,4843048.2042],[621414.3772,4843045.3774],[621428.6819,4843041.4091],[621445.4842,4843030.6148],[621453.9575,4843024.2207],[621454.3917,4843018.2458],[621451.8369,4843012.0532],[621441.5322,4843002.2943],[621441.0425,4842995.2504],[621445.8207,4842984.5839],[621456.2862,4842978.335],[621488.4609,4842962.6487],[621525.5433,4842948.3196],[621577.6216,4842948.0949],[621593.4123,4842951.2434],[621610.9058,4842958.5204],[621640.5507,4842977.6935],[621661.9563,4842986.2551],[621678.7421,4842989.4765],[621690.6212,4842991.3396],[621702.4282,4842994.1991],[621716.789,4843003.2513],[621728.018,4843014.0774],[621732.4196,4843022.4069],[621733.7453,4843045.5313],[621734.4519,4843049.5872],[621745.3193,4843065.394],[621748.6526,4843074.6462],[621749.5846,4843130.7816],[621742.7417,4843142.2991],[621733.4739,4843159.6485],[621719.8604,4843181.6882],[621710.2304,4843204.0161]]],[[[617021.7091,4843274.1887],[617026.8177,4843286.5724],[617031.9976,4843297.962],[617031.1145,4843323.9268],[617028.7612,4843328.7617],[617011.0363,4843338.4886],[617001.9283,4843339.8298],[616992.6205,4843330.1433],[616991.1341,4843323.028],[616988.0907,4843309.7917],[616990.6607,4843301.9688],[616994.0814,4843296.2106],[616994.8046,4843286.2522],[616994.8769,4843285.2558],[617002.4263,4843277.7946],[617002.4986,4843276.7982],[617020.7853,4843273.1204],[617021.7091,4843274.1887]]],[[[616961.5636,4843427.0032],[616967.0332,4843434.4083],[616963.5395,4843441.1618],[616953.8538,4843450.471],[616937.6302,4843453.2974],[616932.6509,4843452.9368],[616929.8804,4843449.732],[616932.2496,4843430.8823],[616933.39,4843428.9625],[616945.6296,4843425.8463],[616953.7415,4843424.4331],[616961.5636,4843427.0032]]]],"crs":{"type":"name","properties":{"name":"epsg:25829"}}}));		
+		
+	
+	colexios[indexColexios] = {
+	    Name: 'CEIP Plurilingüe Pedro Caselles Rollán' + '-' + 'Edificio Principal',        
+	    Codigo: '27005691',
+	    NomeCentro :'CEIP Plurilingüe Pedro Caselles Rollán',
+	    id : indexColexios,
+	    punto: {"type":"point","coordinates":[620536.4225,4838059.0391],"crs":{"type":"name","properties":{"name":"epsg:25829"}}}	   
+	};	
+	
+	indexColexios = indexColexios +1;
+
+	
+
+	let cacheAreas = [];
+	let cache = calculeColexiosGraphics([], colexios);
+	
+	let map = new Map({	
+		basemap: BASE_MAP
+  	});
+  	let view = new MapView({
+      map: map,
+	  center: cache[0].geometry,
+	  constraints: CONSTRAINTS_MAP,
+	  zoom: 11,
+      container: "map", // Div element,
+   	  spatialReference: { wkid: MAP_SITEMA_REF_ESPACIAL }
+  	});   
+  	var homeBtn = new Home({view: view});	
+    view.ui.add(homeBtn, "top-left");
+	
+    var layer = getFeatureColexiosLayer ([]);
+	view.map.add (layer);    
+	mostraMapa (layer, {mostrar:cache});
+	
+	$("#areaInfluencia").change(function() {
+		if(this.checked) {
+			cargarAreaInfluencia();
+		} else {
+			borrarAreaInfluencia();
+		}
+    });	
+	
+    function cargarAreaInfluencia () {
+    	cacheAreas = cargarAreaInfluenciaGraphics (cacheAreas, areasInfluencia);
+		view.graphics.addMany (cacheAreas);
+	}
+	
+	function borrarAreaInfluencia () {
+		view.graphics.removeMany (cacheAreas);
+	}
+
+});
+
+  </script>
+  
+
+
+	</div>
+	<div class="AnchoTotal">
+		  
+
+
+ 
+<a href="/centroseducativos/"  title="Botón que permite voltar á última pantalla" class="botazul" >Volver</a>
+
+	</div>	
+</div>
+
+
+
+				
+				
+				
+	
+			</div>
+		</main>
+		
+		<div id="logosExtra">
+			<!--  para pintar outros logos.. FEDER, XACOBEO...
+			  -->
+		</div>
+	</div>
+
+
+	<!-- PE -->		
+    
+
+
+ 
+
+
+
+
+<footer>
+	<div class="footerLogo">
+		<a class="linkImaxeCabeceira" href="https://www.edu.xunta.gal/" accesskey="x" 
+				title='Ir a Portal Educativo da Xunta de Galicia. Acceso teclado: ALT+x' >
+			
+			<img alt="Portal Educativo da Xunta de Galicia" src="https://recursosweb.edu.xunta.gal/recursosweb/imaxes/logos/cons_cultura_eou-cor-neg.png"/>
+		</a>
+	</div>
+	<div class="footerContact">
+		<ul>
+			<li style="border-right: 1px dotted rgba(238,238,238,.7);">
+				<i class="glyphicon glyphicon-bookmark" aria-hidden="true"></i>&nbsp;centroseducativos 2.24.0
+			</li>
+			<li>
+				 	
+				<a href="/centroseducativos/VerContacto.do" class="linkPe" accesskey="c" 
+						title='Como contactar coa consellería?. Atallo de teclado: c' >
+					<i class="glyphicon glyphicon-envelope" aria-hidden="true" 
+						aria-label='Contacto'></i>&nbsp;Contacto
+				</a>
+			</li>
+		</ul>
+	</div>	
+</footer>
+</body>
+</html>
